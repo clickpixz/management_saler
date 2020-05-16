@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -34,5 +35,5 @@ public class Order {
     @JoinColumn(name = "Customer_ID", referencedColumnName = "id", nullable = false)
     private Customer customer;
     @OneToMany(mappedBy = "order")
-    private Collection<OrderDetail> orderDetails;
+    private List<OrderDetail> orderDetails;
 }

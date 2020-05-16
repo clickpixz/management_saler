@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -34,11 +35,11 @@ public class Member {
     private Date updateDate;
     private Integer activeFlag;
     @OneToMany(mappedBy = "member")
-    private Collection<DateWork> dateWorks;
+    private List<DateWork> dateWorks;
     @OneToMany(mappedBy = "member")
-    private Collection<InventoryHistory> inventoryHistories;
+    private List<InventoryHistory> inventoryHistories;
     @OneToMany(mappedBy = "member")
-    private Collection<Invoice> invoices;
+    private List<Invoice> invoices;
     @ManyToOne
     @JoinColumn(name = "Branch_ID", referencedColumnName = "id", nullable = false)
     private Branch branch;

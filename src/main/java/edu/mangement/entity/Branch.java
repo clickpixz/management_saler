@@ -3,8 +3,7 @@ package edu.mangement.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA
@@ -29,9 +28,9 @@ public class Branch {
     private Date updateDate;
     private Integer activeFlag;
     @OneToMany(mappedBy = "branch")
-    private Collection<BranchFeePerMonth> branchFeePerMonths;
+    private List<BranchFeePerMonth> branchFeePerMonths;
     @OneToMany(mappedBy = "branch")
-    private Collection<Member> members;
+    private List<Member> members;
     @OneToMany(mappedBy = "branch")
-    private Collection<ProductInStock> productInStocks;
+    private List<ProductInStock> productInStocks;
 }

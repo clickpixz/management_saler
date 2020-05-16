@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -37,5 +38,5 @@ public class Product {
     @JoinColumn(name = "Vendor_ID", referencedColumnName = "id", nullable = false)
     private Vendor vendor;
     @OneToMany(mappedBy = "product")
-    private Collection<ProductInStock> productInStocks;
+    private List<ProductInStock> productInStocks;
 }

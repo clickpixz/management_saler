@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -34,5 +35,5 @@ public class Customer {
     private Date updateDate;
     private Integer activeFlag;
     @OneToMany(mappedBy = "customer")
-    private Collection<Order> orders;
+    private List<Order> orders;
 }

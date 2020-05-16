@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -29,9 +30,9 @@ public class ProductInStock {
     private Date updateDate;
     private Integer activeFlag;
     @OneToMany(mappedBy = "productInStock")
-    private Collection<InventoryHistory> inventoryHistories;
+    private List<InventoryHistory> inventoryHistories;
     @OneToMany(mappedBy = "productInStock")
-    private Collection<Items> items;
+    private List<Items> items;
     @ManyToOne
     @JoinColumn(name = "Product_ID", referencedColumnName = "id", nullable = false)
     private Product product;

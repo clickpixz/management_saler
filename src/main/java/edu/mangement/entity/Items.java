@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -28,10 +29,10 @@ public class Items {
     private Date updateDate;
     private Integer activeFlag;
     @OneToMany(mappedBy = "items")
-    private Collection<InvoiceDetail> invoiceDetails;
+    private List<InvoiceDetail> invoiceDetails;
     @ManyToOne
     @JoinColumn(name = "Product_In_Stock_ID", referencedColumnName = "id", nullable = false)
     private ProductInStock productInStock;
     @OneToMany(mappedBy = "items")
-    private Collection<OrderDetail> orderDetails;
+    private List<OrderDetail> orderDetails;
 }

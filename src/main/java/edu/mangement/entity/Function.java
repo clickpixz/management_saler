@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -30,5 +31,5 @@ public class Function {
     private Date updateDate;
     private Integer activeFlag;
     @OneToMany(mappedBy = "function")
-    private Collection<Auth> auths;
+    private List<Auth> auths;
 }

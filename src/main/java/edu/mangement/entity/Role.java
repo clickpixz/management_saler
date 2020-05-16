@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -28,7 +29,7 @@ public class Role {
     private Date updateDate;
     private Integer activeFlag;
     @OneToMany(mappedBy = "role")
-    private Collection<Auth> auths;
+    private List<Auth> auths;
     @OneToMany(mappedBy = "role")
-    private Collection<Member> members;
+    private List<Member> members;
 }
