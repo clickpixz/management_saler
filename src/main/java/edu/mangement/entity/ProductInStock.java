@@ -1,9 +1,6 @@
 package edu.mangement.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -21,12 +18,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString(exclude = {"inventoryHistories","items"})
 public class ProductInStock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long productId;
-    private Long branchId;
     private String size;
     private Long quantity;
     private Date createDate;
@@ -35,7 +31,7 @@ public class ProductInStock {
     @OneToMany(mappedBy = "productInStock")
     private Collection<InventoryHistory> inventoryHistories;
     @OneToMany(mappedBy = "productInStock")
-    private Collection<Items> itemsById;
+    private Collection<Items> items;
     @ManyToOne
     @JoinColumn(name = "Product_ID", referencedColumnName = "id", nullable = false)
     private Product product;

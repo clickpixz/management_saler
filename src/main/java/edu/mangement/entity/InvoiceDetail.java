@@ -25,8 +25,6 @@ public class InvoiceDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long itemsId;
-    private Long invoiceId;
     private Long quantity;
     private BigDecimal unitPrice;
     private Date createDate;

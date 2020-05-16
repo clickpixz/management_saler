@@ -1,9 +1,6 @@
 package edu.mangement.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,8 +20,6 @@ public class Auth {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long roleId;
-    private Long functionId;
     private Integer permission;
     private Date createDate;
     private Date updateDate;

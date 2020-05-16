@@ -25,8 +25,6 @@ public class InventoryHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long productInStockId;
-    private Long memberId;
     private Integer type;
     private Long quantity;
     private BigDecimal price;

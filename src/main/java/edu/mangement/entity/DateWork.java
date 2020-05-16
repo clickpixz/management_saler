@@ -24,7 +24,6 @@ public class DateWork {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long memberId;
     private Integer year;
     private Integer month;
     private Integer snn;

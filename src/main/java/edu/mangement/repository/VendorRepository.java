@@ -1,5 +1,6 @@
-package edu.mangement.entity;
+package edu.mangement.repository;
 
+import edu.mangement.entity.Vendor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
