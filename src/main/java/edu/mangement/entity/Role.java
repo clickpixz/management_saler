@@ -1,6 +1,11 @@
 package edu.mangement.entity;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -19,14 +24,19 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString(exclude = {"auths","members"})
+@EntityListeners(AuditingEntityListener.class)
+@Configuration
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
+    @CreatedDate
     private Date createDate;
+    @LastModifiedDate
     private Date updateDate;
+    @Value("1")
     private Integer activeFlag;
     @OneToMany(mappedBy = "role")
     private List<Auth> auths;

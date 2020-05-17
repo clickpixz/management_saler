@@ -1,6 +1,11 @@
 package edu.mangement.entity;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -20,6 +25,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString(exclude = "invoiceDetails")
+@EntityListeners(AuditingEntityListener.class)
+@Configuration
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +34,11 @@ public class Invoice {
     private BigDecimal totalOrder;
     private String nameCustomer;
     private String phone;
+    @CreatedDate
     private Date createDate;
+    @LastModifiedDate
     private Date updateDate;
+    @Value("1")
     private Integer activeFlag;
     @ManyToOne
     @JoinColumn(name = "Member_ID", referencedColumnName = "id", nullable = false)
