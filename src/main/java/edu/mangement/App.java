@@ -12,11 +12,11 @@ public class App implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);
 	}
-	@Autowired
-	private MemberRepository memberRepository;
+//	@Autowired
+//	private MemberRepository memberRepository;
 	@Override
 	public void run(String... args) throws Exception {
-		var members = memberRepository.findAll();
-		System.out.println(members);
+//		var members = memberRepository.findAll();
+//		System.out.println(members);
 	}
 }

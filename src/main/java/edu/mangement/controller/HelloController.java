@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
  * DATE : 5/16/2020
  * TIME : 4:44 PM
  */
-@Controller("/branch")
+@Controller
 public class HelloController {
-    @GetMapping("/demo")
+    @GetMapping("/dashboard-2")
     public String hello(){
-        return "index";
+        return "Main";
     }
 }

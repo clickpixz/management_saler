@@ -1,6 +1,8 @@
 package edu.mangement.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,7 +23,9 @@ public class Auth {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer permission;
+    @CreatedDate
     private Date createDate;
+    @LastModifiedDate
     private Date updateDate;
     private Integer activeFlag;
     @ManyToOne
