@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.function.Function;
+
 /**
  * Created by IntelliJ IDEA
  * USER : ctc
@@ -21,12 +23,10 @@ public class UserService implements UserDetailsService {
     private MemberRepository memberRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findByUsernameAndActiveFlag(username, 1);
-        System.out.println(member);
-        if(member==null){
-            throw new UsernameNotFoundException(username);
-        }
-        return new CustomUserDetail(member);
+      return memberRepository
+               .findByUsernameAndActiveFlag(username, 1)
+               .map(member -> new CustomUserDetail(member))
+               .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
 }

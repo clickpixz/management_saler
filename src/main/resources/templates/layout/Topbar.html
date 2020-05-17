@@ -1,5 +1,5 @@
 <!-- Topbar Start -->
-<div class="navbar-custom" th:fragment="topbar (username)" xmlns:th="https://www.thymeleaf.org/">
+<div class="navbar-custom" th:fragment="topbar" xmlns:th="https://www.thymeleaf.org/">
     <ul class="list-unstyled topnav-menu float-right mb-0">
 
         <li class="dropdown d-none d-lg-block">
@@ -190,7 +190,7 @@
         <li class="dropdown notification-list">
             <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <img th:src="@{/assets/images/users/avatar-1.jpg}" alt="user-image" class="rounded-circle">
-                <span class="pro-user-name ml-1" th:text="${username}">
+                <span class="pro-user-name ml-1" th:text="${session.name}">
                     <i class="mdi mdi-chevron-down"></i>
                 </span>
             </a>

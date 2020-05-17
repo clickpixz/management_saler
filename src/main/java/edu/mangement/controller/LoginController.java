@@ -28,7 +28,6 @@ public class LoginController {
     }
     @RequestMapping("/403")
     public String accessDenied403() {
-        System.out.println("heeee");
         return "pages-500";
     }
     @GetMapping("/logoutSuccessful")

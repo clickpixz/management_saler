@@ -42,7 +42,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
         return memory;
     }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
@@ -95,6 +94,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/assets/**");
+        web.ignoring().antMatchers("/assets/**","/upload/**");
     }
 }
