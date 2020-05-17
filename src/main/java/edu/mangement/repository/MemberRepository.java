@@ -10,4 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * TIME : 10:54 AM
  */
 public interface MemberRepository extends JpaRepository<Member,Long> {
+    Member findByUsernameAndActiveFlag(String username,int activeFlag);
 }
