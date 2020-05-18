@@ -1,13 +1,12 @@
-package edu.mangement.dto;
+package edu.mangement.model.dto;
 
-import edu.mangement.entity.InventoryHistory;
-import edu.mangement.entity.Items;
-import edu.mangement.entity.Product;
+import edu.mangement.model.dto.BranchDTO;
+import edu.mangement.model.dto.InventoryHistoryDTO;
+import edu.mangement.model.dto.ItemsDTO;
+import edu.mangement.model.dto.ProductDTO;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
 import java.util.List;
@@ -32,8 +31,8 @@ public class ProductInStockDTO {
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;
-    private List<InventoryHistory> inventoryHistories;
-    private List<Items> items;
-    private Product product;
+    private List<InventoryHistoryDTO> inventoryHistories;
+    private List<ItemsDTO> items;
+    private ProductDTO product;
     private BranchDTO branch;
 }

@@ -1,6 +1,5 @@
-package edu.mangement.dto;
+package edu.mangement.model.dto;
 
-import edu.mangement.entity.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -45,8 +44,8 @@ public class MemberDTO {
     @Value("1")
     private Integer activeFlag;
     private List<DateWorkDTO> dateWorks;
-    private List<InventoryHistory> inventoryHistories;
-    private List<Invoice> invoices;
+    private List<InventoryHistoryDTO> inventoryHistories;
+    private List<InvoiceDTO> invoices;
     private BranchDTO branch;
     private RoleDTO role;
 }

@@ -1,4 +1,4 @@
-package edu.mangement.dto.mapper;
+package edu.mangement.mapper;
 
 import org.springframework.stereotype.Component;
 
@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
  * Created by IntelliJ IDEA
  * USER : ctc
  * DATE : 5/18/2020
- * TIME : 1:35 AM
+ * TIME : 5:19 PM
  */
 @Component
 @FunctionalInterface
-public interface ModelMapper<T,V> {
-    T toDTO(V v);
+public interface EntityMapper<V,T> {
+    V toEntity(T t);
 }

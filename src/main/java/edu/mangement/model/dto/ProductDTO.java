@@ -1,8 +1,5 @@
-package edu.mangement.dto;
+package edu.mangement.model.dto;
 
-import edu.mangement.entity.BranchFeePerMonth;
-import edu.mangement.entity.Member;
-import edu.mangement.entity.ProductInStock;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -15,26 +12,29 @@ import java.util.List;
  * Created by IntelliJ IDEA
  * USER : ctc
  * DATE : 5/18/2020
- * TIME : 2:00 AM
+ * TIME : 4:42 PM
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"branchFeePerMonths","productInStocks","members"})
+@ToString(exclude = "productInStocks")
 @Configuration
-public class BranchDTO {
+public class ProductDTO {
     private Long id;
-    @NotBlank(message = "Name Not Blank")
+    @NotBlank(message = "name not blank")
     private String name;
-    @NotBlank(message = "Address Not Blank")
-    private String address;
-    private String phone;
+    @NotBlank(message = "code not null")
+    private String code;
+    @NotBlank(message = "material not null")
+    private String material;
+    private String image;
+    private String description;
     private Date createDate;
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;
-    private List<BranchFeePerMonthDTO> branchFeePerMonths;
-    private List<MemberDTO> members;
+    private CategoryDTO category;
+    private VendorDTO vendor;
     private List<ProductInStockDTO> productInStocks;
 }

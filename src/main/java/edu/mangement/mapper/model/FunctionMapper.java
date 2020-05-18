@@ -1,8 +1,13 @@
-package edu.mangement.dto.mapper;
+package edu.mangement.mapper.model;
 
-import edu.mangement.dto.FunctionDTO;
+import edu.mangement.entity.Auth;
+import edu.mangement.model.dto.AuthDTO;
+import edu.mangement.model.dto.FunctionDTO;
 import edu.mangement.entity.Function;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA
@@ -10,10 +15,9 @@ import org.springframework.stereotype.Component;
  * DATE : 5/18/2020
  * TIME : 1:37 AM
  */
-@Component
-public class FunctionMapper implements ModelMapper<FunctionDTO,Function>{
-    @Override
-    public FunctionDTO toDTO(Function function) {
+public class FunctionMapper {
+
+    public static FunctionDTO toDTO(Function function) {
         return FunctionDTO.builder()
                 .id(function.getId())
                 .parentId(function.getParentId())
@@ -23,7 +27,7 @@ public class FunctionMapper implements ModelMapper<FunctionDTO,Function>{
                 .createDate(function.getCreateDate())
                 .updateDate(function.getUpdateDate())
                 .activeFlag(function.getActiveFlag())
+                .auths(function.getAuths().stream().map(AuthMapper::toDTO).collect(Collectors.toList()))
                 .build();
-//        return null;
     }
 }

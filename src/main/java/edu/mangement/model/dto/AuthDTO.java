@@ -1,9 +1,10 @@
-package edu.mangement.dto;
+package edu.mangement.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 
@@ -11,19 +12,19 @@ import java.util.Date;
  * Created by IntelliJ IDEA
  * USER : ctc
  * DATE : 5/18/2020
- * TIME : 2:04 AM
+ * TIME : 1:52 AM
  */
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class DateWorkDTO {
+public class AuthDTO {
     private Long id;
-    private Integer year;
-    private Integer month;
-    private Integer snn;
+    private Integer permission;
     private Date createDate;
     private Date updateDate;
+    @Value("1")
     private Integer activeFlag;
-    private MemberDTO member;
+    private RoleDTO role;
+    private FunctionDTO function;
 }

@@ -1,5 +1,6 @@
-package edu.mangement.dto;
+package edu.mangement.model.dto;
 
+import edu.mangement.model.dto.BranchDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

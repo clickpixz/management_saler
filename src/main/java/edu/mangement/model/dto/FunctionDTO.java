@@ -1,5 +1,6 @@
-package edu.mangement.dto;
+package edu.mangement.model.dto;
 
+import edu.mangement.model.dto.AuthDTO;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 
