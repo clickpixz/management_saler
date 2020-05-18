@@ -1,8 +1,7 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
 import edu.mangement.entity.Product;
 import edu.mangement.model.dto.ProductDTO;
-import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
@@ -27,6 +26,23 @@ public class ProductMapper {
                 .vendor(VendorMapper.toDTO(product.getVendor()))
                 .category(CategoryMapper.toDTO(product.getCategory()))
                 .productInStocks(product.getProductInStocks().stream().map(ProductInStockMapper::toDTO).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static Product toEntity(ProductDTO product) {
+        return Product.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .code(product.getCode())
+                .image(product.getImage())
+                .material(product.getMaterial())
+                .createDate(product.getCreateDate())
+                .updateDate(product.getUpdateDate())
+                .activeFlag(product.getActiveFlag())
+                .description(product.getDescription())
+                .vendor(VendorMapper.toEntity(product.getVendor()))
+                .category(CategoryMapper.toEntity(product.getCategory()))
+                .productInStocks(product.getProductInStocks().stream().map(ProductInStockMapper::toEntity).collect(Collectors.toList()))
                 .build();
     }
 }

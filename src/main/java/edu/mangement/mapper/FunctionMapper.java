@@ -1,11 +1,7 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
-import edu.mangement.entity.Auth;
-import edu.mangement.model.dto.AuthDTO;
 import edu.mangement.model.dto.FunctionDTO;
 import edu.mangement.entity.Function;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
@@ -28,6 +24,19 @@ public class FunctionMapper {
                 .updateDate(function.getUpdateDate())
                 .activeFlag(function.getActiveFlag())
                 .auths(function.getAuths().stream().map(AuthMapper::toDTO).collect(Collectors.toList()))
+                .build();
+    }
+    public static Function toEntity(FunctionDTO function) {
+        return Function.builder()
+                .id(function.getId())
+                .parentId(function.getParentId())
+                .url(function.getUrl())
+                .name(function.getName())
+                .orderIndex(function.getOrderIndex())
+                .createDate(function.getCreateDate())
+                .updateDate(function.getUpdateDate())
+                .activeFlag(function.getActiveFlag())
+                .auths(function.getAuths().stream().map(AuthMapper::toEntity).collect(Collectors.toList()))
                 .build();
     }
 }

@@ -1,8 +1,7 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
 import edu.mangement.entity.InvoiceDetail;
 import edu.mangement.model.dto.InvoiceDetailDTO;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA
@@ -22,6 +21,19 @@ public class InvoiceDetailMapper{
                 .activeFlag(invoiceDetail.getActiveFlag())
                 .invoice(InvoiceMapper.toDTO(invoiceDetail.getInvoice()))
                 .items(ItemsMapper.toDTO(invoiceDetail.getItems()))
+                .build();
+    }
+
+    public static InvoiceDetail toEntity(InvoiceDetailDTO invoiceDetail) {
+        return InvoiceDetail.builder()
+                .id(invoiceDetail.getId())
+                .quantity(invoiceDetail.getQuantity())
+                .unitPrice(invoiceDetail.getUnitPrice())
+                .createDate(invoiceDetail.getCreateDate())
+                .updateDate(invoiceDetail.getUpdateDate())
+                .activeFlag(invoiceDetail.getActiveFlag())
+                .invoice(InvoiceMapper.toEntity(invoiceDetail.getInvoice()))
+                .items(ItemsMapper.toEntity(invoiceDetail.getItems()))
                 .build();
     }
 }

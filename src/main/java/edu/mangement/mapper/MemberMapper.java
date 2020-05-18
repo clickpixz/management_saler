@@ -1,8 +1,7 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
 import edu.mangement.model.dto.MemberDTO;
 import edu.mangement.entity.Member;
-import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
@@ -31,6 +30,27 @@ public class MemberMapper{
                 .dateWorks(member.getDateWorks().stream().map(DateWorkMapper::toDTO).collect(Collectors.toList()))
                 .invoices(member.getInvoices().stream().map(InvoiceMapper::toDTO).collect(Collectors.toList()))
                 .inventoryHistories(member.getInventoryHistories().stream().map(InventoryHistoryMapper::toDTO).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static Member toEntity(MemberDTO member) {
+        return Member.builder()
+                .id(member.getId())
+                .name(member.getName())
+                .username(member.getUsername())
+                .password(member.getPassword())
+                .image(member.getImage())
+                .doB(member.getDoB())
+                .sex(member.getSex())
+                .salary(member.getSalary())
+                .createDate(member.getCreateDate())
+                .updateDate(member.getUpdateDate())
+                .activeFlag(member.getActiveFlag())
+                .branch(BranchMapper.toEntity(member.getBranch()))
+                .role(RoleMapper.toEntity(member.getRole()))
+                .dateWorks(member.getDateWorks().stream().map(DateWorkMapper::toEntity).collect(Collectors.toList()))
+                .invoices(member.getInvoices().stream().map(InvoiceMapper::toEntity).collect(Collectors.toList()))
+                .inventoryHistories(member.getInventoryHistories().stream().map(InventoryHistoryMapper::toEntity).collect(Collectors.toList()))
                 .build();
     }
 }

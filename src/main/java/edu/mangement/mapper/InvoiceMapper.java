@@ -1,4 +1,4 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
 import edu.mangement.entity.Invoice;
 import edu.mangement.model.dto.InvoiceDTO;
@@ -23,6 +23,20 @@ public class InvoiceMapper {
                 .activeFlag(invoice.getActiveFlag())
                 .member(MemberMapper.toDTO(invoice.getMember()))
                 .invoiceDetails(invoice.getInvoiceDetails().stream().map(InvoiceDetailMapper::toDTO).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static Invoice toEntity(InvoiceDTO invoice) {
+        return Invoice.builder()
+                .id(invoice.getId())
+                .nameCustomer(invoice.getNameCustomer())
+                .phone(invoice.getPhone())
+                .totalOrder(invoice.getTotalOrder())
+                .createDate(invoice.getCreateDate())
+                .updateDate(invoice.getUpdateDate())
+                .activeFlag(invoice.getActiveFlag())
+                .member(MemberMapper.toEntity(invoice.getMember()))
+                .invoiceDetails(invoice.getInvoiceDetails().stream().map(InvoiceDetailMapper::toEntity).collect(Collectors.toList()))
                 .build();
     }
 }

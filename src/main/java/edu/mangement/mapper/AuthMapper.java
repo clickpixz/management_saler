@@ -1,14 +1,7 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
 import edu.mangement.entity.Auth;
-import edu.mangement.entity.Function;
-import edu.mangement.entity.Role;
 import edu.mangement.model.dto.AuthDTO;
-import edu.mangement.model.dto.FunctionDTO;
-import edu.mangement.model.dto.RoleDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA
@@ -27,6 +20,17 @@ public class AuthMapper{
                 .activeFlag(auth.getActiveFlag())
                 .role(RoleMapper.toDTO(auth.getRole()))
                 .function(FunctionMapper.toDTO(auth.getFunction()))
+                .build();
+    }
+    public static Auth toEntity(AuthDTO auth) {
+        return Auth.builder()
+                .id(auth.getId())
+                .permission(auth.getPermission())
+                .createDate(auth.getCreateDate())
+                .updateDate(auth.getUpdateDate())
+                .activeFlag(auth.getActiveFlag())
+                .role(RoleMapper.toEntity(auth.getRole()))
+                .function(FunctionMapper.toEntity(auth.getFunction()))
                 .build();
     }
 }

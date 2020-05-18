@@ -1,8 +1,7 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
 import edu.mangement.entity.Category;
 import edu.mangement.model.dto.CategoryDTO;
-import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
@@ -22,6 +21,18 @@ public class CategoryMapper {
                 .updateDate(category.getUpdateDate())
                 .activeFlag(category.getActiveFlag())
                 .products(category.getProducts().stream().map(ProductMapper::toDTO).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static Category toEntity(CategoryDTO category) {
+        return Category.builder()
+                .id(category.getId())
+                .name(category.getName())
+                .parentId(category.getParentId())
+                .createDate(category.getCreateDate())
+                .updateDate(category.getUpdateDate())
+                .activeFlag(category.getActiveFlag())
+                .products(category.getProducts().stream().map(ProductMapper::toEntity).collect(Collectors.toList()))
                 .build();
     }
 }

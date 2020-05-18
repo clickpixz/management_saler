@@ -1,8 +1,7 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
 import edu.mangement.entity.Role;
 import edu.mangement.model.dto.RoleDTO;
-import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
@@ -23,6 +22,19 @@ public class RoleMapper  {
                 .activeFlag(role.getActiveFlag())
                 .auths(role.getAuths().stream().map(AuthMapper::toDTO).collect(Collectors.toList()))
                 .members(role.getMembers().stream().map(MemberMapper::toDTO).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static Role toEntity(RoleDTO role) {
+        return Role.builder()
+                .id(role.getId())
+                .name(role.getName())
+                .description(role.getDescription())
+                .createDate(role.getCreateDate())
+                .updateDate(role.getUpdateDate())
+                .activeFlag(role.getActiveFlag())
+                .auths(role.getAuths().stream().map(AuthMapper::toEntity).collect(Collectors.toList()))
+                .members(role.getMembers().stream().map(MemberMapper::toEntity).collect(Collectors.toList()))
                 .build();
     }
 }

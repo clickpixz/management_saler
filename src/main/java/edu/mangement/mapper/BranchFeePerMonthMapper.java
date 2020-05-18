@@ -1,8 +1,7 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
 import edu.mangement.entity.BranchFeePerMonth;
 import edu.mangement.model.dto.BranchFeePerMonthDTO;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA
@@ -14,6 +13,18 @@ public class BranchFeePerMonthMapper {
     public static BranchFeePerMonthDTO toDTO(BranchFeePerMonth branchFeePerMonth) {
         return BranchFeePerMonthDTO.builder()
                 .id(branchFeePerMonth.getId())
+                .year(branchFeePerMonth.getYear())
+                .cost(branchFeePerMonth.getCost())
+                .month(branchFeePerMonth.getMonth())
+                .createDate(branchFeePerMonth.getCreateDate())
+                .updateDate(branchFeePerMonth.getUpdateDate())
+                .activeFlag(branchFeePerMonth.getActiveFlag())
+                .description(branchFeePerMonth.getDescription())
+                .branch(BranchMapper.toDTO(branchFeePerMonth.getBranch()))
+                .build();
+    } public static BranchFeePerMonth toEntity(BranchFeePerMonthDTO branchFeePerMonth) {
+        return BranchFeePerMonth.builder()
+                .id(branchFeePerMonth.getId())
                 .cost(branchFeePerMonth.getCost())
                 .description(branchFeePerMonth.getDescription())
                 .month(branchFeePerMonth.getMonth())
@@ -21,7 +32,7 @@ public class BranchFeePerMonthMapper {
                 .createDate(branchFeePerMonth.getCreateDate())
                 .updateDate(branchFeePerMonth.getUpdateDate())
                 .activeFlag(branchFeePerMonth.getActiveFlag())
-                .branch(BranchMapper.toDTO(branchFeePerMonth.getBranch()))
+                .branch(BranchMapper.toEntity(branchFeePerMonth.getBranch()))
                 .build();
     }
 }

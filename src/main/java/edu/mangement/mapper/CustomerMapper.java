@@ -1,8 +1,7 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
 import edu.mangement.entity.Customer;
 import edu.mangement.model.dto.CustomerDTO;
-import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
@@ -28,6 +27,24 @@ public class CustomerMapper {
                 .updateDate(customer.getUpdateDate())
                 .activeFlag(customer.getActiveFlag())
                 .orders(customer.getOrders().stream().map(OrderMapper::toDTO).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static Customer toEntity(CustomerDTO customer) {
+        return Customer.builder()
+                .id(customer.getId())
+                .username(customer.getUsername())
+                .password(customer.getPassword())
+                .name(customer.getName())
+                .address(customer.getAddress())
+                .email(customer.getEmail())
+                .image(customer.getImage())
+                .phone(customer.getPhone())
+                .birthday(customer.getBirthday())
+                .createDate(customer.getCreateDate())
+                .updateDate(customer.getUpdateDate())
+                .activeFlag(customer.getActiveFlag())
+                .orders(customer.getOrders().stream().map(OrderMapper::toEntity).collect(Collectors.toList()))
                 .build();
     }
 }

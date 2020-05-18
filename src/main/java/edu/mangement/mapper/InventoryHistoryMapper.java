@@ -1,8 +1,7 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
 import edu.mangement.entity.InventoryHistory;
 import edu.mangement.model.dto.InventoryHistoryDTO;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA
@@ -22,6 +21,20 @@ public class InventoryHistoryMapper{
                 .activeFlag(inventoryHistory.getActiveFlag())
                 .member(MemberMapper.toDTO(inventoryHistory.getMember()))
                 .productInStock(ProductInStockMapper.toDTO(inventoryHistory.getProductInStock()))
+                .build();
+    }
+
+    public static InventoryHistory toEntity(InventoryHistoryDTO inventoryHistory) {
+        return InventoryHistory.builder()
+                .id(inventoryHistory.getId())
+                .quantity(inventoryHistory.getQuantity())
+                .price(inventoryHistory.getPrice())
+                .type(inventoryHistory.getType())
+                .createDate(inventoryHistory.getCreateDate())
+                .updateDate(inventoryHistory.getUpdateDate())
+                .activeFlag(inventoryHistory.getActiveFlag())
+                .member(MemberMapper.toEntity(inventoryHistory.getMember()))
+                .productInStock(ProductInStockMapper.toEntity(inventoryHistory.getProductInStock()))
                 .build();
     }
 }

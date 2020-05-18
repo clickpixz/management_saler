@@ -1,8 +1,7 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
 import edu.mangement.entity.OrderDetail;
 import edu.mangement.model.dto.OrderDetailDTO;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA
@@ -21,6 +20,19 @@ public class OrderDetailMapper {
                 .activeFlag(orderDetail.getActiveFlag())
                 .items(ItemsMapper.toDTO(orderDetail.getItems()))
                 .order(OrderMapper.toDTO(orderDetail.getOrder()))
+                .build();
+    }
+
+    public static OrderDetail toEntity(OrderDetailDTO orderDetail) {
+        return OrderDetail.builder()
+                .id(orderDetail.getId())
+                .unitPrice(orderDetail.getUnitPrice())
+                .quantity(orderDetail.getQuantity())
+                .createDate(orderDetail.getCreateDate())
+                .updateDate(orderDetail.getUpdateDate())
+                .activeFlag(orderDetail.getActiveFlag())
+                .items(ItemsMapper.toEntity(orderDetail.getItems()))
+                .order(OrderMapper.toEntity(orderDetail.getOrder()))
                 .build();
     }
 }

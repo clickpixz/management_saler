@@ -1,8 +1,7 @@
-package edu.mangement.mapper.model;
+package edu.mangement.mapper;
 
 import edu.mangement.entity.Order;
 import edu.mangement.model.dto.OrderDTO;
-import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
@@ -25,6 +24,21 @@ public class OrderMapper {
                 .activeFlag(order.getActiveFlag())
                 .customer(CustomerMapper.toDTO(order.getCustomer()))
                 .orderDetails(order.getOrderDetails().stream().map(OrderDetailMapper::toDTO).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static Order toEntity(OrderDTO order) {
+        return Order.builder()
+                .id(order.getId())
+                .totalOrder(order.getTotalOrder())
+                .deliveryAddress(order.getDeliveryAddress())
+                .description(order.getDescription())
+                .statusDelivery(order.getStatusDelivery())
+                .createDate(order.getCreateDate())
+                .updateDate(order.getUpdateDate())
+                .activeFlag(order.getActiveFlag())
+                .customer(CustomerMapper.toEntity(order.getCustomer()))
+                .orderDetails(order.getOrderDetails().stream().map(OrderDetailMapper::toEntity).collect(Collectors.toList()))
                 .build();
     }
 }
