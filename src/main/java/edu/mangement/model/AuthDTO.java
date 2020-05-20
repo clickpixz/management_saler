@@ -1,35 +1,30 @@
-package edu.mangement.model.dto;
+package edu.mangement.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA
  * USER : ctc
  * DATE : 5/18/2020
- * TIME : 4:32 PM
+ * TIME : 1:52 AM
  */
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Configuration
-public class InventoryHistoryDTO {
+public class AuthDTO {
     private Long id;
-    private Integer type;
-    private Long quantity;
-    private BigDecimal price;
+    private Integer permission;
     private Date createDate;
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;
-    private ProductInStockDTO productInStock;
-    private MemberDTO member;
+    private RoleDTO role;
+    private MenuDTO function;
 }

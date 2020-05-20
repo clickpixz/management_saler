@@ -20,6 +20,7 @@ import java.util.List;
  * TIME : 11:03 PM
  */
 @Entity
+@Table(name = "Orders" ,schema = "dbo",catalog = "CKTDDQ")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

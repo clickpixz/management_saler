@@ -1,7 +1,7 @@
 package edu.mangement.mapper;
 
 import edu.mangement.entity.Customer;
-import edu.mangement.model.dto.CustomerDTO;
+import edu.mangement.model.CustomerDTO;
 
 import java.util.stream.Collectors;
 
@@ -12,39 +12,45 @@ import java.util.stream.Collectors;
  * TIME : 5:59 PM
  */
 public class CustomerMapper {
-    public static CustomerDTO toDTO(Customer customer) {
-        return CustomerDTO.builder()
-                .id(customer.getId())
-                .username(customer.getUsername())
-                .password(customer.getPassword())
-                .name(customer.getName())
-                .address(customer.getAddress())
-                .email(customer.getEmail())
-                .image(customer.getImage())
-                .phone(customer.getPhone())
-                .birthday(customer.getBirthday())
-                .createDate(customer.getCreateDate())
-                .updateDate(customer.getUpdateDate())
-                .activeFlag(customer.getActiveFlag())
-                .orders(customer.getOrders().stream().map(OrderMapper::toDTO).collect(Collectors.toList()))
+    public static CustomerDTO toDTO(Customer customerEntity) {
+        CustomerDTO customerDTO = CustomerDTO.builder()
+                .id(customerEntity.getId())
+                .username(customerEntity.getUsername())
+                .password(customerEntity.getPassword())
+                .name(customerEntity.getName())
+                .address(customerEntity.getAddress())
+                .email(customerEntity.getEmail())
+                .image(customerEntity.getImage())
+                .phone(customerEntity.getPhone())
+                .birthday(customerEntity.getBirthday())
+                .createDate(customerEntity.getCreateDate())
+                .updateDate(customerEntity.getUpdateDate())
+                .activeFlag(customerEntity.getActiveFlag())
                 .build();
+//        if(customerEntity.getOrders()!=null){
+//            customerDTO.setOrders(customerEntity.getOrders().stream().map(OrderMapper::toDTO).collect(Collectors.toList()));
+//        }
+        return customerDTO;
     }
 
-    public static Customer toEntity(CustomerDTO customer) {
-        return Customer.builder()
-                .id(customer.getId())
-                .username(customer.getUsername())
-                .password(customer.getPassword())
-                .name(customer.getName())
-                .address(customer.getAddress())
-                .email(customer.getEmail())
-                .image(customer.getImage())
-                .phone(customer.getPhone())
-                .birthday(customer.getBirthday())
-                .createDate(customer.getCreateDate())
-                .updateDate(customer.getUpdateDate())
-                .activeFlag(customer.getActiveFlag())
-                .orders(customer.getOrders().stream().map(OrderMapper::toEntity).collect(Collectors.toList()))
+    public static Customer toEntity(CustomerDTO customerDTO) {
+        Customer customerEntity = Customer.builder()
+                .id(customerDTO.getId())
+                .username(customerDTO.getUsername())
+                .password(customerDTO.getPassword())
+                .name(customerDTO.getName())
+                .address(customerDTO.getAddress())
+                .email(customerDTO.getEmail())
+                .image(customerDTO.getImage())
+                .phone(customerDTO.getPhone())
+                .birthday(customerDTO.getBirthday())
+                .createDate(customerDTO.getCreateDate())
+                .updateDate(customerDTO.getUpdateDate())
+                .activeFlag(customerDTO.getActiveFlag())
                 .build();
+//        if(customerDTO.getOrders()!=null){
+//            customerEntity.setOrders(customerDTO.getOrders().stream().map(OrderMapper::toEntity).collect(Collectors.toList()));
+//        }
+        return customerEntity;
     }
 }

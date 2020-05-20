@@ -1,7 +1,7 @@
 package edu.mangement.mapper;
 
 import edu.mangement.entity.DateWork;
-import edu.mangement.model.dto.DateWorkDTO;
+import edu.mangement.model.DateWorkDTO;
 
 /**
  * Created by IntelliJ IDEA
@@ -9,29 +9,36 @@ import edu.mangement.model.dto.DateWorkDTO;
  * DATE : 5/18/2020
  * TIME : 5:50 PM
  */
-public class DateWorkMapper{
-    public static DateWorkDTO toDTO(DateWork dateWork) {
-        return DateWorkDTO.builder()
-                .id(dateWork.getId())
-                .snn(dateWork.getSnn())
-                .year(dateWork.getYear())
-                .month(dateWork.getMonth())
-                .createDate(dateWork.getCreateDate())
-                .updateDate(dateWork.getUpdateDate())
-                .activeFlag(dateWork.getActiveFlag())
-                .member(MemberMapper.toDTO(dateWork.getMember()))
+public class DateWorkMapper {
+    public static DateWorkDTO toDTO(DateWork dateWorkEntity) {
+        DateWorkDTO dateWorkDTO = DateWorkDTO.builder()
+                .id(dateWorkEntity.getId())
+                .snn(dateWorkEntity.getSnn())
+                .year(dateWorkEntity.getYear())
+                .month(dateWorkEntity.getMonth())
+                .createDate(dateWorkEntity.getCreateDate())
+                .updateDate(dateWorkEntity.getUpdateDate())
+                .activeFlag(dateWorkEntity.getActiveFlag())
                 .build();
+//        if (dateWorkEntity.getMember() != null) {
+//            dateWorkDTO.setMember(MemberMapper.toDTO(dateWorkEntity.getMember()));
+//        }
+        return dateWorkDTO;
     }
-    public static DateWork toEntity(DateWorkDTO dateWork) {
-        return DateWork.builder()
-                .id(dateWork.getId())
-                .snn(dateWork.getSnn())
-                .year(dateWork.getYear())
-                .month(dateWork.getMonth())
-                .createDate(dateWork.getCreateDate())
-                .updateDate(dateWork.getUpdateDate())
-                .activeFlag(dateWork.getActiveFlag())
-                .member(MemberMapper.toEntity(dateWork.getMember()))
+
+    public static DateWork toEntity(DateWorkDTO dateWorkDTO) {
+        DateWork dateWorkEntity = DateWork.builder()
+                .id(dateWorkDTO.getId())
+                .snn(dateWorkDTO.getSnn())
+                .year(dateWorkDTO.getYear())
+                .month(dateWorkDTO.getMonth())
+                .createDate(dateWorkDTO.getCreateDate())
+                .updateDate(dateWorkDTO.getUpdateDate())
+                .activeFlag(dateWorkDTO.getActiveFlag())
                 .build();
+//        if (dateWorkDTO.getMember() != null) {
+//            dateWorkEntity.setMember(MemberMapper.toEntity(dateWorkDTO.getMember()));
+//        }
+        return dateWorkEntity;
     }
 }

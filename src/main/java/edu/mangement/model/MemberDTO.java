@@ -1,4 +1,4 @@
-package edu.mangement.model.dto;
+package edu.mangement.model;
 
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"dateWorks", "inventoryHistories", "invoices"})
+@ToString(exclude = {"dateWorks"})
 @Configuration
 public class MemberDTO {
     private Long id;
@@ -44,8 +44,6 @@ public class MemberDTO {
     @Value("1")
     private Integer activeFlag;
     private List<DateWorkDTO> dateWorks;
-    private List<InventoryHistoryDTO> inventoryHistories;
-    private List<InvoiceDTO> invoices;
     private BranchDTO branch;
     private RoleDTO role;
 }

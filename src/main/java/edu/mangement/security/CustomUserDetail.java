@@ -1,7 +1,7 @@
 package edu.mangement.security;
 
 import edu.mangement.constant.SystemConstant;
-import edu.mangement.entity.Member;
+import edu.mangement.model.MemberDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +20,7 @@ import java.util.Collections;
 @Data
 @AllArgsConstructor
 public class CustomUserDetail implements UserDetails {
-    Member member;
+    MemberDTO member;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(SystemConstant.ROLE_ADMIN));

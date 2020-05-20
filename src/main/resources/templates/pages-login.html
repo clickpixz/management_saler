@@ -29,7 +29,14 @@
                                         <label for="username">Username : </label>
                                         <input class="form-control" type="text" id="username" required="" placeholder="username" name="username">
                                     </div>
-
+                                    <th:block th:if="${(param.error!=null) and (param.error[0]=='true')}">
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <strong th:text="${message}">Oh snap!</strong> Change a few things up and try submitting again.
+                                        </div>
+                                    </th:block>
                                     <div class="form-group mb-3">
                                         <label for="password">Password :</label>
                                         <input class="form-control" type="password" required="" id="password" placeholder="Enter your password" name="password">

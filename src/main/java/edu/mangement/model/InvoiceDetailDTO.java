@@ -1,13 +1,12 @@
-package edu.mangement.model.dto;
+package edu.mangement.model;
 
-import edu.mangement.model.dto.BranchDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -16,25 +15,21 @@ import java.util.Date;
  * Created by IntelliJ IDEA
  * USER : ctc
  * DATE : 5/18/2020
- * TIME : 2:01 AM
+ * TIME : 4:36 PM
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BranchFeePerMonthDTO {
+@Configuration
+public class InvoiceDetailDTO {
     private Long id;
-    private String description;
-    @Min(value = 0,message = "cost > 0")
-    private BigDecimal cost;
-    @Min(value = 0,message = "month > 0")
-    @Max(value = 12,message = "month <=12")
-    private Integer month;
-    @Min(value = 1970,message = "year > 1970")
-    private Integer year;
+    @Min(value = 0,message = "quantity > 0")
+    private Long quantity;
+    private BigDecimal unitPrice;
     private Date createDate;
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;
-    private BranchDTO branch;
+    private ItemsDTO items;
 }

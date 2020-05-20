@@ -1,10 +1,10 @@
-package edu.mangement.model.dto;
+package edu.mangement.model;
 
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -12,22 +12,20 @@ import java.util.List;
  * Created by IntelliJ IDEA
  * USER : ctc
  * DATE : 5/18/2020
- * TIME : 4:30 PM
+ * TIME : 4:38 PM
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = "products")
+@ToString(exclude = {"invoiceDetails","orderDetails"})
 @Configuration
-public class CategoryDTO {
+public class ItemsDTO {
     private Long id;
-    @NotBlank
-    private String name;
-    private Integer parentId;
+    private BigDecimal price;
     private Date createDate;
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;
-    private List<ProductDTO> products;
+    private ProductInStockDTO productInStock;
 }

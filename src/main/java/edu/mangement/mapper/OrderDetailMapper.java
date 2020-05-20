@@ -1,7 +1,7 @@
 package edu.mangement.mapper;
 
 import edu.mangement.entity.OrderDetail;
-import edu.mangement.model.dto.OrderDetailDTO;
+import edu.mangement.model.OrderDetailDTO;
 
 /**
  * Created by IntelliJ IDEA
@@ -10,29 +10,39 @@ import edu.mangement.model.dto.OrderDetailDTO;
  * TIME : 6:02 PM
  */
 public class OrderDetailMapper {
-    public static OrderDetailDTO toDTO(OrderDetail orderDetail) {
-        return OrderDetailDTO.builder()
-                .id(orderDetail.getId())
-                .unitPrice(orderDetail.getUnitPrice())
-                .quantity(orderDetail.getQuantity())
-                .createDate(orderDetail.getCreateDate())
-                .updateDate(orderDetail.getUpdateDate())
-                .activeFlag(orderDetail.getActiveFlag())
-                .items(ItemsMapper.toDTO(orderDetail.getItems()))
-                .order(OrderMapper.toDTO(orderDetail.getOrder()))
+    public static OrderDetailDTO toDTO(OrderDetail orderDetailEntity) {
+        OrderDetailDTO orderDetailDTO = OrderDetailDTO.builder()
+                .id(orderDetailEntity.getId())
+                .unitPrice(orderDetailEntity.getUnitPrice())
+                .quantity(orderDetailEntity.getQuantity())
+                .createDate(orderDetailEntity.getCreateDate())
+                .updateDate(orderDetailEntity.getUpdateDate())
+                .activeFlag(orderDetailEntity.getActiveFlag())
                 .build();
+        if (orderDetailEntity.getItems() != null) {
+            orderDetailDTO.setItems(ItemsMapper.toDTO(orderDetailEntity.getItems()));
+        }
+//        if (orderDetailEntity.getOrder() != null) {
+//            orderDetailDTO.setOrder(OrderMapper.toDTO(orderDetailEntity.getOrder()));
+//        }
+        return orderDetailDTO;
     }
 
-    public static OrderDetail toEntity(OrderDetailDTO orderDetail) {
-        return OrderDetail.builder()
-                .id(orderDetail.getId())
-                .unitPrice(orderDetail.getUnitPrice())
-                .quantity(orderDetail.getQuantity())
-                .createDate(orderDetail.getCreateDate())
-                .updateDate(orderDetail.getUpdateDate())
-                .activeFlag(orderDetail.getActiveFlag())
-                .items(ItemsMapper.toEntity(orderDetail.getItems()))
-                .order(OrderMapper.toEntity(orderDetail.getOrder()))
+    public static OrderDetail toEntity(OrderDetailDTO orderDetailDTO) {
+        OrderDetail orderDetailEntity = OrderDetail.builder()
+                .id(orderDetailDTO.getId())
+                .unitPrice(orderDetailDTO.getUnitPrice())
+                .quantity(orderDetailDTO.getQuantity())
+                .createDate(orderDetailDTO.getCreateDate())
+                .updateDate(orderDetailDTO.getUpdateDate())
+                .activeFlag(orderDetailDTO.getActiveFlag())
                 .build();
+        if (orderDetailDTO.getItems() != null) {
+            orderDetailEntity.setItems(ItemsMapper.toEntity(orderDetailDTO.getItems()));
+        }
+//        if (orderDetailDTO.getOrder() != null) {
+//            orderDetailEntity.setOrder(OrderMapper.toEntity(orderDetailDTO.getOrder()));
+//        }
+        return orderDetailEntity;
     }
 }

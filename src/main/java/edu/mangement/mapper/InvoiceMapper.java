@@ -1,7 +1,7 @@
 package edu.mangement.mapper;
 
 import edu.mangement.entity.Invoice;
-import edu.mangement.model.dto.InvoiceDTO;
+import edu.mangement.model.InvoiceDTO;
 
 import java.util.stream.Collectors;
 
@@ -12,31 +12,41 @@ import java.util.stream.Collectors;
  * TIME : 5:52 PM
  */
 public class InvoiceMapper {
-    public static InvoiceDTO toDTO(Invoice invoice) {
-        return InvoiceDTO.builder()
-                .id(invoice.getId())
-                .nameCustomer(invoice.getNameCustomer())
-                .phone(invoice.getPhone())
-                .totalOrder(invoice.getTotalOrder())
-                .createDate(invoice.getCreateDate())
-                .updateDate(invoice.getUpdateDate())
-                .activeFlag(invoice.getActiveFlag())
-                .member(MemberMapper.toDTO(invoice.getMember()))
-                .invoiceDetails(invoice.getInvoiceDetails().stream().map(InvoiceDetailMapper::toDTO).collect(Collectors.toList()))
+    public static InvoiceDTO toDTO(Invoice invoiceEntity) {
+        InvoiceDTO invoiceDTO = InvoiceDTO.builder()
+                .id(invoiceEntity.getId())
+                .nameCustomer(invoiceEntity.getNameCustomer())
+                .phone(invoiceEntity.getPhone())
+                .totalOrder(invoiceEntity.getTotalOrder())
+                .createDate(invoiceEntity.getCreateDate())
+                .updateDate(invoiceEntity.getUpdateDate())
+                .activeFlag(invoiceEntity.getActiveFlag())
                 .build();
+        if(invoiceEntity.getMember()!=null){
+            invoiceDTO.setMember(MemberMapper.toDTO(invoiceEntity.getMember()));
+        }
+        if(invoiceEntity.getInvoiceDetails()!=null){
+            invoiceDTO.setInvoiceDetails(invoiceEntity.getInvoiceDetails().stream().map(InvoiceDetailMapper::toDTO).collect(Collectors.toList()));
+        }
+        return invoiceDTO;
     }
 
-    public static Invoice toEntity(InvoiceDTO invoice) {
-        return Invoice.builder()
-                .id(invoice.getId())
-                .nameCustomer(invoice.getNameCustomer())
-                .phone(invoice.getPhone())
-                .totalOrder(invoice.getTotalOrder())
-                .createDate(invoice.getCreateDate())
-                .updateDate(invoice.getUpdateDate())
-                .activeFlag(invoice.getActiveFlag())
-                .member(MemberMapper.toEntity(invoice.getMember()))
-                .invoiceDetails(invoice.getInvoiceDetails().stream().map(InvoiceDetailMapper::toEntity).collect(Collectors.toList()))
+    public static Invoice toEntity(InvoiceDTO invoiceDTO) {
+        Invoice invoiceEntity = Invoice.builder()
+                .id(invoiceDTO.getId())
+                .nameCustomer(invoiceDTO.getNameCustomer())
+                .phone(invoiceDTO.getPhone())
+                .totalOrder(invoiceDTO.getTotalOrder())
+                .createDate(invoiceDTO.getCreateDate())
+                .updateDate(invoiceDTO.getUpdateDate())
+                .activeFlag(invoiceDTO.getActiveFlag())
                 .build();
+        if(invoiceDTO.getMember()!=null){
+            invoiceEntity.setMember(MemberMapper.toEntity(invoiceDTO.getMember()));
+        }
+        if(invoiceDTO.getInvoiceDetails()!=null){
+            invoiceEntity.setInvoiceDetails(invoiceDTO.getInvoiceDetails().stream().map(InvoiceDetailMapper::toEntity).collect(Collectors.toList()));
+        }
+        return invoiceEntity;
     }
 }

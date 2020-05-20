@@ -38,6 +38,6 @@ public class Auth {
     @JoinColumn(name = "Role_ID", referencedColumnName = "id", nullable = false)
     private Role role;
     @ManyToOne
-    @JoinColumn(name = "Function_ID", referencedColumnName = "id", nullable = false)
-    private Function function;
+    @JoinColumn(name = "Menu_ID", referencedColumnName = "id", nullable = false)
+    private Menu menu;
 }

@@ -1,4 +1,4 @@
-package edu.mangement.model.dto;
+package edu.mangement.model;
 
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,24 +13,25 @@ import java.util.List;
  * Created by IntelliJ IDEA
  * USER : ctc
  * DATE : 5/18/2020
- * TIME : 4:35 PM
+ * TIME : 4:39 PM
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = "invoiceDetails")
+@ToString(exclude = "orderDetails")
 @Configuration
-public class InvoiceDTO {
+public class OrderDTO {
     private Long id;
-    @Min(value = 0,message = "totalOrder > 0")
+    @Min(message = "totalOrder > 0", value = 0)
     private BigDecimal totalOrder;
-    private String nameCustomer;
-    private String phone;
+    private String description;
+    private String deliveryAddress;
+    private Integer statusDelivery;
     private Date createDate;
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;
-    private MemberDTO member;
-    private List<InvoiceDetailDTO> invoiceDetails;
+    private CustomerDTO customer;
+    private List<OrderDetailDTO> orderDetails;
 }

@@ -1,9 +1,5 @@
-package edu.mangement.model.dto;
+package edu.mangement.model;
 
-import edu.mangement.model.dto.BranchDTO;
-import edu.mangement.model.dto.InventoryHistoryDTO;
-import edu.mangement.model.dto.ItemsDTO;
-import edu.mangement.model.dto.ProductDTO;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"inventoryHistories","items"})
 @Configuration
 public class ProductInStockDTO {
     private Long id;
@@ -31,8 +26,6 @@ public class ProductInStockDTO {
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;
-    private List<InventoryHistoryDTO> inventoryHistories;
-    private List<ItemsDTO> items;
     private ProductDTO product;
     private BranchDTO branch;
 }

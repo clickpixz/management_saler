@@ -25,11 +25,17 @@ import java.util.List;
 @ToString(exclude = "auths")
 @EntityListeners(AuditingEntityListener.class)
 @Configuration
-public class Function {
+@NamedQueries(
+        @NamedQuery(name = "Menu.findMenuUse",
+        query = "SELECT a.menu from Auth a inner join a.menu inner join a.role " +
+                "where a.role.id = :roleId and a.role.activeFlag = 1 and a.activeFlag=1 and a.permission =1" +
+                " and a.menu.activeFlag=1")
+)
+public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer parentId;
+    private Long parentId;
     private String url;
     private String name;
     private Integer orderIndex;
@@ -39,6 +45,6 @@ public class Function {
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;
-    @OneToMany(mappedBy = "function")
+    @OneToMany(mappedBy = "menu")
     private List<Auth> auths;
 }

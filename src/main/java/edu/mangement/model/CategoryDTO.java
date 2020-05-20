@@ -1,4 +1,4 @@
-package edu.mangement.model.dto;
+package edu.mangement.model;
 
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,26 +12,20 @@ import java.util.List;
  * Created by IntelliJ IDEA
  * USER : ctc
  * DATE : 5/18/2020
- * TIME : 2:00 AM
+ * TIME : 4:30 PM
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"branchFeePerMonths","productInStocks","members"})
 @Configuration
-public class BranchDTO {
+public class CategoryDTO {
     private Long id;
-    @NotBlank(message = "Name Not Blank")
+    @NotBlank
     private String name;
-    @NotBlank(message = "Address Not Blank")
-    private String address;
-    private String phone;
+    private Integer parentId;
     private Date createDate;
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;
-    private List<BranchFeePerMonthDTO> branchFeePerMonths;
-    private List<MemberDTO> members;
-    private List<ProductInStockDTO> productInStocks;
 }

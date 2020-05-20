@@ -1,8 +1,8 @@
-package edu.mangement.model.dto;
+package edu.mangement.model;
 
-import edu.mangement.model.dto.AuthDTO;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -12,24 +12,21 @@ import java.util.List;
  * Created by IntelliJ IDEA
  * USER : ctc
  * DATE : 5/18/2020
- * TIME : 1:31 AM
+ * TIME : 4:43 PM
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = "auths")
-public class FunctionDTO {
+@Configuration
+public class VendorDTO {
     private Long id;
-    private Integer parentId;
     @NotBlank
-    private String url;
     private String name;
-    private Integer orderIndex;
-    private String idMenu;
+    private String address;
+    private String phone;
     private Date createDate;
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;
-    private List<AuthDTO> auths;
 }

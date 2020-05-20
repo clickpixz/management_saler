@@ -14,13 +14,16 @@ import java.util.List;
  * DATE : 5/18/2020
  * TIME : 1:01 AM
  */
-@Configuration
-public class WebMvcConfig extends WebMvcConfigurationSupport {
-    @Override
-    protected void addInterceptors(InterceptorRegistry registry) {
-        var listUrls = Arrays.asList("/login","/logout","/403","/logoutSuccessful","/assets/**","/j_spring_security_check","/upload/**");
-        registry.addInterceptor(new FilterSystem())
-                .addPathPatterns("/**")
-                .excludePathPatterns(listUrls);
-    }
+//@Configuration
+//public class WebMvcConfig extends WebMvcConfigurationSupport {
+//    @Override
+//    protected void addInterceptors(InterceptorRegistry registry) {
+//        var listUrls = Arrays.asList("/login","/logout","/403","/logoutSuccessful","/assets/**","/j_spring_security_check","/upload/**");
+//        registry.addInterceptor(new FilterSystem())
+//                .addPathPatterns("/**")
+//                .excludePathPatterns(listUrls);
+//    }
+//}
+public class WebMvcConfig{
+
 }

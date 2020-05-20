@@ -1,7 +1,5 @@
-package edu.mangement.model.dto;
+package edu.mangement.model;
 
-import edu.mangement.model.dto.AuthDTO;
-import edu.mangement.model.dto.MemberDTO;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -13,22 +11,23 @@ import java.util.List;
  * Created by IntelliJ IDEA
  * USER : ctc
  * DATE : 5/18/2020
- * TIME : 1:53 AM
+ * TIME : 1:31 AM
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"auths","members"})
-public class RoleDTO {
+public class MenuDTO {
     private Long id;
+    private Long parentId;
     @NotBlank
+    private String url;
     private String name;
-    private String description;
+    private Integer orderIndex;
     private Date createDate;
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;
-    private List<AuthDTO> auths;
-    private List<MemberDTO> members;
+    private String idMenu;
+    private List<MenuDTO> child;
 }
