@@ -16,4 +16,5 @@ import java.util.List;
  */
 public interface BranchRepository extends JpaRepository<Branch,Long> {
     List<Branch> findAllByActiveFlag(int activeFlag, Pageable pageable);
+    Branch findBranchByIdAndActiveFlag(Long id,int activeFlag);
 }

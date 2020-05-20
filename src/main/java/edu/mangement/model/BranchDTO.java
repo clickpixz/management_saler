@@ -25,6 +25,7 @@ public class BranchDTO {
     private String name;
     @NotBlank(message = "Address Not Blank")
     private String address;
+    @NotBlank(message = "phone not empty")
     private String phone;
     private Date createDate;
     private Date updateDate;

@@ -18,4 +18,5 @@ public interface BranchService {
     BranchDTO saveBranch(BranchDTO branchDTO) throws Exception;
     List<BranchDTO> findAllBranch(Pageable pageable);
     BranchDTO findBranchById(Long id);
+    void deleteBranch(BranchDTO branchDTO) throws Exception;
 }

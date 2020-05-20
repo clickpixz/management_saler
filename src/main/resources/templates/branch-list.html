@@ -1,158 +1,197 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
-    <head>
-        <meta charset="utf-8">
-        <title>Danh Sách các chi nhánh</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Responsive bootstrap 4 admin template" name="description">
-        <meta content="Coderthemes" name="author">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <th:block th:replace="layout/Link-Top :: link-top"></th:block>
-        <th:block>
-            <!-- third party css -->
-            <link th:href="@{/assets/libs/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet" type="text/css">
-            <link th:href="@{/assets/libs/datatables/buttons.bootstrap4.min.css}" rel="stylesheet" type="text/css">
-            <link th:href="@{/assets/libs/datatables/responsive.bootstrap4.min.css}" rel="stylesheet" type="text/css">
-            <link th:href="@{/assets/libs/datatables/select.bootstrap4.min.css}" rel="stylesheet" type="text/css">
-        </th:block>
+<head>
+    <meta charset="utf-8">
+    <title>Danh Sách các chi nhánh</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Responsive bootstrap 4 admin template" name="description">
+    <meta content="Coderthemes" name="author">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <th:block th:replace="layout/Link-Top :: link-top"></th:block>
+    <th:block>
+        <!-- third party css -->
+        <link th:href="@{/assets/libs/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/assets/libs/datatables/buttons.bootstrap4.min.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/assets/libs/datatables/responsive.bootstrap4.min.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/assets/libs/datatables/select.bootstrap4.min.css}" rel="stylesheet" type="text/css">
+    </th:block>
 
-    </head>
+</head>
 
-    <body>
+<body>
 
-        <!-- Begin page -->
-        <div id="wrapper">
+<!-- Begin page -->
+<div id="wrapper">
 
 
-            <!-- Topbar Start -->
-            <div th:replace="layout/Topbar :: topbar"></div>
-            <!-- end Topbar --> <!-- ========== Left Sidebar Start ========== -->
-            <div th:replace="layout/LeftSidebar :: left-sidebar"></div>
-            <!-- Left Sidebar End -->
+    <!-- Topbar Start -->
+    <div th:replace="layout/Topbar :: topbar"></div>
+    <!-- end Topbar --> <!-- ========== Left Sidebar Start ========== -->
+    <div th:replace="layout/LeftSidebar :: left-sidebar"></div>
+    <!-- Left Sidebar End -->
 
-            <!-- ============================================================== -->
-            <!-- Start Page Content here -->
-            <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
 
-            <div class="content-page">
-                <div class="content">
+    <div class="content-page">
+        <div class="content">
 
-                    <!-- Start Content-->
-                    <div class="container-fluid">
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <h4 class="page-title">Data Table</h4>
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb p-0 m-0">
-                                            <li class="breadcrumb-item"><a href="#">Velonic</a></li>
-                                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
-                                            <li class="breadcrumb-item active">Data Table</li>
-                                        </ol>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title">Data Table</h4>
+                            <div class="page-title-right">
+                                <ol class="breadcrumb p-0 m-0">
+                                    <li class="breadcrumb-item"><a href="#">Velonic</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                                    <li class="breadcrumb-item active">Data Table</li>
+                                </ol>
                             </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-
-                                        <h4 class="header-title">Danh sách các chi nhánh</h4>
-                                        <p class="sub-header">
-                                            Danh sách các chi nhánh đang hoạt động hiện tại
-                                        </p>
-                                        <a th:href="@{/admin/branch/add}">
-                                            <i class="fas fa-store-alt"></i>
-                                            Thêm chi nhánh
-                                        </a>
-                                        <br/>
-                                        <table id="selection-datatable" class="table dt-responsive nowrap">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Name</th>
-                                                <th>Address</th>
-                                                <th>Phone</th>
-                                                <th>View</th>
-                                                <th>Edit</th>
-                                                <th>Delete</th>
-                                            </tr>
-                                            </thead>
-
-
-                                            <tbody th:each="branch,branchState : ${branchDTOList}">
-                                            <tr>
-                                                <td th:text="${branchState.index + 1}"></td>
-                                                <td th:text="${branch.name}"></td>
-                                                <td th:text="${branch.address}"></td>
-                                                <td th:text="${branch.phone}"></td>
-                                                <th><a type="button" class="btn btn-primary waves-effect width-md waves-light" th:href="@{/admin/branch/view}">View</a></th>
-                                                <th><a type="button" class="btn btn-purple waves-effect width-md waves-light" th:href="@{/admin/branch/edit}">Edit</a></th>
-                                                <th><a type="button" class="btn btn-pink waves-effect width-md waves-light" th:href="@{/admin/branch/delete}">Delete</a></th>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-
-                                    </div> <!-- end card body-->
-                                </div> <!-- end card -->
-                            </div><!-- end col-->
-                        </div>
-
-
                     </div>
-                    <!-- end container-fluid -->
-
                 </div>
-                <!-- end content -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="header-title">Danh sách các chi nhánh</h4>
+                                <p class="sub-header">
+                                    Danh sách các chi nhánh đang hoạt động hiện tại
+                                </p>
+                                <a th:href="@{/admin/branch/add}">
+                                    <i class="fas fa-store-alt"></i>
+                                    Thêm chi nhánh
+                                </a>
+                                <br/>
+                                <table id="selection-datatable" class="table dt-responsive nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Phone</th>
+                                        <th>View</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    </thead>
 
 
-                <!-- Footer Start -->
-                <div th:replace="layout/Footer :: footer"></div>
-                <!-- end Footer -->
+                                    <tbody th:each="branch,branchState : ${branchDTOList}">
+                                    <tr>
+                                        <td th:text="${branchState.index + 1}"></td>
+                                        <td th:text="${branch.name}"></td>
+                                        <td th:text="${branch.address}"></td>
+                                        <td th:text="${branch.phone}"></td>
+                                        <th><a type="button" class="btn btn-primary waves-effect width-md waves-light"
+                                               th:href="@{'/admin/branch/view/'+${branch.id}}">View</a></th>
+                                        <th><a type="button" class="btn btn-purple waves-effect width-md waves-light"
+                                               th:href="@{'/admin/branch/edit/'+${branch.id}}">Edit</a></th>
+                                        <th><a type="button" class="btn btn-pink waves-effect width-md waves-light"
+                                               th:onclick="'javascript:confirmDeleteBranch('+${branch.id}+');'">Delete</a>
+                                        </th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div> <!-- end card body-->
+                        </div> <!-- end card -->
+                    </div><!-- end col-->
+                </div>
+
 
             </div>
-
-            <!-- ============================================================== -->
-            <!-- End Page content -->
-            <!-- ============================================================== -->
+            <!-- end container-fluid -->
 
         </div>
-        <!-- END wrapper -->
+        <!-- end content -->
 
 
-        <!-- Right Sidebar -->
-        <div th:replace="layout/RightSidebar :: right-sidebar"></div>
-        <!-- /Right-bar -->
+        <!-- Footer Start -->
+        <div th:replace="layout/Footer :: footer"></div>
+        <!-- end Footer -->
 
-        <!-- Right bar overlay-->
-        <div th:replace="layout/Right-bar-overlay :: right-bar-overlay"></div>
+    </div>
 
-        <div th:replace="layout/Link-Footer :: link-footer"></div>
-        <th:block>
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
 
-            <!-- Required datatable js -->
-            <script th:src="@{/assets/libs/datatables/jquery.dataTables.min.js}"></script>
-            <script th:src="@{/assets/libs/datatables/dataTables.bootstrap4.min.js}"></script>
-            <!-- Datatables init -->
-            <script th:src="@{/assets/js/pages/datatables.init.js}"></script>
-            <!-- Responsive examples -->
+</div>
+<!-- END wrapper -->
 
-            <script th:src="@{/assets/libs/datatables/dataTables.select.min.js}"></script>
-            <!-- Buttons examples -->
-        </th:block>
-    <script>
-        $(document).ready(
-            function () {
-                $('#adminbranchlistId').addClass('mm-active').siblings()
-                    .removeClass('mm-active');
-                // let parent = $('#adminbranchlistId').parents('li');
-                // parent.addClass('mm-active').siblings().removeClass('mm-active');
-                $('#adminbranchlistId').parents('li').show();
-            });
-    </script>
-    </body>
+
+<!-- Right Sidebar -->
+<div th:replace="layout/RightSidebar :: right-sidebar"></div>
+<!-- /Right-bar -->
+
+<!-- Right bar overlay-->
+<div th:replace="layout/Right-bar-overlay :: right-bar-overlay"></div>
+
+<div th:replace="layout/Link-Footer :: link-footer"></div>
+<th:block>
+
+    <!-- Required datatable js -->
+    <script th:src="@{/assets/libs/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/assets/libs/datatables/dataTables.bootstrap4.min.js}"></script>
+    <!-- Datatables init -->
+    <script th:src="@{/assets/js/pages/datatables.init.js}"></script>
+    <!-- Responsive examples -->
+
+    <script th:src="@{/assets/libs/datatables/dataTables.select.min.js}"></script>
+    <!-- Buttons examples -->
+</th:block>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    function confirmDeleteBranch(id) {
+        if (confirm('Do you want delete this record?')) {
+            window.location.href = '/admin/branch/delete/' + id;
+        }
+    }
+    $(document).ready(
+        function () {
+            $('#adminbranchlistId').addClass('mm-active').siblings()
+                .removeClass('mm-active');
+            // let parent = $('#adminbranchlistId').parents('li');
+            // parent.addClass('mm-active').siblings().removeClass('mm-active');
+            $('#adminbranchlistId').parents('li').show();
+        });
+    $(document).ready(function () {
+        let msgSuccess = [[${msgSuccess}]];
+        let msgError = [[${msgError}]];
+        if (msgSuccess) {
+            toastr["success"]("Success", msgSuccess)
+        }
+        if(msgError){
+            toastr["error"]("Error;", msgError)
+        }
+    });
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "slideDown",
+        "hideMethod": "slideUp"
+    }
+    /*]]>*/
+</script>
+</body>
 </html>

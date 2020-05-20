@@ -43,6 +43,15 @@ public class BranchServiceImpl implements BranchService {
 
     @Override
     public BranchDTO findBranchById(Long id) {
-        return null;
+        return Optional.ofNullable(id)
+                .map(branchId->branchRepository.findBranchByIdAndActiveFlag(branchId,1))
+                .map(BranchMapper::toDTO)
+                .orElseGet(null);
+    }
+
+    @Override
+    public void deleteBranch(BranchDTO branchDTO) throws Exception {
+        branchDTO.setActiveFlag(0);
+        branchRepository.save(BranchMapper.toEntity(branchDTO));
     }
 }
