@@ -80,15 +80,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .failureUrl("/login?error=true")
                         .usernameParameter("username")
                         .passwordParameter("password")
+                .and()
+                    .rememberMe()
+                        .key("rem-me-key")
+                        .rememberMeParameter("remember-me")
+                        .rememberMeCookieName("rememberlogin")
+                        .tokenValiditySeconds(60*60*24)
                 // Cấu hình cho Logout Page.
                 .and()
                     .logout()
                         .logoutSuccessUrl("/logoutSuccessful");
 
-//         Cấu hình Remember Me.
-        http.authorizeRequests().and() //
-                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-                .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
+////         Cấu hình Remember Me.
+//        http.authorizeRequests().and() //
+//                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
+//                .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
     }
 
     @Override

@@ -6,27 +6,6 @@
             <a class="nav-link dropdown-toggle mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <img th:src="@{/assets/images/flags/us.jpg}" alt="user-image" class="mr-2" height="12"> <span class="align-middle">English <i class="mdi mdi-chevron-down"></i> </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img th:src="@{/assets/images/flags/germany.jpg}" alt="user-image" class="mr-2" height="12"> <span class="align-middle">German</span>
-                </a>
-
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img th:src="@{/assets/images/flags/italy.jpg}" alt="user-image" class="mr-2" height="12"> <span class="align-middle">Italian</span>
-                </a>
-
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img th:src="@{assets/images/flags/spain.jpg}" alt="user-image" class="mr-2" height="12"> <span class="align-middle">Spanish</span>
-                </a>
-
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img th:src="@{/assets/images/flags/russia.jpg}" alt="user-image" class="mr-2" height="12"> <span class="align-middle">Russian</span>
-                </a>
-            </div>
         </li>
 
         <li class="dropdown notification-list">
@@ -45,49 +24,6 @@
                             </a>
                         </span>Chat
                     </h5>
-                </div>
-
-                <div class="slimscroll noti-scroll">
-
-                    <div class="inbox-widget">
-                        <a href="#">
-                            <div class="inbox-item">
-                                <div class="inbox-item-img"><img th:src="@{/assets/images/users/avatar-1.jpg}" class="rounded-circle" alt=""></div>
-                                <p class="inbox-item-author">Cristina Pride</p>
-                                <p class="inbox-item-text text-truncate">Hi, How are you? What about our next meeting</p>
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="inbox-item">
-                                <div class="inbox-item-img"><img th:src="@{/assets/images/users/avatar-2.jpg}" class="rounded-circle" alt=""></div>
-                                <p class="inbox-item-author">Sam Garret</p>
-                                <p class="inbox-item-text text-truncate">Yeah everything is fine</p>
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="inbox-item">
-                                <div class="inbox-item-img"><img th:src="@{/assets/images/users/avatar-3.jpg}" class="rounded-circle" alt=""></div>
-                                <p class="inbox-item-author">Karen Robinson</p>
-                                <p class="inbox-item-text text-truncate">Wow that's great</p>
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="inbox-item">
-                                <div class="inbox-item-img"><img th:src="@{/assets/images/users/avatar-4.jpg}" class="rounded-circle" alt=""></div>
-                                <p class="inbox-item-author">Sherry Marshall</p>
-                                <p class="inbox-item-text text-truncate">Hi, How are you? What about our next meeting</p>
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="inbox-item">
-                                <div class="inbox-item-img"><img th:src="@{/assets/images/users/avatar-5.jpg}" class="rounded-circle" alt=""></div>
-                                <p class="inbox-item-author">Shawn Millard</p>
-                                <p class="inbox-item-text text-truncate">Yeah everything is fine</p>
-
-                            </div>
-                        </a>
-                    </div> <!-- end inbox-widget -->
-
                 </div>
                 <!-- All-->
                 <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
@@ -240,7 +176,7 @@
 
     <!-- LOGO -->
     <div class="logo-box">
-        <a href="index.html" class="logo text-center logo-dark">
+        <a th:href="@{/admin/home}" class="logo text-center logo-dark">
             <span class="logo-lg">
                 <img th:src="@{/assets/images/logo-dark.png}" alt="" height="18">
                 <!-- <span class="logo-lg-text-dark">Velonic</span> -->
@@ -251,7 +187,7 @@
             </span>
         </a>
 
-        <a href="index.html" class="logo text-center logo-light">
+        <a th:href="@{/admin/home}" class="logo text-center logo-light">
             <span class="logo-lg">
                 <img th:src="@{/assets/images/logo-light.png}" alt="" height="18">
                 <!-- <span class="logo-lg-text-dark">Velonic</span> -->
