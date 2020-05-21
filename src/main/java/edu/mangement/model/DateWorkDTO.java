@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -22,6 +23,7 @@ public class DateWorkDTO {
     private Integer year;
     private Integer month;
     private Integer snn;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createDate;
     private Date updateDate;
     private Integer activeFlag;

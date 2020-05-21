@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -26,6 +27,7 @@ public class InventoryHistoryDTO {
     private Integer type;
     private Long quantity;
     private BigDecimal price;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createDate;
     private Date updateDate;
     @Value("1")

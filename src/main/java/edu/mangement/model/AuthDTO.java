@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -21,6 +22,7 @@ import java.util.Date;
 public class AuthDTO {
     private Long id;
     private Integer permission;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createDate;
     private Date updateDate;
     @Value("1")

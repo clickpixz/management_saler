@@ -3,6 +3,7 @@ package edu.mangement.model;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -39,6 +40,7 @@ public class MemberDTO {
     private String image;
     @Min(value = 0, message = "Salary must be more than 0")
     private BigDecimal salary;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createDate;
     private Date updateDate;
     @Value("1")

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import java.math.BigDecimal;
@@ -27,6 +28,7 @@ public class OrderDetailDTO {
     @Min(value = 0,message = "quantity > 0")
     private Integer quantity;
     private BigDecimal unitPrice;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createDate;
     private Date updateDate;
     @Value("1")

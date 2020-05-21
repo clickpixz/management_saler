@@ -2,6 +2,7 @@ package edu.mangement.model;
 
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -24,6 +25,7 @@ public class MenuDTO {
     private String url;
     private String name;
     private Integer orderIndex;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createDate;
     private Date updateDate;
     @Value("1")
