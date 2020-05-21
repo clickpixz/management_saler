@@ -22,15 +22,6 @@ public class BranchMapper {
                 .updateDate(branchEntity.getUpdateDate())
                 .activeFlag(branchEntity.getActiveFlag())
                 .build();
-//        if (branchEntity.getBranchFeePerMonths()!=null){
-//            branchDTO.setBranchFeePerMonths(branchEntity.getBranchFeePerMonths().stream().map(BranchFeePerMonthMapper::toDTO).collect(Collectors.toList()));
-//        }
-//        if (branchEntity.getMembers()!=null){
-//            branchDTO.setMembers(branchEntity.getMembers().stream().map(MemberMapper::toDTO).collect(Collectors.toList()));
-//        }
-//        if(branchEntity.getProductInStocks()!=null){
-//            branchDTO.setProductInStocks(branchEntity.getProductInStocks().stream().map(ProductInStockMapper::toDTO).collect(Collectors.toList()));
-//        }
         return branchDTO;
     }
 
@@ -44,15 +35,6 @@ public class BranchMapper {
                 .updateDate(branchDTO.getUpdateDate())
                 .activeFlag(branchDTO.getActiveFlag())
                 .build();
-//        if (branchDTO.getBranchFeePerMonths()!=null){
-//            branchEntity.setBranchFeePerMonths(branchDTO.getBranchFeePerMonths().stream().map(BranchFeePerMonthMapper::toEntity).collect(Collectors.toList()));
-//        }
-//        if (branchDTO.getMembers()!=null){
-//            branchEntity.setMembers(branchDTO.getMembers().stream().map(MemberMapper::toEntity).collect(Collectors.toList()));
-//        }
-//        if(branchDTO.getProductInStocks()!=null){
-//            branchEntity.setProductInStocks(branchDTO.getProductInStocks().stream().map(ProductInStockMapper::toEntity).collect(Collectors.toList()));
-//        }
         return branchEntity;
     }
 }

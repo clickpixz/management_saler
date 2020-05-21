@@ -44,7 +44,7 @@ public class BranchFeePerMonth {
     @LastModifiedDate
     private Date updateDate;
     @Value("1")
-    private Integer activeFlag;
+    private Integer activeFlag = 1;
     @ManyToOne
     @JoinColumn(name = "Branch_ID", referencedColumnName = "id", nullable = false)
     private Branch branch;

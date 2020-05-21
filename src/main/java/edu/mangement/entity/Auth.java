@@ -33,7 +33,7 @@ public class Auth {
     @LastModifiedDate
     private Date updateDate;
     @Value("1")
-    private Integer activeFlag;
+    private Integer activeFlag = 1;
     @ManyToOne
     @JoinColumn(name = "Role_ID", referencedColumnName = "id", nullable = false)
     private Role role;

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -38,8 +39,7 @@ public class Branch {
     private Date createDate;
     @LastModifiedDate
     private Date updateDate;
-    @Value("1")
-    private Integer activeFlag;
+    private Integer activeFlag = 1;
     @OneToMany(mappedBy = "branch")
     private List<BranchFeePerMonth> branchFeePerMonths;
     @OneToMany(mappedBy = "branch")
