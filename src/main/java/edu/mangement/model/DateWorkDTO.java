@@ -23,7 +23,7 @@ public class DateWorkDTO {
     private Integer year;
     private Integer month;
     private Integer snn;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
     private Integer activeFlag;

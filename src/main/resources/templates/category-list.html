@@ -61,13 +61,12 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <h4 class="header-title">Danh sách các chi nhánh</h4>
-                                <p class="sub-header">
-                                    Danh sách các chi nhánh đang hoạt động hiện tại
+                                <h4 class="header-title" th:text="${tittlePage}"></h4>
+                                <p class="sub-header" th:text="${tittlePage+'hiện tại'}">
                                 </p>
-                                <a th:href="@{/admin/branch/add}">
+                                <a th:href="@{/admin/category/add}">
                                     <i class="fas fa-store-alt"></i>
-                                    Thêm chi nhánh
+                                    <th:block th:text="${nameAddButton}"></th:block>
                                 </a>
                                 <br/>
                                 <table id="selection-datatable" class="table dt-responsive nowrap">
@@ -75,27 +74,23 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Address</th>
-                                        <th>Phone</th>
+                                        <th>parentId</th>
                                         <th>View</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
                                     </thead>
-
-
-                                    <tbody th:each="branch,branchState : ${branchDTOList}">
+                                    <tbody th:each="category,categoryState : ${categoryDTOList}">
                                     <tr>
-                                        <td th:text="${branchState.index + 1}"></td>
-                                        <td th:text="${branch.name}"></td>
-                                        <td th:text="${branch.address}"></td>
-                                        <td th:text="${branch.phone}"></td>
+                                        <td th:text="${categoryState.index + 1}"></td>
+                                        <td th:text="${category.name}"></td>
+                                        <td th:text="${category.parentId}"></td>
                                         <th><a type="button" class="btn btn-primary waves-effect width-md waves-light"
-                                               th:href="@{'/admin/branch/view/'+${branch.id}}">View</a></th>
+                                               th:href="@{'/admin/category/view/'+${category.id}}">View</a></th>
                                         <th><a type="button" class="btn btn-purple waves-effect width-md waves-light"
-                                               th:href="@{'/admin/branch/edit/'+${branch.id}}">Edit</a></th>
+                                               th:href="@{'/admin/category/edit/'+${category.id}}">Edit</a></th>
                                         <th><a type="button" class="btn btn-pink waves-effect width-md waves-light"
-                                               th:onclick="'javascript:confirmDeleteBranch('+${branch.id}+');'">Delete</a>
+                                               th:onclick="'javascript:confirmDeleteBranch('+${category.id}+');'">Delete</a>
                                         </th>
                                     </tr>
                                     </tbody>
@@ -148,52 +143,24 @@
     <script th:src="@{/assets/libs/datatables/dataTables.select.min.js}"></script>
     <!-- Buttons examples -->
 </th:block>
-<script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
     function confirmDeleteBranch(id) {
         if (confirm('Do you want delete this record?')) {
-            window.location.href = '/admin/branch/delete/' + id;
+            window.location.href = '/admin/category/delete/' + id;
         }
     }
     $(document).ready(
         function () {
-            $('#adminbranchlistId').addClass('mm-active').siblings()
+            $('#admincategorylistId').addClass('mm-active').siblings()
                 .removeClass('mm-active');
             // let parent = $('#adminbranchlistId').parents('li');
             // parent.addClass('mm-active').siblings().removeClass('mm-active');
-            $('#adminbranchlistId').parents('li').show();
+            $('#admincategorylistId').parents('li').show();
         });
-</script>
-<script th:inline="javascript" th:fragment="script-page-list">
-    /*<![CDATA[*/
-
-    $(document).ready(function () {
-        let msgSuccess = [[${msgSuccess}]];
-        let msgError = [[${msgError}]];
-        if (msgSuccess) {
-            toastr["success"]("Success", msgSuccess)
-        }
-        if(msgError){
-            toastr["error"]("Error;", msgError)
-        }
-    });
-    toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": true,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "slideDown",
-        "hideMethod": "slideUp"
-    }
     /*]]>*/
 </script>
+<script th:replace="branch-list :: script-page-list"></script>
 </body>
 </html>

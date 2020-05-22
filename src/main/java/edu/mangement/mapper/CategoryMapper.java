@@ -21,9 +21,6 @@ public class CategoryMapper {
                 .updateDate(categoryEntity.getUpdateDate())
                 .activeFlag(categoryEntity.getActiveFlag())
                 .build();
-//        if(categoryEntity.getProducts()!=null){
-//            categoryDTO.setProducts(categoryEntity.getProducts().stream().map(ProductMapper::toDTO).collect(Collectors.toList()));
-//        }
         return categoryDTO;
     }
 
@@ -36,9 +33,6 @@ public class CategoryMapper {
                 .updateDate(categoryDTO.getUpdateDate())
                 .activeFlag(categoryDTO.getActiveFlag())
                 .build();
-//        if(categoryDTO.getProducts()!=null){
-//            categoryEntity.setProducts(categoryDTO.getProducts().stream().map(ProductMapper::toEntity).collect(Collectors.toList()));
-//        }
         return categoryEntity;
     }
 }

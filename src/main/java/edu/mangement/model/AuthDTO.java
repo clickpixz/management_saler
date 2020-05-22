@@ -22,7 +22,7 @@ import java.util.Date;
 public class AuthDTO {
     private Long id;
     private Integer permission;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
     @Value("1")

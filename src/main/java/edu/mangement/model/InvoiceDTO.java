@@ -28,7 +28,7 @@ public class InvoiceDTO {
     private BigDecimal totalOrder;
     private String nameCustomer;
     private String phone;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
     @Value("1")

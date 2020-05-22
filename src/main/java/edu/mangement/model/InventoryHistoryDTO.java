@@ -27,7 +27,7 @@ public class InventoryHistoryDTO {
     private Integer type;
     private Long quantity;
     private BigDecimal price;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
     @Value("1")

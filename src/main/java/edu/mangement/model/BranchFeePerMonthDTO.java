@@ -32,7 +32,7 @@ public class BranchFeePerMonthDTO {
     private Integer month;
     @Min(value = 1970,message = "year > 1970")
     private Integer year;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
     @Value("1")

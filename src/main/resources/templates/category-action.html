@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Danh Sách các chi nhánh</title>
+        <title>Danh Sách các Category</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Responsive bootstrap 4 admin template" name="description">
         <meta content="Coderthemes" name="author">
@@ -63,7 +63,7 @@
                                     <div class="card-body">
                                         <h4 class="header-title mb-4" th:text="${tittlePage}"></h4>
 
-                                        <form class="parsley-examples" th:action="@{/admin/branch/save}" th:object="${modelForm}" method="post">
+                                        <form class="parsley-examples" th:action="@{/admin/category/save}" th:object="${modelForm}" method="post">
                                             <input type="hidden" name = "id" th:field="*{id}">
                                             <input type="hidden" th:field="*{createDate}" name="createDate" id="createDate">
                                             <input type="hidden" th:field="*{activeFlag}" name="activeFlag">
@@ -73,14 +73,9 @@
                                                 <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="address">address<span class="text-danger">*</span></label>
-                                                <input type="text" name="address" th:field="*{address}" th:disabled="${viewOnly}" parsley-trigger="change" required="true" placeholder="Address" class="form-control" id="address">
-                                                <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="phone">Phone<span class="text-danger">*</span></label>
-                                                <input id="phone" type="text" th:field="*{phone}" th:disabled="${viewOnly}" placeholder="phone" required="true" class="form-control">
-                                                <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+                                                <label for="parentId">parentId</label>
+                                                <input type="text" name="parentId" th:field="*{parentId}" th:disabled="${viewOnly}" parsley-trigger="change" placeholder="parentId" class="form-control" id="parentId">
+                                                <span th:if="${#fields.hasErrors('parentId')}" th:errors="*{parentId}"></span>
                                             </div>
 
                                             <div class="form-group text-right mb-0">
@@ -147,11 +142,10 @@
     <script>
         $(document).ready(
             function () {
-                $('#adminbranchlistId').addClass('mm-active').siblings()
+                $('#admincategorylistId').addClass('mm-active').siblings()
                     .removeClass('mm-active');
-                $('#adminbranchlistId').parents('li').show();
+                $('#admincategorylistId').parents('li').show();
             });
-
     </script>
     </body>
 </html>

@@ -1,7 +1,10 @@
 package edu.mangement.repository;
 
 import edu.mangement.entity.Category;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -10,4 +13,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * TIME : 10:47 AM
  */
 public interface CategoryRepository extends JpaRepository<Category,Long> {
+    List<Category> findAllByActiveFlag(int activeFlag, Pageable pageable);
+    Category findCategoryByIdAndActiveFlag(Long id,int activeFlag);
 }

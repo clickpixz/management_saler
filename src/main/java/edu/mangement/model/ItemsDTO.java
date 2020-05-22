@@ -19,12 +19,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"invoiceDetails","orderDetails"})
 @Configuration
 public class ItemsDTO {
     private Long id;
     private BigDecimal price;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
     @Value("1")

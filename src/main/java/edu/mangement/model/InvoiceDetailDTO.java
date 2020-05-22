@@ -28,7 +28,7 @@ public class InvoiceDetailDTO {
     @Min(value = 0,message = "quantity > 0")
     private Long quantity;
     private BigDecimal unitPrice;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
     @Value("1")

@@ -23,7 +23,7 @@ public class ProductInStockDTO {
     private Long id;
     private String size;
     private Long quantity;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
     @Value("1")

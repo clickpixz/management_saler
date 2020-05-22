@@ -40,7 +40,7 @@ public class MemberDTO {
     private String image;
     @Min(value = 0, message = "Salary must be more than 0")
     private BigDecimal salary;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
     @Value("1")

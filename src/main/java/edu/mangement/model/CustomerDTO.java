@@ -34,7 +34,7 @@ public class CustomerDTO {
     private String image;
     private String phone;
     private String birthday;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
     @Value("1")

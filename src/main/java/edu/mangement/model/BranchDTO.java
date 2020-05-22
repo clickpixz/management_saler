@@ -32,7 +32,7 @@ public class BranchDTO {
     private String address;
     @NotBlank(message = "phone not empty")
     private String phone;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
     @Value("1")
