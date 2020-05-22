@@ -22,8 +22,9 @@ import java.util.List;
 @Configuration
 public class VendorDTO {
     private Long id;
-    @NotBlank
+    @NotBlank(message = "Name Not Empty")
     private String name;
+    @NotBlank(message = "Address Not Empty")
     private String address;
     private String phone;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

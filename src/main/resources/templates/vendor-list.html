@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Danh Sách các chi nhánh</title>
+    <title th:text="${tittlePage}"></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Responsive bootstrap 4 admin template" name="description">
     <meta content="Coderthemes" name="author">
@@ -64,7 +64,7 @@
                                 <h4 class="header-title" th:text="${tittlePage}"></h4>
                                 <p class="sub-header" th:text="${tittlePage+'hiện tại'}">
                                 </p>
-                                <a th:href="@{/admin/category/add}">
+                                <a th:href="@{/admin/vendor/add}">
                                     <i class="fas fa-store-alt"></i>
                                     <th:block th:text="${nameAddButton}"></th:block>
                                 </a>
@@ -74,23 +74,25 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>parentId</th>
+                                        <th>Address</th>
+                                        <th>Phone</th>
                                         <th>View</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
                                     </thead>
-                                    <tbody th:each="category,categoryState : ${categoryDTOList}">
+                                    <tbody th:each="vendor,vendorState : ${vendorDTOList}">
                                     <tr>
-                                        <td th:text="${categoryState.index + 1}"></td>
-                                        <td th:text="${category.name}"></td>
-                                        <td th:text="${category.parentId}"></td>
+                                        <td th:text="${vendorState.index + 1}"></td>
+                                        <td th:text="${vendor.name}"></td>
+                                        <td th:text="${vendor.address}"></td>
+                                        <td th:text="${vendor.phone}"></td>
                                         <th><a type="button" class="btn btn-primary waves-effect width-md waves-light"
-                                               th:href="@{'/admin/category/view/'+${category.id}}">View</a></th>
+                                               th:href="@{'/admin/vendor/view/'+${vendor.id}}">View</a></th>
                                         <th><a type="button" class="btn btn-purple waves-effect width-md waves-light"
-                                               th:href="@{'/admin/category/edit/'+${category.id}}">Edit</a></th>
+                                               th:href="@{'/admin/vendor/edit/'+${vendor.id}}">Edit</a></th>
                                         <th><a type="button" class="btn btn-pink waves-effect width-md waves-light"
-                                               th:onclick="'javascript:confirmDelete('+${category.id}+');'">Delete</a>
+                                               th:onclick="'javascript:confirmDelete('+${vendor.id}+');'">Delete</a>
                                         </th>
                                     </tr>
                                     </tbody>
@@ -148,16 +150,16 @@
 
     function confirmDelete(id) {
         if (confirm('Do you want delete this record?')) {
-            window.location.href = '/admin/category/delete/' + id;
+            window.location.href = '/admin/vendor/delete/' + id;
         }
     }
     $(document).ready(
         function () {
-            $('#admincategorylistId').addClass('mm-active').siblings()
+            $('#adminvendorlistId').addClass('mm-active').siblings()
                 .removeClass('mm-active');
             // let parent = $('#adminbranchlistId').parents('li');
             // parent.addClass('mm-active').siblings().removeClass('mm-active');
-            $('#admincategorylistId').parents('li').show();
+            $('#adminvendorlistId').parents('li').show();
         });
     /*]]>*/
 </script>
