@@ -82,8 +82,10 @@
                                                 <th rowspan="2">Status</th>
                                                 <th th:colspan="${roleDTOList.size()}">Role</th>
                                             </tr>
-                                            <tr th:each="role : ${roleDTOList}">
-                                                <th th:text="${role.name}"></th>
+                                            <tr>
+                                                <th:block th:each="role : ${roleDTOList}">
+                                                    <th th:text="${role.name}"></th>
+                                                </th:block>
                                             </tr>
                                             </thead>
                                             <tbody th:each="menu,menuStatus : ${menuDTOList}">

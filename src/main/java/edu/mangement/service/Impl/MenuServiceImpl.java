@@ -41,7 +41,7 @@ public class MenuServiceImpl implements MenuService {
                 .map(menus -> menus.stream()
                         .map(MenuMapper::toDTO)
                         .collect(Collectors.toList()))
-                .orElseGet(() -> null);
+                .orElseGet(null);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class MenuServiceImpl implements MenuService {
             var childMenus = new ArrayList<MenuDTO>();
             childMenuList.forEach(childMenu -> {
                 //so sanh neu id menu cha == parentId cua menu con thi la menu con
-                if (childMenu.getParentId() == parentMenu.getId()) {
+                if (childMenu.getParentId().equals(parentMenu.getId())) {
                     childMenus.add(childMenu);
                 }
             });
@@ -87,7 +87,7 @@ public class MenuServiceImpl implements MenuService {
         Page<Menu> menuPage = menuRepository.findAll(pageable);
         Integer totalPages = menuPage.getTotalPages();
         var menuList = menuPage.getContent();
-        var roleDTOList = roleService.findAllRole();
+        var roleDTOList = roleService.findAllRole(null);
         List<MenuDTO> menuDTOList = new ArrayList<>();
         menuList.forEach(menu -> {
             // convert to tree map role
@@ -134,10 +134,12 @@ public class MenuServiceImpl implements MenuService {
         var auth = authRepository.findByMenu_IdAndRole_Id(authForm.getMenuId(), authForm.getRoleId());
         if (auth != null) {
             auth.setPermission(authForm.getPermission());
+            auth.setActiveFlag(1);
             authRepository.save(auth);
         }else {
             if (authForm.getPermission()==1) {
                 Auth build = Auth.builder()
+                        .activeFlag(1)
                         .permission(authForm.getPermission())
                         .menu(Menu.builder().id(authForm.getMenuId()).build())
                         .role(Role.builder().id(authForm.getRoleId()).build())

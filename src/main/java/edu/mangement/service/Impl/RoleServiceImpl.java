@@ -1,19 +1,14 @@
 package edu.mangement.service.Impl;
 
-import edu.mangement.entity.Auth;
-import edu.mangement.entity.Menu;
-import edu.mangement.entity.Role;
-import edu.mangement.mapper.MenuMapper;
 import edu.mangement.mapper.RoleMapper;
-import edu.mangement.model.MenuDTO;
 import edu.mangement.model.RoleDTO;
 import edu.mangement.repository.RoleRepository;
 import edu.mangement.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -36,12 +31,12 @@ public class RoleServiceImpl implements RoleService {
         return Optional.ofNullable(roleId)
                 .map(id->roleRepository.findRoleByIdAndActiveFlag(id,1))
                 .map(RoleMapper::toDTO)
-                .orElseGet(() -> null);
+                .orElseGet(null);
     }
 
     @Override
-    public List<RoleDTO> findAllRole() {
-        return roleRepository.findAllByActiveFlag(1,null)
+    public List<RoleDTO> findAllRole(Pageable pageable) {
+        return roleRepository.findAllByActiveFlag(1,pageable)
                                 .stream()
                                 .map(RoleMapper::toDTO)
                                 .sorted(Comparator.comparingLong(RoleDTO::getId))
@@ -50,11 +45,16 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDTO saveRole(RoleDTO roleDTO) throws Exception {
-        return null;
+        return Optional.ofNullable(roleDTO)
+                .map(RoleMapper::toEntity)
+                .map(role -> roleRepository.save(role))
+                .map(RoleMapper::toDTO)
+                .orElseGet(null);
     }
 
     @Override
     public void deleteRole(RoleDTO roleDTO) throws Exception {
-
+        roleDTO.setActiveFlag(0);
+        roleRepository.save(RoleMapper.toEntity(roleDTO));
     }
 }

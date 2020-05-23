@@ -1,6 +1,7 @@
 package edu.mangement.service;
 
 import edu.mangement.model.RoleDTO;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +14,8 @@ import java.util.List;
  */
 @Service
 public interface RoleService {
-    RoleDTO findRoleById(Long roleId);
-    List<RoleDTO> findAllRole();
     RoleDTO saveRole(RoleDTO roleDTO) throws Exception;
+    RoleDTO findRoleById(Long roleId);
+    List<RoleDTO> findAllRole(Pageable pageable);
     void deleteRole(RoleDTO roleDTO) throws Exception;
 }

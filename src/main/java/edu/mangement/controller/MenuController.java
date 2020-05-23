@@ -63,7 +63,7 @@ public class MenuController {
         }
         Paging paging = Paging.builder().recordPerPage(20).indexPage(page).totalPages(totalPages).build();
         var menuDTOList = listPair.getValue();
-        var roleDTOList = roleService.findAllRole();
+        var roleDTOList = roleService.findAllRole(null);
         Constant.sessionProcessor(model, session);
         model.addAttribute("menuDTOList", menuDTOList);
         model.addAttribute("roleDTOList", roleDTOList);
@@ -125,7 +125,7 @@ public class MenuController {
                         MenuDTO::getId,
                         menuDTO -> "Menu name : " + menuDTO.getName() + "  -  URL : " + menuDTO.getUrl(),
                         (o, n) -> n));
-        var mapRoles = roleService.findAllRole()
+        var mapRoles = roleService.findAllRole(null)
                 .stream()
                 .collect(Collectors.toMap(RoleDTO::getId, RoleDTO::getName, (o, n) -> n));
 
