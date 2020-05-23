@@ -19,9 +19,9 @@ public class AuthMapper {
                 .updateDate(auth.getUpdateDate())
                 .activeFlag(auth.getActiveFlag())
                 .build();
-//        if (auth.getRole() != null) {
-//            authDTO.setRole(RoleMapper.toDTO(auth.getRole()));
-//        }
+        if (auth.getRole() != null) {
+            authDTO.setRole(RoleMapper.toDTO(auth.getRole()));
+        }
         if (auth.getMenu() != null) {
             authDTO.setFunction(MenuMapper.toDTO(auth.getMenu()));
         }
@@ -36,9 +36,9 @@ public class AuthMapper {
                 .updateDate(auth.getUpdateDate())
                 .activeFlag(auth.getActiveFlag())
                 .build();
-//        if (auth.getRole() != null) {
-//            authEntity.setRole(RoleMapper.toEntity(auth.getRole()));
-//        }
+        if (auth.getRole() != null) {
+            authEntity.setRole(RoleMapper.toEntity(auth.getRole()));
+        }
         if (auth.getFunction() != null) {
             authEntity.setMenu(MenuMapper.toEntity(auth.getFunction()));
         }

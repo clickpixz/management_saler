@@ -9,7 +9,7 @@
     <meta content="Coderthemes" name="author">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <th:block th:replace="layout/Link-Top :: link-top"></th:block>
-    <th:block>
+    <th:block th:fragment="branch-list-css-frament">
         <!-- third party css -->
         <link th:href="@{/assets/libs/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet" type="text/css">
         <link th:href="@{/assets/libs/datatables/buttons.bootstrap4.min.css}" rel="stylesheet" type="text/css">
@@ -136,7 +136,7 @@
 <div th:replace="layout/Right-bar-overlay :: right-bar-overlay"></div>
 
 <div th:replace="layout/Link-Footer :: link-footer"></div>
-<th:block>
+<th:block th:fragment="script-required-datatable">
 
     <!-- Required datatable js -->
     <script th:src="@{/assets/libs/datatables/jquery.dataTables.min.js}"></script>

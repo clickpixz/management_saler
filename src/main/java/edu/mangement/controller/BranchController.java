@@ -90,7 +90,6 @@ public class BranchController {
     public String deleteBranch(Model model, @PathVariable("id") Long id, HttpSession session) {
         BranchDTO branchDTO = branchService.findBranchById(id);
         if (branchDTO != null) {
-            model.addAttribute("viewOnly", false);
             try {
                 branchService.deleteBranch(branchDTO);
                 session.setAttribute(Constant.MSG_SUCCESS, "Delete Success !!!");

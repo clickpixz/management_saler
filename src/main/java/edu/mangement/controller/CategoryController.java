@@ -92,7 +92,6 @@ public class CategoryController {
     public String deleteBranch(Model model, @PathVariable("id") Long id, HttpSession session) {
         CategoryDTO categoryDTO = categoryService.findCategoryById(id);
         if (categoryDTO != null) {
-            model.addAttribute("viewOnly", false);
             try {
                 categoryService.deleteCategory(categoryDTO);
                 session.setAttribute(Constant.MSG_SUCCESS, "Delete Success !!!");

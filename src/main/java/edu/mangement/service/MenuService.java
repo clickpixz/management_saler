@@ -1,6 +1,9 @@
 package edu.mangement.service;
 
+import edu.mangement.model.AuthForm;
 import edu.mangement.model.MenuDTO;
+import javafx.util.Pair;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,4 +18,9 @@ import java.util.List;
 public interface MenuService {
     List<MenuDTO> findMenuUse(Long roleId);
     List<MenuDTO> generateMenu(Long roleId);
+    Pair<Integer, List<MenuDTO>> findAllMapMenu(Pageable pageable);
+    MenuDTO findMenuById(Long id);
+    void changeMenuStatus(MenuDTO menuDTO) throws Exception;
+    List<MenuDTO> findAllMenu();
+    void updatePermission(AuthForm authForm) throws Exception;
 }

@@ -13,6 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -31,6 +32,5 @@ public class App implements CommandLineRunner {
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {
-//		System.out.println(branchRepository.findAllByActiveFlag(1,PageRequest.of(0,1)));
 	}
 }

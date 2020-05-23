@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8">
+    <title th:text="${tittlePage}"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Responsive bootstrap 4 admin template" name="description">
+    <meta content="Coderthemes" name="author">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link th:href="@{/assets/libs/switchery/switchery.min.css}" rel="stylesheet" type="text/css">
+    <th:block th:replace="layout/Link-Top :: link-top"></th:block>
+    </th:block>
+
+</head>
+
+<body>
+
+<!-- Begin page -->
+<div id="wrapper">
+
+
+    <!-- Topbar Start -->
+    <div th:replace="layout/Topbar :: topbar"></div>
+    <!-- end Topbar --> <!-- ========== Left Sidebar Start ========== -->
+    <div th:replace="layout/LeftSidebar :: left-sidebar"></div>
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title">Data Table</h4>
+                            <div class="page-title-right">
+                                <ol class="breadcrumb p-0 m-0">
+                                    <li class="breadcrumb-item"><a href="#">Velonic</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                                    <li class="breadcrumb-item active">Data Table</li>
+                                </ol>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header py-3 bg-transparent">
+                                <div class="card-widgets">
+                                    <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
+                                    <a data-toggle="collapse" href="#cardCollpase3" role="button" aria-expanded="false"
+                                       aria-controls="cardCollpase3"><i class="mdi mdi-minus"></i></a>
+                                    <a href="#" data-toggle="remove"><i class="mdi mdi-close"></i></a>
+                                </div>
+                                <h5 class="header-title mb-2"> Projects</h5>
+                                <a th:href="@{/admin/menu/permission}">
+                                    <i class="fas fa-bong"></i>
+                                    <th:block th:text="${nameAddButton}"></th:block>
+                                </a>
+                            </div>
+                            <div id="cardCollpase3" class="collapse show">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-nowrap mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th rowspan="2" class="text-body">#</th>
+                                                <th rowspan="2" class="text-center">ID</th>
+                                                <th rowspan="2">Menu Name</th>
+                                                <th rowspan="2">Menu URL</th>
+                                                <th rowspan="2">ParentId</th>
+                                                <th rowspan="2">Order Index</th>
+                                                <th rowspan="2">Status</th>
+                                                <th th:colspan="${roleDTOList.size()}">Role</th>
+                                            </tr>
+                                            <tr th:each="role : ${roleDTOList}">
+                                                <th th:text="${role.name}"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody th:each="menu,menuStatus : ${menuDTOList}">
+                                            <tr>
+                                                <td th:text="${menuStatus.index+1}"></td>
+                                                <td th:text="${menu.id}"></td>
+                                                <td th:text="${menu.name}"></td>
+                                                <td th:text="${menu.url}"></td>
+                                                <td th:text="${menu.parentId}"></td>
+                                                <td th:text="${menu.orderIndex}"></td>
+                                                <td>
+                                                    <th:block th:if="${menu.activeFlag}">
+                                                        <a type="button" th:href="@{'/admin/menu/change-status/'+${menu.id}}"
+                                                           class="btn btn-success waves-effect waves-light btn-sm text-light">Enable</a>
+                                                    </th:block>
+                                                    <th:block th:unless="${menu.activeFlag}">
+                                                        <a type="button" th:href="@{'/admin/menu/change-status/'+${menu.id}}"
+                                                           class="btn btn-secondary waves-effect waves-light btn-sm text-light">Disable</a>
+                                                    </th:block>
+                                                </td>
+                                                 <td  th:class="text-center" th:each="auth : ${menu.mapAuth}">
+                                                        <i class="fas fa-check" style="color: #2ecc71" th:if="${auth.value}"></i>
+                                                        <i class="fas fa-times"  style="color: #a62929" th:unless="${auth.value}"></i>
+                                                 </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <nav aria-label="Page navigation example" th:fragment="menu-paging">
+                                <ul class="pagination justify-content-center">
+                                    <li th:if="${paging.indexPage == 1}" class="page-item disabled">
+                                        <a class="page-link" href="javascript:void(0);" tabindex="-1">Previous</a>
+                                    </li>
+                                    <li th:if="${paging.indexPage != 1}" class="page-item">
+                                        <a class="page-link" th:href="@{'/admin/menu/list/'+${paging.indexPage - 1}}"
+                                           tabindex="-1">Previous</a>
+                                    </li>
+                                    <th:block th:each="i : ${#numbers.sequence(1,paging.totalPages)}">
+                                        <li th:if="${paging.indexPage ==  i}" class="page-item active">
+                                            <a class="page-link" href="javascript:void(0);"
+                                               th:text="${i}"></a>
+                                        </li>
+                                        <li th:if="${paging.indexPage !=  i}" class="page-item">
+                                            <a class="page-link" th:href="@{'/admin/menu/list/'+${i}}"
+                                               th:text="${i}"></a>
+                                        </li>
+
+                                    </th:block>
+                                    <li th:if="${paging.indexPage != paging.totalPages}" class="page-item">
+                                        <a class="page-link"
+                                           th:href="@{'/admin/menu/list/'+${paging.indexPage - 1}}">Next</a>
+                                    </li>
+                                    <li th:if="${paging.indexPage == paging.totalPages}" class="page-item disabled">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- end card-->
+
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- end container-fluid -->
+
+        </div>
+        <!-- end content -->
+
+
+        <!-- Footer Start -->
+        <div th:replace="layout/Footer :: footer"></div>
+        <!-- end Footer -->
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+</div>
+<!-- END wrapper -->
+
+
+<!-- Right Sidebar -->
+<div th:replace="layout/RightSidebar :: right-sidebar"></div>
+<!-- /Right-bar -->
+
+<!-- Right bar overlay-->
+<div th:replace="layout/Right-bar-overlay :: right-bar-overlay"></div>
+
+<div th:replace="layout/Link-Footer :: link-footer"></div>
+<script>
+    $(document).ready(
+        function () {
+            $('#adminmenulistId').addClass('mm-active').siblings()
+                .removeClass('mm-active');
+            // let parent = $('#adminbranchlistId').parents('li');
+            // parent.addClass('mm-active').siblings().removeClass('mm-active');
+            $('#adminmenulistId').parents('li').show();
+        });
+</script>
+<script th:inline="javascript" th:replace="branch-list :: script-page-list">
+</script>
+</body>
+</html>

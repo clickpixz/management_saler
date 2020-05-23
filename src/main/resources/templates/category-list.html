@@ -131,17 +131,7 @@
 <div th:replace="layout/Right-bar-overlay :: right-bar-overlay"></div>
 
 <div th:replace="layout/Link-Footer :: link-footer"></div>
-<th:block>
-
-    <!-- Required datatable js -->
-    <script th:src="@{/assets/libs/datatables/jquery.dataTables.min.js}"></script>
-    <script th:src="@{/assets/libs/datatables/dataTables.bootstrap4.min.js}"></script>
-    <!-- Datatables init -->
-    <script th:src="@{/assets/js/pages/datatables.init.js}"></script>
-    <!-- Responsive examples -->
-
-    <script th:src="@{/assets/libs/datatables/dataTables.select.min.js}"></script>
-    <!-- Buttons examples -->
+<th:block th:replace="branch-list :: script-required-datatable">
 </th:block>
 <script th:inline="javascript">
     /*<![CDATA[*/

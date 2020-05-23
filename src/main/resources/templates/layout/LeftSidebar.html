@@ -12,8 +12,11 @@
                     <li th:id="${menu.idMenu}">
                         <a href="javascript: void(0);" class="waves-effect">
                             <th:block th:switch="${menu.id}">
-                                <i th:case="1" class="ion-md-speedometer"></i>
-                                <i th:case="9" class="ion-md-basket"></i>
+                                <i th:case="1" class="mdi mdi-store"></i>
+                                <i th:case="9" class="fas fa-boxes"></i>
+                                <i th:case="17" class="ion ion-md-shuffle"></i>
+                                <i th:case="26" class="ion ion-ios-body"></i>
+                                <i th:case="27" class="ion ion-logo-octocat"></i>
                                 <i th:case="*" class="ion-ios-apps"></i>
                             </th:block>
                             <span th:text="${menu.name}"></span>

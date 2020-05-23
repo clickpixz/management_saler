@@ -12,4 +12,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AuthRepository extends JpaRepository<Auth,Long> {
+    Auth findByMenu_IdAndRole_Id(Long menuId,Long roleId);
 }

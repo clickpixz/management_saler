@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA
@@ -32,4 +33,5 @@ public class MenuDTO {
     private Integer activeFlag;
     private String idMenu;
     private List<MenuDTO> child;
+    private Map<Long,Integer> mapAuth;
 }

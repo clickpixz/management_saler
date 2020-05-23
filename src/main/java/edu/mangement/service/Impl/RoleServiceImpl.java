@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,12 +32,29 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
     @Override
-    public RoleDTO getRoleById(RoleDTO roleDTO) {
-        return Optional.ofNullable(roleDTO)
-                .filter(r -> r.getId() != null)//neu id bang null tra ve rong
-                .map(r -> roleRepository.findById(r.getId())//tim trong db neu co tra ve ko return null
-                        .map(RoleMapper::toDTO)
-                        .orElseGet(() -> null))
+    public RoleDTO findRoleById(Long roleId) {
+        return Optional.ofNullable(roleId)
+                .map(id->roleRepository.findRoleByIdAndActiveFlag(id,1))
+                .map(RoleMapper::toDTO)
                 .orElseGet(() -> null);
+    }
+
+    @Override
+    public List<RoleDTO> findAllRole() {
+        return roleRepository.findAllByActiveFlag(1,null)
+                                .stream()
+                                .map(RoleMapper::toDTO)
+                                .sorted(Comparator.comparingLong(RoleDTO::getId))
+                                .collect(Collectors.toList());
+    }
+
+    @Override
+    public RoleDTO saveRole(RoleDTO roleDTO) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void deleteRole(RoleDTO roleDTO) throws Exception {
+
     }
 }

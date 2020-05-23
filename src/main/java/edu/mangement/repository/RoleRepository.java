@@ -1,9 +1,11 @@
 package edu.mangement.repository;
 
 import edu.mangement.entity.Role;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -14,5 +16,6 @@ import java.util.Optional;
  */
 @Repository
 public interface RoleRepository extends JpaRepository<Role,Long> {
-    Role findByIdAndActiveFlag(Long id,Integer activeFlag);
+    List<Role> findAllByActiveFlag(int activeFlag, Pageable pageable);
+    Role findRoleByIdAndActiveFlag(Long id,int activeFlag);
 }

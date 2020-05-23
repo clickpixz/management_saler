@@ -91,7 +91,6 @@ public class VendorController {
     public String deleteBranch(Model model, @PathVariable("id") Long id, HttpSession session) {
         var vendorDTO = vendorService.findVendorById(id);
         if (vendorDTO != null) {
-            model.addAttribute("viewOnly", false);
             try {
                 vendorService.deleteVendor(vendorDTO);
                 session.setAttribute(Constant.MSG_SUCCESS, "Delete Success !!!");

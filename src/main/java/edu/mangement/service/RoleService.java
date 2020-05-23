@@ -1,7 +1,5 @@
 package edu.mangement.service;
 
-import edu.mangement.entity.Menu;
-import edu.mangement.model.MenuDTO;
 import edu.mangement.model.RoleDTO;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +13,8 @@ import java.util.List;
  */
 @Service
 public interface RoleService {
-    RoleDTO getRoleById(RoleDTO roleDTO);
+    RoleDTO findRoleById(Long roleId);
+    List<RoleDTO> findAllRole();
+    RoleDTO saveRole(RoleDTO roleDTO) throws Exception;
+    void deleteRole(RoleDTO roleDTO) throws Exception;
 }
