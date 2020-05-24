@@ -22,8 +22,8 @@ import java.util.Optional;
  * DATE : 5/17/2020
  * TIME : 11:43 PM
  */
-@Transactional
 @Component
+@Transactional(rollbackOn = Exception.class)
 public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberRepository memberRepository;

@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
  * DATE : 5/19/2020
  * TIME : 1:01 AM
  */
-@Transactional
 @Component
+@Transactional(rollbackOn = Exception.class)
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository roleRepository;

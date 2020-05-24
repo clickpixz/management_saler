@@ -30,12 +30,6 @@ public class App implements CommandLineRunner {
 	@Transactional
 	public void run(String... args) throws Exception {
 //		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-////		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Branch.class).get();
-////		Query query = queryBuilder.keyword().onFields("name", "address","phone").matching("Hà").createQuery();
-////		FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query, Branch.class);
-////		List<Branch> resultList = fullTextQuery.getResultList();
-////		resultList.forEach(System.out::println);
-////		System.out.println(resultList.size());
 //		fullTextEntityManager.createIndexer().startAndWait();
 	}
 

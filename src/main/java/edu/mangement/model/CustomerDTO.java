@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -32,6 +33,7 @@ public class CustomerDTO {
     @Email
     private String email;
     private String image;
+    private MultipartFile multipartFile;
     private String phone;
     private String birthday;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
