@@ -1,6 +1,9 @@
 package edu.mangement.entity;
 
 import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.CreatedDate;
@@ -26,27 +29,33 @@ import java.util.List;
 @Builder
 @ToString(exclude = "orders")
 @EntityListeners(AuditingEntityListener.class)
-@Configuration
+@Indexed
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @Field(termVector = TermVector.YES)
     private String username;
-    @NotBlank
+    @Field(termVector = TermVector.YES)
     private String password;
+    @Field(termVector = TermVector.YES)
     private String name;
+    @Field(termVector = TermVector.YES)
     private String address;
-    @Email
+    @Field(termVector = TermVector.YES)
     private String email;
+    @Field(termVector = TermVector.YES)
     private String image;
+    @Field(termVector = TermVector.YES)
     private String phone;
+    @Field(termVector = TermVector.YES)
     private String birthday;
     @CreatedDate
+    @Field(termVector = TermVector.YES)
     private Date createDate;
     @LastModifiedDate
+    @Field(termVector = TermVector.YES)
     private Date updateDate;
-    @Value("1")
     private Integer activeFlag;
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;

@@ -1,6 +1,9 @@
 package edu.mangement.entity;
 
 import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.CreatedDate;
@@ -8,11 +11,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -30,15 +28,20 @@ import java.util.List;
 @Builder
 @ToString(exclude = {"dateWorks", "inventoryHistories", "invoices"})
 @EntityListeners(AuditingEntityListener.class)
-@Configuration
+@Indexed
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Field(termVector = TermVector.YES)
     private String username;
+    @Field(termVector = TermVector.YES)
     private String password;
+    @Field(termVector = TermVector.YES)
     private String name;
+    @Field(termVector = TermVector.YES)
     private Integer sex;
+    @Field(termVector = TermVector.YES)
     private String doB;
     private String image;
     private BigDecimal salary;
@@ -46,7 +49,6 @@ public class Member {
     private Date createDate;
     @LastModifiedDate
     private Date updateDate;
-    @Value("1")
     private Integer activeFlag;
     @OneToMany(mappedBy = "member")
     private List<DateWork> dateWorks;

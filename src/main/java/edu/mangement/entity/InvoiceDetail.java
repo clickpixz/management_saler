@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,18 +30,21 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-@Configuration
+@Indexed
 public class InvoiceDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Field(termVector = TermVector.YES)
     private Long quantity;
+    @Field(termVector = TermVector.YES)
     private BigDecimal unitPrice;
     @CreatedDate
+    @Field(termVector = TermVector.YES)
     private Date createDate;
     @LastModifiedDate
+    @Field(termVector = TermVector.YES)
     private Date updateDate;
-    @Value("1")
     private Integer activeFlag;
     @ManyToOne
     @JoinColumn(name = "Items_ID", referencedColumnName = "id", nullable = false)

@@ -2,21 +2,18 @@ package edu.mangement;
 
 import edu.mangement.entity.Branch;
 import edu.mangement.entity.Menu;
-import edu.mangement.model.MenuDTO;
-import edu.mangement.model.RoleDTO;
-import edu.mangement.repository.*;
-import edu.mangement.service.MenuService;
-import edu.mangement.service.RoleService;
+import org.apache.lucene.search.Query;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -28,9 +25,18 @@ public class App implements CommandLineRunner {
 		SpringApplication.run(App.class, args);
 	}
 	@Autowired
-	private BranchRepository branchRepository;
+	private EntityManager entityManager;
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {
+//		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+////		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Branch.class).get();
+////		Query query = queryBuilder.keyword().onFields("name", "address","phone").matching("Hà").createQuery();
+////		FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query, Branch.class);
+////		List<Branch> resultList = fullTextQuery.getResultList();
+////		resultList.forEach(System.out::println);
+////		System.out.println(resultList.size());
+//		fullTextEntityManager.createIndexer().startAndWait();
 	}
+
 }

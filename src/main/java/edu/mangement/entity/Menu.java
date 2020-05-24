@@ -1,6 +1,9 @@
 package edu.mangement.entity;
 
 import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.CreatedDate;
@@ -31,17 +34,24 @@ import java.util.List;
                 "where a.role.id = :roleId and a.role.activeFlag = 1 and a.activeFlag=1 and a.permission =1" +
                 " and a.menu.activeFlag=1")
 )
+@Indexed
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Field(termVector = TermVector.YES)
     private Long parentId;
+    @Field(termVector = TermVector.YES)
     private String url;
+    @Field(termVector = TermVector.YES)
     private String name;
+    @Field(termVector = TermVector.YES)
     private Integer orderIndex;
     @CreatedDate
+    @Field(termVector = TermVector.YES)
     private Date createDate;
     @LastModifiedDate
+    @Field(termVector = TermVector.YES)
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;

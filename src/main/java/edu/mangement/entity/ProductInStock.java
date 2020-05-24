@@ -1,6 +1,9 @@
 package edu.mangement.entity;
 
 import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.CreatedDate;
@@ -26,18 +29,21 @@ import java.util.List;
 @Builder
 @ToString(exclude = {"inventoryHistories","items"})
 @EntityListeners(AuditingEntityListener.class)
-@Configuration
+@Indexed
 public class ProductInStock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Field(termVector = TermVector.YES)
     private String size;
+    @Field(termVector = TermVector.YES)
     private Long quantity;
     @CreatedDate
+    @Field(termVector = TermVector.YES)
     private Date createDate;
     @LastModifiedDate
+    @Field(termVector = TermVector.YES)
     private Date updateDate;
-    @Value("1")
     private Integer activeFlag;
     @OneToMany(mappedBy = "productInStock")
     private List<InventoryHistory> inventoryHistories;

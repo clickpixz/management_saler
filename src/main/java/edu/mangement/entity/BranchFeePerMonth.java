@@ -1,6 +1,9 @@
 package edu.mangement.entity;
 
 import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.CreatedDate;
@@ -26,24 +29,25 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-@Configuration
+@Indexed
 public class BranchFeePerMonth {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Field(termVector = TermVector.YES)
     private String description;
-    @Min(value = 0,message = "cost > 0")
+    @Field(termVector = TermVector.YES)
     private BigDecimal cost;
-    @Min(value = 0,message = "month > 0")
-    @Max(value = 12,message = "month <=12")
+    @Field(termVector = TermVector.YES)
     private Integer month;
-    @Min(value = 1970,message = "year > 1970")
+    @Field(termVector = TermVector.YES)
     private Integer year;
     @CreatedDate
+    @Field(termVector = TermVector.YES)
     private Date createDate;
     @LastModifiedDate
+    @Field(termVector = TermVector.YES)
     private Date updateDate;
-    @Value("1")
     private Integer activeFlag = 1;
     @ManyToOne
     @JoinColumn(name = "Branch_ID", referencedColumnName = "id", nullable = false)
