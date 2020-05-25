@@ -2,6 +2,10 @@ package edu.mangement;
 
 import edu.mangement.entity.Branch;
 import edu.mangement.entity.Menu;
+import edu.mangement.entity.Product;
+import edu.mangement.repository.ProductRepository;
+import edu.mangement.service.CategoryService;
+import edu.mangement.service.ProductService;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
@@ -26,6 +30,12 @@ public class App implements CommandLineRunner {
 	}
 	@Autowired
 	private EntityManager entityManager;
+	@Autowired
+	private ProductRepository productRepository;
+	@Autowired
+	private ProductService productService;
+	@Autowired
+	private CategoryService categoryService;
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {

@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class ProductDTO {
     private String code;
     @NotBlank(message = "material not null")
     private String material;
+    private MultipartFile multipartFile;
     private String image;
     private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -36,5 +38,7 @@ public class ProductDTO {
     @Value("1")
     private Integer activeFlag;
     private CategoryDTO category;
+    private Long categoryId;
     private VendorDTO vendor;
+    private Long vendorId;
 }

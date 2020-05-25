@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+    <head>
+        <meta charset="utf-8">
+        <title th:text="${tittlePage}"></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Responsive bootstrap 4 admin template" name="description">
+        <meta content="Coderthemes" name="author">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <th:block th:replace="layout/Link-Top :: link-top"></th:block>
+
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+
+            <!-- Topbar Start -->
+            <div th:replace="layout/Topbar :: topbar"></div>
+            <!-- end Topbar --> <!-- ========== Left Sidebar Start ========== -->
+            <div th:replace="layout/LeftSidebar :: left-sidebar"></div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Data Table</h4>
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb p-0 m-0">
+                                            <li class="breadcrumb-item"><a href="#">Velonic</a></li>
+                                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                                            <li class="breadcrumb-item active">Data Table</li>
+                                        </ol>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title mb-4" th:text="${tittlePage}"></h4>
+
+                                        <form class="parsley-examples" th:action="@{/admin/product/save}" th:object="${modelForm}" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name = "id" th:field="*{id}">
+                                            <input type="hidden" th:field="*{createDate}" name="createDate" id="createDate">
+                                            <input type="hidden" th:field="*{activeFlag}" name="activeFlag">
+                                            <input th:unless="${viewOnly}" type="hidden" th:field="*{image}" name="image">
+                                            <div class="form-group">
+                                                <label for="name">Name<span class="text-danger">*</span></label>
+                                                <input type="text" name="name" th:field="*{name}" th:disabled="${viewOnly}"
+                                                       parsley-trigger="change" required="true" placeholder="Name" class="form-control" id="name">
+                                                <span th:class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="code">Code<span class="text-danger">*</span></label>
+                                                <input type="text" name="code" th:field="*{code}" th:disabled="${viewOnly}" parsley-trigger="change"
+                                                       required="true" placeholder="Code" class="form-control" id="code">
+                                                <span th:class="text-danger" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="material">Material</label>
+                                                <input type="text" name="material" th:field="*{material}" th:disabled="${viewOnly}"
+                                                       parsley-trigger="change" placeholder="Material" class="form-control" id="material">
+                                                <span th:class="text-danger" th:if="${#fields.hasErrors('material')}" th:errors="*{material}"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="category">Category</label>
+                                                <input th:if="${viewOnly}" id="category" type="text" th:field="*{category.name}"
+                                                       placeholder="category" class="form-control">
+                                                <select th:unless="${viewOnly}" name="categoryId" id="categoryId" th:field="*{categoryId}"
+                                                        class="form-control" data-toggle="select2" >
+                                                    <option th:each="category : ${mapCategory}"
+                                                            th:selected="(${category.key} == *{categoryId})"
+                                                            th:value="${category.key}" th:text="${category.value}"></option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="vendor">Vendor</label>
+                                                <input th:if="${viewOnly}" id="vendor" type="text" th:value="*{vendor.name}" th:field="*{vendorId}"
+                                                       placeholder="vendor" class="form-control">
+                                                <select th:unless="${viewOnly}" id="vendorId" name="vendorId"
+                                                        class="form-control" data-toggle="select2">
+                                                    <option th:each="vendor : ${mapVendor}"
+                                                            th:selected="(${vendor.key} == *{vendorId})"
+                                                            th:value="${vendor.key}" th:text="${vendor.value}"></option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <textarea id="description" type="text" th:field="*{description}" th:disabled="${viewOnly}"
+                                                          placeholder="description" class="form-control"></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="image">Image</label>
+                                                <img th:if="${viewOnly}" id="image" th:src="@{'/'+${modelForm.image}}" class="img-fluid">
+                                                <input type="file" th:unless="${viewOnly}" th:field="*{multipartFile}"
+                                                       class="form-control" placeholder="Drop file here ... ">
+                                            </div>
+                                            <div class="form-group text-right mb-0">
+                                                <button class="btn btn-primary waves-effect waves-light mr-1" th:disabled="${viewOnly}" type="submit">
+                                                    Submit
+                                                </button>
+                                                <button type="reset" th:disabled="${viewOnly}" class="btn btn-secondary waves-effect waves-light">
+                                                    Cancel
+                                                </button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                            </div>
+                            <!-- end col -->
+
+                            <!-- end col -->
+                        </div>
+
+
+                    </div>
+                    <!-- end container-fluid -->
+
+                </div>
+                <!-- end content -->
+
+
+                <!-- Footer Start -->
+                <div th:replace="layout/Footer :: footer"></div>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- Right Sidebar -->
+        <div th:replace="layout/RightSidebar :: right-sidebar"></div>
+        <!-- /Right-bar -->
+
+        <!-- Right bar overlay-->
+        <div th:replace="layout/Right-bar-overlay :: right-bar-overlay"></div>
+
+        <div th:replace="layout/Link-Footer :: link-footer"></div>
+    <script>
+        $(document).ready(
+            function () {
+                $('#admincustomerlistId').addClass('mm-active').siblings()
+                    .removeClass('mm-active');
+                $('#admincustomerlistId').parents('li').show();
+            });
+    </script>
+    </body>
+</html>

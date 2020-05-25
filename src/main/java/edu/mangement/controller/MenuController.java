@@ -11,7 +11,6 @@ import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -74,7 +73,7 @@ public class MenuController {
     }
 
     @GetMapping("/change-status/{id}")
-    public String deleteBranch(Model model, @PathVariable("id") Long id, HttpSession session) {
+    public String deleteBranch(@PathVariable("id") Long id, HttpSession session) {
         var menuDTO = menuService.findMenuById(id);
         if (menuDTO != null) {
             try {

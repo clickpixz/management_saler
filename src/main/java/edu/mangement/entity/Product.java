@@ -36,15 +36,12 @@ public class Product {
     private String code;
     @Field(termVector = TermVector.YES)
     private String material;
-    @Field(termVector = TermVector.YES)
     private String image;
     @Field(termVector = TermVector.YES)
     private String description;
     @CreatedDate
-    @Field(termVector = TermVector.YES)
     private Date createDate;
     @LastModifiedDate
-    @Field(termVector = TermVector.YES)
     private Date updateDate;
     private Integer activeFlag;
     @ManyToOne

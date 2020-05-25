@@ -1,5 +1,6 @@
 package edu.mangement.service.Impl;
 
+import edu.mangement.entity.Category;
 import edu.mangement.mapper.CategoryMapper;
 import edu.mangement.model.CategoryDTO;
 import edu.mangement.repository.CategoryRepository;
@@ -43,10 +44,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDTO findCategoryById(Long id) {
-        return Optional.ofNullable(id)
-                .map(categoryId -> categoryRepository.findCategoryByIdAndActiveFlag(categoryId,1))
-                .map(CategoryMapper::toDTO)
-                .orElseGet(null);
+        if(id!=null){
+            var category = categoryRepository.findCategoryByIdAndActiveFlag(id, 1);
+            if(category!=null){
+                return CategoryMapper.toDTO(category);
+            }
+        }
+        return null;
     }
 
     @Override
