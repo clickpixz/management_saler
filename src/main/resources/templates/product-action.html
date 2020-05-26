@@ -71,7 +71,7 @@
                                             <div class="form-group">
                                                 <label for="code">Code<span class="text-danger">*</span></label>
                                                 <input type="text" name="code" th:field="*{code}" th:disabled="${viewOnly}" parsley-trigger="change"
-                                                       required="true" placeholder="Code" class="form-control" id="code">
+                                                        placeholder="Code" class="form-control" id="code">
                                                 <span th:class="text-danger" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></span>
                                             </div>
 

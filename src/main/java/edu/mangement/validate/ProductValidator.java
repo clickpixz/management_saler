@@ -8,6 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
@@ -19,8 +20,6 @@ import org.springframework.validation.Validator;
 @Component
 public class ProductValidator implements Validator {
     @Autowired
-    private Environment environment;
-    @Autowired
     private ProductService productService;
 
     @Override
@@ -31,6 +30,9 @@ public class ProductValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         ProductDTO productDTO = (ProductDTO) o;
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","msg.product.name.null");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"code","msg.product.code.null");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"material","msg.product.material.null");
         if (productDTO.getCode() != null) {
             ProductDTO result = productService.findProductByCode(productDTO.getCode());
             if (result != null) {
@@ -39,18 +41,18 @@ public class ProductValidator implements Validator {
                 if (productDTO.getId() != null && productDTO.getId() != 0) {
 //                kiem tra id voi id cua result neu ko trung thi la trung code con trung thi thoa man
                     if(result.getId()!=productDTO.getId()){
-                        errors.rejectValue("code",environment.getProperty("msg.code.exits"));
+                        errors.rejectValue("code","msg.product.code.exits");
                     }
                 }else {
 //                    => ko co id => tao moi product => result != null => trung code
-                    errors.rejectValue("code",environment.getProperty("msg.code.exits"));
+                    errors.rejectValue("code","msg.product.code.exits");
                 }
             }
         }
         if (!productDTO.getMultipartFile().getOriginalFilename().isBlank()) {
             String extension = FilenameUtils.getExtension(productDTO.getMultipartFile().getOriginalFilename());
             if (!extension.equals("jpg")&&!extension.equals("png")) {
-                errors.rejectValue("multipartFile",environment.getProperty("msg.file.extension.error"));
+                errors.rejectValue("multipartFile","msg.file.extension.error");
             }
         }
     }
