@@ -34,11 +34,13 @@ public class InventoryHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Field(termVector = TermVector.YES)
+    private String code;
+    @Field(termVector = TermVector.YES)
     private Integer type;
     @Field(termVector = TermVector.YES)
     private Long quantity;
     @Field(termVector = TermVector.YES)
-    private BigDecimal price;
+    private String description;
     @CreatedDate
     @Field(termVector = TermVector.YES)
     private Date createDate;

@@ -11,6 +11,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,8 @@ public class ProductInStock {
     private String size;
     @Field(termVector = TermVector.YES)
     private Long quantity;
+    @Field(termVector = TermVector.YES)
+    private BigDecimal price;
     @CreatedDate
     @Field(termVector = TermVector.YES)
     private Date createDate;

@@ -21,16 +21,15 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Configuration
 public class InventoryHistoryDTO {
     private Long id;
+    private String code;
     private Integer type;
     private Long quantity;
-    private BigDecimal price;
+    private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
-    @Value("1")
     private Integer activeFlag;
     private ProductInStockDTO productInStock;
     private MemberDTO member;

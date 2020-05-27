@@ -17,6 +17,7 @@ public class ProductInStockMapper {
                 .id(productInStockEntity.getId())
                 .quantity(productInStockEntity.getQuantity())
                 .size(productInStockEntity.getSize())
+                .price(productInStockEntity.getPrice())
                 .createDate(productInStockEntity.getCreateDate())
                 .updateDate(productInStockEntity.getUpdateDate())
                 .activeFlag(productInStockEntity.getActiveFlag())
@@ -35,6 +36,7 @@ public class ProductInStockMapper {
                 .id(productInStockDTO.getId())
                 .quantity(productInStockDTO.getQuantity())
                 .size(productInStockDTO.getSize())
+                .price(productInStockDTO.getPrice())
                 .createDate(productInStockDTO.getCreateDate())
                 .updateDate(productInStockDTO.getUpdateDate())
                 .activeFlag(productInStockDTO.getActiveFlag())
@@ -45,12 +47,6 @@ public class ProductInStockMapper {
         if (productInStockDTO.getProduct() != null) {
             productInStockEntity.setProduct(ProductMapper.toEntity(productInStockDTO.getProduct()));
         }
-//        if (productInStockDTO.getItems() != null) {
-//            productInStockEntity.setItems(productInStockDTO.getItems().stream().map(ItemsMapper::toEntity).collect(Collectors.toList()));
-//        }
-//        if (productInStockDTO.getInventoryHistories() != null) {
-//            productInStockEntity.setInventoryHistories(productInStockDTO.getInventoryHistories().stream().map(InventoryHistoryMapper::toEntity).collect(Collectors.toList()));
-//        }
         return productInStockEntity;
     }
 }
