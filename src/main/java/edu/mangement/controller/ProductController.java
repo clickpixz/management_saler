@@ -112,6 +112,7 @@ public class ProductController {
         var productDTO = productService.findProductById(id);
         if (productDTO != null) {
             productDTO.setCategoryId(productDTO.getCategory().getId());
+            productDTO.setVendorId(productDTO.getVendor().getId());
             model.addAttribute("tittlePage", "Sửa Sản phẩm");
             model.addAttribute("modelForm", productDTO);
             model.addAttribute("viewOnly", false);

@@ -20,14 +20,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Configuration
 public class ProductDTO {
     private Long id;
-    @NotBlank(message = "name not blank")
     private String name;
-    @NotBlank(message = "code not null")
     private String code;
-    @NotBlank(message = "material not null")
     private String material;
     private MultipartFile multipartFile;
     private String image;
@@ -35,7 +31,6 @@ public class ProductDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
-    @Value("1")
     private Integer activeFlag;
     private CategoryDTO category;
     private Long categoryId;

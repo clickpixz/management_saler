@@ -1,5 +1,6 @@
 package edu.mangement.service;
 
+import edu.mangement.model.MemberDTO;
 import edu.mangement.security.CustomUserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,8 +22,11 @@ public class UserService implements UserDetailsService {
     private MemberService memberService;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-      return Optional.of(memberService.findByUsername(username))
-              .map(memberDTO -> new CustomUserDetail(memberDTO))
-              .orElseThrow(() -> new UsernameNotFoundException(username));
+        MemberDTO memberDTO = memberService.findByUsername(username);
+        if(memberDTO!=null){
+            return new CustomUserDetail(memberDTO);
+        }else {
+            throw new UsernameNotFoundException(username);
+        }
     }
 }

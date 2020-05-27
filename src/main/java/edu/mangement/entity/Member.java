@@ -35,7 +35,6 @@ public class Member {
     private Long id;
     @Field(termVector = TermVector.YES)
     private String username;
-    @Field(termVector = TermVector.YES)
     private String password;
     @Field(termVector = TermVector.YES)
     private String name;

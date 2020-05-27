@@ -3,8 +3,11 @@ package edu.mangement;
 import edu.mangement.entity.Branch;
 import edu.mangement.entity.Menu;
 import edu.mangement.entity.Product;
+import edu.mangement.model.ProductDTO;
+import edu.mangement.repository.ProductInStockRepository;
 import edu.mangement.repository.ProductRepository;
 import edu.mangement.service.CategoryService;
+import edu.mangement.service.MemberService;
 import edu.mangement.service.ProductService;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.EntityManager;
@@ -31,16 +35,17 @@ public class App implements CommandLineRunner {
 	@Autowired
 	private EntityManager entityManager;
 	@Autowired
-	private ProductRepository productRepository;
+	private MemberService memberService;
 	@Autowired
 	private ProductService productService;
 	@Autowired
-	private CategoryService categoryService;
+	private ProductInStockRepository productInStockRepository;
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {
 //		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
 //		fullTextEntityManager.createIndexer().startAndWait();
+//		System.out.println(productInStockRepository.searchProductInStock(null,"CANIAFA Hà Nội","M",1, Pageable.unpaged()).getContent());
 	}
 
 }

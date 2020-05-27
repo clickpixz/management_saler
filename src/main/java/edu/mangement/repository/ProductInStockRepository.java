@@ -1,6 +1,8 @@
 package edu.mangement.repository;
 
 import edu.mangement.entity.ProductInStock;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProductInStockRepository extends JpaRepository<ProductInStock,Long> {
+    Page<ProductInStock> findAllByActiveFlag(int activeFlag,Pageable pageable);
+    ProductInStock findProductInStockByProduct_CodeAndActiveFlag(String code,int activeFlag);
+    ProductInStock findProductInStockByIdAndActiveFlag(Long id,int activeFlag);
 }

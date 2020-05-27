@@ -11,17 +11,17 @@ import lombok.*;
 @Builder
 @EqualsAndHashCode
 public class Paging {
-    private Integer totalRows;
+    private Long totalRows;
     private Integer totalPages;
     private Integer indexPage;
     private Integer recordPerPage = 10;
     private Integer offset;
 
-    public Integer getTotalRows() {
+    public Long getTotalRows() {
         return totalRows;
     }
 
-    public void setTotalRows(Integer totalRows) {
+    public void setTotalRows(Long totalRows) {
         this.totalRows = totalRows;
     }
 

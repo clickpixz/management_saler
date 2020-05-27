@@ -7,6 +7,7 @@ import edu.mangement.model.Paging;
 import edu.mangement.model.SearchForm;
 import edu.mangement.repository.CustomerRepository;
 import edu.mangement.service.CustomerService;
+import edu.mangement.service.FullTextSearchEngine;
 import javafx.util.Pair;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
@@ -35,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
-    private EntityManager entityManager;
+    private FullTextSearchEngine<Customer> fullTextSearchEngine;
 
     @Override
     public CustomerDTO findByCustomerId(Long id) {
@@ -71,22 +72,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerDTO> search(SearchForm searchForm, Paging paging) {
-        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-        QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
-                .buildQueryBuilder().forEntity(Customer.class).get();
-        Query query = queryBuilder.keyword()
-                .onFields("username", "name", "address", "email", "phone", "birthday")
-                .matching(searchForm.getField()).createQuery();
-        FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query, Customer.class);
-        if (paging != null) {
-            //so ban ghi 1 page
-            fullTextQuery.setMaxResults(paging.getRecordPerPage());
-            //ban ghi dau tien
-            fullTextQuery.setFirstResult(paging.getOffset());
-            //tong so ban ghi
-            paging.setTotalRows(fullTextQuery.getResultSize());
-            paging.setTotalPages((int) Math.ceil(paging.getTotalRows() / (double) paging.getRecordPerPage()));
-        }
+        FullTextQuery fullTextQuery = fullTextSearchEngine
+                .getFullTextQuery(searchForm, paging, Customer.class,
+                        "username", "name", "address", "email", "phone", "birthday");
         List<Customer> resultList = fullTextQuery.getResultList();
         return resultList.stream().map(CustomerMapper::toDTO).collect(Collectors.toList());
     }

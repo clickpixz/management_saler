@@ -27,12 +27,6 @@ public class ProductInStockMapper {
         if (productInStockEntity.getProduct() != null) {
             productInStockDTO.setProduct(ProductMapper.toDTO(productInStockEntity.getProduct()));
         }
-//        if (productInStockEntity.getItems() != null) {
-//            productInStockDTO.setItems(productInStockEntity.getItems().stream().map(ItemsMapper::toDTO).collect(Collectors.toList()));
-//        }
-//        if (productInStockEntity.getInventoryHistories() != null) {
-//            productInStockDTO.setInventoryHistories(productInStockEntity.getInventoryHistories().stream().map(InventoryHistoryMapper::toDTO).collect(Collectors.toList()));
-//        }
         return productInStockDTO;
     }
 

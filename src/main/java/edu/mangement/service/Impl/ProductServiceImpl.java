@@ -6,19 +6,17 @@ import edu.mangement.model.Paging;
 import edu.mangement.model.ProductDTO;
 import edu.mangement.model.SearchForm;
 import edu.mangement.repository.ProductRepository;
+import edu.mangement.service.FullTextSearchEngine;
 import edu.mangement.service.ProductService;
 import edu.mangement.utils.FileProcessUtils;
 import javafx.util.Pair;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
-import org.hibernate.search.jpa.Search;
-import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +34,7 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private EntityManager entityManager;
-
+    private FullTextSearchEngine<Product> fullTextSearchEngine;
     @Override
     public ProductDTO findProductById(Long id) {
         if (id != null) {
@@ -70,19 +67,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO saveProduct(ProductDTO productDTO) throws Exception {
-        //check save or update
-        if (productDTO.getId() != null) {
-//            => update
+        if (productDTO != null) {
             if (!productDTO.getMultipartFile().isEmpty()) {
                 var fileName = FileProcessUtils.processUploadFile(productDTO.getMultipartFile());
                 productDTO.setImage(fileName);
             }
+            return Optional.of(productDTO)
+                    .map(ProductMapper::toEntity)
+                    .map(product -> productRepository.save(product))
+                    .map(ProductMapper::toDTO)
+                    .orElseGet(null);
         }
-        return Optional.of(productDTO)
-                .map(ProductMapper::toEntity)
-                .map(product -> productRepository.save(product))
-                .map(ProductMapper::toDTO)
-                .orElseGet(null);
+        return null;
     }
 
     @Override
@@ -93,21 +89,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> searchProduct(SearchForm searchForm, Paging paging) {
-        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-        QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
-                .buildQueryBuilder().forEntity(Product.class).get();
-        Query query = queryBuilder.keyword().onFields("name", "code", "material", "description")
-                .matching(searchForm.getField()).createQuery();
-        FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query, Product.class);
-        if (paging != null) {
-            //so ban ghi 1 page
-            fullTextQuery.setMaxResults(paging.getRecordPerPage());
-            //ban ghi dau tien
-            fullTextQuery.setFirstResult(paging.getOffset());
-            //tong so ban ghi
-            paging.setTotalRows(fullTextQuery.getResultSize());
-            paging.setTotalPages((int) Math.ceil(paging.getTotalRows() / (double) paging.getRecordPerPage()));
-        }
+        FullTextQuery fullTextQuery = fullTextSearchEngine
+                .getFullTextQuery(searchForm, paging, Product.class,
+                        "name", "code", "material", "description");
         List<Product> resultList = fullTextQuery.getResultList();
         return resultList.stream().map(ProductMapper::toDTO).collect(Collectors.toList());
     }

@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -24,28 +25,23 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString(exclude = {"dateWorks"})
-@Configuration
 public class MemberDTO {
     private Long id;
-    @NotBlank(message = "Username Not Null")
-    @Size(min = 6,max = 100,message = "Username Length must be more than 6 character")
     private String username;
-    @NotBlank(message = "Password Not Null")
-    @Size(min = 6,max = 255,message = "Password Length must be more than 6 character")
     private String password;
-    @NotBlank(message = "Name Not Null")
     private String name;
     private Integer sex;
     private String doB;
     private String image;
-    @Min(value = 0, message = "Salary must be more than 0")
+    private MultipartFile multipartFile;
     private BigDecimal salary;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
-    @Value("1")
     private Integer activeFlag;
     private List<DateWorkDTO> dateWorks;
     private BranchDTO branch;
+    private Long branchId;
     private RoleDTO role;
+    private Long roleId;
 }

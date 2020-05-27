@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8">
+    <title th:text="${tittlePage}"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Responsive bootstrap 4 admin template" name="description">
+    <meta content="Coderthemes" name="author">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <th:block th:replace="layout/Link-Top :: link-top"></th:block>
+
+</head>
+
+<body>
+
+<!-- Begin page -->
+<div id="wrapper">
+
+
+    <!-- Topbar Start -->
+    <div th:replace="layout/Topbar :: topbar"></div>
+    <!-- end Topbar --> <!-- ========== Left Sidebar Start ========== -->
+    <div th:replace="layout/LeftSidebar :: left-sidebar"></div>
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title">Data Table</h4>
+                            <div class="page-title-right">
+                                <ol class="breadcrumb p-0 m-0">
+                                    <li class="breadcrumb-item"><a href="#">Velonic</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                                    <li class="breadcrumb-item active">Data Table</li>
+                                </ol>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="">
+                        <div class="card">
+                            <div class="card-header py-3 bg-transparent row">
+                                <h5 class="header-title mb-2"> Projects</h5>
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-6 card-body">
+                                    <form th:action="@{/admin/product-in-stock/list/1}"
+                                          th:object="${searchForm}" method="post" enctype="multipart/form-data"
+                                          name="searchForm" id="searchForm"
+                                            class="parsley-examples">
+                                                <div class="form-group">
+                                                    <label for="product.code">Code</label>
+                                                    <input id="product.code" type="text" th:field="*{product.code}"
+                                                           class="form-control" placeholder="Code...">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="product.category.id">Category</label>
+                                                    <select id="product.category.id" class="form-control" th:field="*{product.category.id}">
+                                                        <option value="">Select</option>
+                                                        <option th:each="category : ${allCategory}"
+                                                                th:value="${category.id}"
+                                                                th:text="${category.name}"></option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="branch.id">Branch</label>
+                                                    <select id="branch.id" class="form-control" th:field="*{branch.id}">
+                                                        <option value="">Select</option>
+                                                        <option th:each="branch : ${allBranch}"
+                                                                th:value="${branch.id}"
+                                                                th:text="${branch.name}"></option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="size">Size</label>
+                                                    <select class="form-control" th:field="*{size}" id="size">
+                                                        <option value="">Select</option>
+                                                        <option value="S">S</option>
+                                                        <option value="M">M</option>
+                                                        <option value="L">L</option>
+                                                        <option value="XL">XL</option>
+                                                        <option value="XXL">XXL</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary" type="submit">
+                                                        <i class="fas fa-search">Search</i>
+                                                    </button>
+                                                </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="cardCollpase3" class="collapse show">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-nowrap mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-body">#</th>
+                                                <th class="text-center">Code</th>
+                                                <th class="text-center">Name</th>
+                                                <th class="text-center">Category</th>
+                                                <th class="text-center">Branch</th>
+                                                <th class="text-center">Size</th>
+                                                <th class="text-center">Quantity</th>
+                                                <th class="text-center">Đăng bán</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody th:each="productInStock,productInStockStatus : ${productInStockDTOList}">
+                                            <tr>
+                                                <td th:text="${productInStockStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
+                                                <td th:text="${productInStock.product.code}"></td>
+                                                <td th:text="${productInStock.product.name}"></td>
+                                                <td th:text="${productInStock.product.category.name}"></td>
+                                                <td th:text="${productInStock.branch.name}"></td>
+                                                <td th:text="${productInStock.size}"></td>
+                                                <td th:text="${productInStock.quantity}"></td>
+                                                <td>
+                                                    <a class="btn">
+                                                        <i class="fas fa-angle-double-up"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <nav aria-label="Page navigation example" th:fragment="menu-paging">
+                                <ul class="pagination justify-content-center">
+                                    <li th:if="${paging.indexPage == 1}" class="page-item disabled">
+                                        <a class="page-link" href="javascript:void(0);" tabindex="-1">Previous</a>
+                                    </li>
+                                    <li th:if="${paging.indexPage != 1}" class="page-item">
+                                        <a class="page-link"
+                                           th:onclick="'javascript:gotoPage('+${paging.indexPage - 1}+');'"
+                                           tabindex="-1">Previous</a>
+                                    </li>
+                                    <th:block th:each="i : ${#numbers.sequence(1,paging.totalPages)}">
+                                        <li th:if="${paging.indexPage ==  i}" class="page-item active">
+                                            <a class="page-link" href="javascript:void(0);"
+                                               th:text="${i}"></a>
+                                        </li>
+                                        <li th:if="${paging.indexPage !=  i}" class="page-item">
+                                            <a class="page-link"
+                                               th:text="${i}" th:onclick="'javascript:gotoPage('+${i}+');'"></a>
+                                        </li>
+
+                                    </th:block>
+                                    <li th:if="${paging.indexPage != paging.totalPages}" class="page-item">
+                                        <a class="page-link"
+                                           th:onclick="'javascript:gotoPage('+${paging.indexPage + 1}+');'">Next</a>
+                                    </li>
+                                    <li th:if="${paging.indexPage == paging.totalPages}" class="page-item disabled">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- end card-->
+
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- end container-fluid -->
+
+        </div>
+        <!-- end content -->
+
+
+        <!-- Footer Start -->
+        <div th:replace="layout/Footer :: footer"></div>
+        <!-- end Footer -->
+
+    </div>
+    <!-- end content -->
+
+
+    <!-- Footer Start -->
+    <div th:replace="layout/Footer :: footer"></div>
+    <!-- end Footer -->
+
+</div>
+
+<!-- ============================================================== -->
+<!-- End Page content -->
+<!-- ============================================================== -->
+
+</div>
+<!-- END wrapper -->
+
+
+<!-- Right Sidebar -->
+<div th:replace="layout/RightSidebar :: right-sidebar"></div>
+<!-- /Right-bar -->
+
+<!-- Right bar overlay-->
+<div th:replace="layout/Right-bar-overlay :: right-bar-overlay"></div>
+
+<div th:replace="layout/Link-Footer :: link-footer"></div>
+<th:block th:replace="branch-list :: script-required-datatable">
+</th:block>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function gotoPage(page) {
+        let url = '/admin/product-in-stock/list/' + page;
+        $('#searchForm').attr('action', url);
+        $('#searchForm').submit();
+    }
+
+    $(document).ready(
+        function () {
+            $('#adminproduct-in-stocklistId').addClass('mm-active').siblings()
+                .removeClass('mm-active');
+            $('#adminproduct-in-stocklistId').parents('li').show();
+        });
+    /*]]>*/
+</script>
+<script th:replace="branch-list :: script-page-list"></script>
+</body>
+</html>
