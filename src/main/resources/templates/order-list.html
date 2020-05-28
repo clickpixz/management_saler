@@ -56,36 +56,31 @@
                                 <h5 class="header-title mb-2"> Projects</h5>
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-6 card-body">
-                                    <form th:action="@{/admin/inventory-history/list/1}"
+                                    <form th:action="@{/admin/order/list/1}"
                                           th:object="${searchForm}" method="post" enctype="multipart/form-data"
                                           name="searchForm" id="searchForm"
                                             class="parsley-examples">
                                                 <div class="form-group">
-                                                    <label for="code">Inventory History Code</label>
-                                                    <input id="code" type="text" th:field="*{code}"
-                                                           class="form-control" placeholder="Code...">
+                                                    <label for="code">Customer Name</label>
+                                                    <input id="code" type="text" th:field="*{name}"
+                                                           class="form-control" placeholder="Name Customer...">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="product.code">Product Code</label>
-                                                    <input id="product.code" type="text" th:field="*{productInStock.product.code}"
-                                                           class="form-control" placeholder="Code...">
+                                                    <label for="upTo">Price Upto</label>
+                                                    <input id="upTo" type="text" th:field="*{upTo}"
+                                                           class="form-control" placeholder="Price...">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="branch.id">Branch</label>
-                                                    <select id="branch.id" class="form-control" th:field="*{productInStock.branch.id}">
-                                                        <option value="">Select</option>
-                                                        <option th:each="branch : ${allBranch}"
-                                                                th:value="${branch.id}"
-                                                                th:text="${branch.name}"></option>
-                                                    </select>
+                                                    <label for="fromDate">FromDate</label>
+                                                    <input id="fromDate" type="date" class="form-control"
+                                                           th:field="*{getFromDate}" placeholder="mm/dd/yyyy"
+                                                           data-provide="datepicker" data-date-autoclose="true">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="size">Type</label>
-                                                    <select class="form-control" th:field="*{type}" id="size">
-                                                        <option value="">Select</option>
-                                                        <option value="1">Nhập kho</option>
-                                                        <option value="2">Xuất kho</option>
-                                                    </select>
+                                                    <label for="toDate">To Date</label>
+                                                    <input id="toDate" type="date" class="form-control"
+                                                           th:field="*{toDate}" placeholder="mm/dd/yyyy"
+                                                           data-provide="datepicker" data-date-autoclose="true">
                                                 </div>
                                                 <div class="form-group">
                                                     <button class="btn btn-outline-info btn-rounded waves-effect width-md waves-light" type="submit">
@@ -95,21 +90,6 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-3"></div>
-                                <div class="col-lg-2">
-                                    <a class="btn btn-purple text-light" type="button" href="/admin/inventory-history/list">
-                                        <i class="mdi mdi-database-import"></i>
-                                        Nhập hàng
-                                    </a>
-                                </div>
-                                <div class="col-lg-2">
-                                    <a type="button" class="btn btn-info" href="/admin/inventory-history/list">
-                                        <i class="mdi mdi-database-export"></i>
-                                        Xuất hàng
-                                    </a>
-                                </div>
-                            </div>
                             <div id="cardCollpase3" class="collapse show">
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -117,33 +97,28 @@
                                             <thead>
                                             <tr>
                                                 <th class="text-body">#</th>
-                                                <th class="text-center">Code</th>
-                                                <th class="text-center">Mã Sản Phẩm</th>
-                                                <th class="text-center">Type</th>
-                                                <th class="text-center">Quantity</th>
-                                                <th class="text-center">Nhân viên</th>
-                                                <th class="text-center">Branch</th>
+                                                <th class="text-center">Id</th>
+                                                <th class="text-center">Customer Name</th>
+                                                <th class="text-center">Địa Chỉ giao hàng</th>
+                                                <th class="text-center">Trạng thái giao hàng</th>
+                                                <th class="text-center">Total Order</th>
+                                                <th class="text-center">Thời gian</th>
                                                 <th class="text-center">View</th>
-                                                <th class="text-center">Edit</th>
                                             </tr>
                                             </thead>
-                                            <tbody th:each="inventoryHistory,inventoryHistoryStatus : ${inventoryHistoryDTOList}">
+                                            <tbody th:each="order,orderStatus : ${orderDTOList}">
                                             <tr>
-                                                <td th:text="${inventoryHistoryStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
-                                                <td th:text="${inventoryHistory.code}"></td>
-                                                <td th:text="${inventoryHistory.productInStock.product.code}"></td>
-                                                <td th:text="${inventoryHistory.type}"></td>
-                                                <td th:text="${inventoryHistory.quantity}"></td>
-                                                <td th:text="${inventoryHistory.member.name}"></td>
-                                                <td th:text="${inventoryHistory.productInStock.branch.name}"></td>
+                                                <td th:text="${orderStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
+                                                <td th:text="${order.id}"></td>
+                                                <td th:text="${order.customer.name}"></td>
+                                                <td th:text="${order.deliveryAddress}"></td>
+                                                <td th:text="${order.statusDelivery}"></td>
+                                                <td th:text="${order.totalOrder}"></td>
+                                                <td th:text="${order.updateDate}"></td>
                                                 <th>
-                                                    <a class="btn btn-primary">
+                                                    <a class="btn btn-primary text-light">
+                                                        <i class="fas fa-cubes"></i>
                                                         View
-                                                    </a>
-                                                </th>
-                                                <th>
-                                                    <a class="btn btn-block">
-                                                        Edit
                                                     </a>
                                                 </th>
                                             </tr>
@@ -231,7 +206,7 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     function gotoPage(page) {
-        let url = '/admin/inventory-history/list/' + page;
+        let url = '/admin/order/list/' + page;
         $('#searchForm').attr('action', url);
         $('#searchForm').submit();
     }

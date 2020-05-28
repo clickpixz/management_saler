@@ -88,6 +88,18 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
+                                                    <label for="fromDate">FromDate</label>
+                                                    <input id="fromDate" type="date" class="form-control"
+                                                           th:field="*{fromDate}" placeholder="mm/dd/yyyy"
+                                                           data-provide="datepicker" data-date-autoclose="true">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="toDate">To Date</label>
+                                                    <input id="toDate" type="date" class="form-control"
+                                                           th:field="*{toDate}" placeholder="mm/dd/yyyy"
+                                                           data-provide="datepicker" data-date-autoclose="true">
+                                                </div>
+                                                <div class="form-group">
                                                     <button class="btn btn-outline-info btn-rounded waves-effect width-md waves-light" type="submit">
                                                         <i class="fas fa-search">Search</i>
                                                     </button>

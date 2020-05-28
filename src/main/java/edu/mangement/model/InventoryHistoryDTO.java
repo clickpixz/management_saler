@@ -33,4 +33,8 @@ public class InventoryHistoryDTO {
     private Integer activeFlag;
     private ProductInStockDTO productInStock;
     private MemberDTO member;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fromDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date toDate;
 }

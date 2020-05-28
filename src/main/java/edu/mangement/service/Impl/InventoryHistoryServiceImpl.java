@@ -87,6 +87,15 @@ public class InventoryHistoryServiceImpl implements InventoryHistoryService {
                 appendStr.append(" and ih.type =:type ");
                 mapParams.put("type",inventoryHistoryDTO.getType());
             }
+            //check from date and to date
+            if (inventoryHistoryDTO.getFromDate() != null) {
+                appendStr.append(" and ih.updateDate >= :fromDate");
+                mapParams.put("fromDate", inventoryHistoryDTO.getFromDate());
+            }
+            if (inventoryHistoryDTO.getToDate() != null) {
+                appendStr.append(" and ih.updateDate <= :toDate");
+                mapParams.put("toDate", inventoryHistoryDTO.getToDate());
+            }
         }
         queryStr.append(appendStr);
         countQueryStr.append(appendStr);
