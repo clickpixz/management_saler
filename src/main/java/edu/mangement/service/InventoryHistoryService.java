@@ -1,6 +1,10 @@
 package edu.mangement.service;
 
+import edu.mangement.model.InventoryHistoryDTO;
+import edu.mangement.model.Paging;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -10,4 +14,5 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface InventoryHistoryService {
+    List<InventoryHistoryDTO> search(InventoryHistoryDTO inventoryHistoryDTO, Paging paging);
 }

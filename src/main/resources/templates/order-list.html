@@ -56,27 +56,23 @@
                                 <h5 class="header-title mb-2"> Projects</h5>
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-6 card-body">
-                                    <form th:action="@{/admin/product-in-stock/list/1}"
+                                    <form th:action="@{/admin/inventory-history/list/1}"
                                           th:object="${searchForm}" method="post" enctype="multipart/form-data"
                                           name="searchForm" id="searchForm"
                                             class="parsley-examples">
                                                 <div class="form-group">
-                                                    <label for="product.code">Code</label>
-                                                    <input id="product.code" type="text" th:field="*{product.code}"
+                                                    <label for="code">Inventory History Code</label>
+                                                    <input id="code" type="text" th:field="*{code}"
                                                            class="form-control" placeholder="Code...">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="product.category.id">Category</label>
-                                                    <select id="product.category.id" class="form-control" th:field="*{product.category.id}">
-                                                        <option value="">Select</option>
-                                                        <option th:each="category : ${allCategory}"
-                                                                th:value="${category.id}"
-                                                                th:text="${category.name}"></option>
-                                                    </select>
+                                                    <label for="product.code">Product Code</label>
+                                                    <input id="product.code" type="text" th:field="*{productInStock.product.code}"
+                                                           class="form-control" placeholder="Code...">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="branch.id">Branch</label>
-                                                    <select id="branch.id" class="form-control" th:field="*{branch.id}">
+                                                    <select id="branch.id" class="form-control" th:field="*{productInStock.branch.id}">
                                                         <option value="">Select</option>
                                                         <option th:each="branch : ${allBranch}"
                                                                 th:value="${branch.id}"
@@ -84,22 +80,34 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="size">Size</label>
-                                                    <select class="form-control" th:field="*{size}" id="size">
+                                                    <label for="size">Type</label>
+                                                    <select class="form-control" th:field="*{type}" id="size">
                                                         <option value="">Select</option>
-                                                        <option value="S">S</option>
-                                                        <option value="M">M</option>
-                                                        <option value="L">L</option>
-                                                        <option value="XL">XL</option>
-                                                        <option value="XXL">XXL</option>
+                                                        <option value="1">Nhập kho</option>
+                                                        <option value="2">Xuất kho</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <button class="btn btn-primary" type="submit">
+                                                    <button class="btn btn-outline-info btn-rounded waves-effect width-md waves-light" type="submit">
                                                         <i class="fas fa-search">Search</i>
                                                     </button>
                                                 </div>
                                     </form>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-2">
+                                    <a class="btn btn-purple text-light" type="button" href="/admin/inventory-history/list">
+                                        <i class="mdi mdi-database-import"></i>
+                                        Nhập hàng
+                                    </a>
+                                </div>
+                                <div class="col-lg-2">
+                                    <a type="button" class="btn btn-info" href="/admin/inventory-history/list">
+                                        <i class="mdi mdi-database-export"></i>
+                                        Xuất hàng
+                                    </a>
                                 </div>
                             </div>
                             <div id="cardCollpase3" class="collapse show">
@@ -110,37 +118,41 @@
                                             <tr>
                                                 <th class="text-body">#</th>
                                                 <th class="text-center">Code</th>
-                                                <th class="text-center">Name</th>
-                                                <th class="text-center">Category</th>
-                                                <th class="text-center">Branch</th>
-                                                <th class="text-center">Size</th>
+                                                <th class="text-center">Mã Sản Phẩm</th>
+                                                <th class="text-center">Type</th>
                                                 <th class="text-center">Quantity</th>
-                                                <th class="text-center">Price</th>
-                                                <th class="text-center">Đăng bán</th>
+                                                <th class="text-center">Nhân viên</th>
+                                                <th class="text-center">Branch</th>
+                                                <th class="text-center">View</th>
+                                                <th class="text-center">Edit</th>
                                             </tr>
                                             </thead>
-                                            <tbody th:each="productInStock,productInStockStatus : ${productInStockDTOList}">
+                                            <tbody th:each="inventoryHistory,inventoryHistoryStatus : ${inventoryHistoryDTOList}">
                                             <tr>
-                                                <td th:text="${productInStockStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
-                                                <td th:text="${productInStock.product.code}"></td>
-                                                <td th:text="${productInStock.product.name}"></td>
-                                                <td th:text="${productInStock.product.category.name}"></td>
-                                                <td th:text="${productInStock.branch.name}"></td>
-                                                <td th:text="${productInStock.size}"></td>
-                                                <td th:text="${productInStock.quantity}"></td>
-                                                <td th:text="${productInStock.price}"></td>
-                                                <td>
-                                                    <a class="btn">
-                                                        <i class="fas fa-angle-double-up"></i>
+                                                <td th:text="${inventoryHistoryStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
+                                                <td th:text="${inventoryHistory.code}"></td>
+                                                <td th:text="${inventoryHistory.productInStock.product.code}"></td>
+                                                <td th:text="${inventoryHistory.type}"></td>
+                                                <td th:text="${inventoryHistory.quantity}"></td>
+                                                <td th:text="${inventoryHistory.member.name}"></td>
+                                                <td th:text="${inventoryHistory.productInStock.branch.name}"></td>
+                                                <th>
+                                                    <a class="btn btn-primary">
+                                                        View
                                                     </a>
-                                                </td>
+                                                </th>
+                                                <th>
+                                                    <a class="btn btn-block">
+                                                        Edit
+                                                    </a>
+                                                </th>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <nav aria-label="Page navigation example" th:fragment="menu-paging">
+                            <nav th:if="${paging.totalPages > 0}" aria-label="Page navigation example" th:fragment="menu-paging">
                                 <ul class="pagination justify-content-center">
                                     <li th:if="${paging.indexPage == 1}" class="page-item disabled">
                                         <a class="page-link" href="javascript:void(0);" tabindex="-1">Previous</a>
@@ -219,16 +231,16 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     function gotoPage(page) {
-        let url = '/admin/product-in-stock/list/' + page;
+        let url = '/admin/inventory-history/list/' + page;
         $('#searchForm').attr('action', url);
         $('#searchForm').submit();
     }
 
     $(document).ready(
         function () {
-            $('#adminproduct-in-stocklistId').addClass('mm-active').siblings()
+            $('#admininventory-historylistId').addClass('mm-active').siblings()
                 .removeClass('mm-active');
-            $('#adminproduct-in-stocklistId').parents('li').show();
+            $('#admininventory-historylistId').parents('li').show();
         });
     /*]]>*/
 </script>
