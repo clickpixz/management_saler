@@ -118,7 +118,8 @@
                                                 <td th:text="${invoice.totalOrder}"></td>
                                                 <td th:text="${invoice.updateDate}"></td>
                                                 <th>
-                                                    <a class="btn btn-primary text-light">
+                                                    <a th:href="@{'/admin/invoice-detail/list?invoiceId='+${invoice.id}}"
+                                                            class="btn btn-primary text-light">
                                                         <i class="fas fa-cubes"></i>
                                                         View
                                                     </a>

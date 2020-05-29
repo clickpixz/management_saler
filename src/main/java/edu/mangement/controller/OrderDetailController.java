@@ -43,7 +43,6 @@ public class OrderDetailController {
     @RequestMapping("/list/{page}")
     public String show(Model model, @RequestParam(name = "orderId", defaultValue = "0") Long orderId,
                        @PathVariable("page") int page) {
-        System.out.println("Order Id : "+orderId);
         Paging paging = Paging.builder().recordPerPage(10).indexPage(page).build();
         var orderDetailDTOList = orderDetailService
                 .findOrderDetailByOrderId(orderId, paging, PageRequest.of(page-1,10));

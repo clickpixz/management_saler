@@ -90,7 +90,7 @@
                                             </thead>
                                             <tbody th:each="menu,menuStatus : ${menuDTOList}">
                                             <tr>
-                                                <td th:text="${menuStatus.index+1}"></td>
+                                                <td th:text="${menuStatus.index+(paging.indexPage - 1)*paging.recordPerPage}"></td>
                                                 <td th:text="${menu.id}"></td>
                                                 <td th:text="${menu.name}"></td>
                                                 <td th:text="${menu.url}"></td>

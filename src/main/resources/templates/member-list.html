@@ -101,7 +101,7 @@
                                             </thead>
                                             <tbody th:each="member,memberStatus : ${memberDTOList}">
                                             <tr>
-                                                <td th:text="${memberStatus.index+1+ (paging.indexPage-1)*paging.recordPerPage}"></td>
+                                                <td th:text="${memberStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
                                                 <td th:text="${member.username}"></td>
                                                 <td th:text="${member.name}"></td>
                                                 <td th:text="${member.role.name}"></td>

@@ -51,7 +51,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public InvoiceDTO getById(Long id) {
         return Optional.ofNullable(id)
-                .map(invoiceId -> invoiceRepository.getOne(invoiceId))
+                .map(invoiceId -> invoiceRepository.getInvoiceByIdAndActiveFlag(invoiceId,1))
                 .map(InvoiceMapper::toDTO)
                 .orElse(null);
     }

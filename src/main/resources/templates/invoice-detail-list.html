@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8">
+    <title th:text="${tittlePage}"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Responsive bootstrap 4 admin template" name="description">
+    <meta content="Coderthemes" name="author">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <th:block th:replace="layout/Link-Top :: link-top"></th:block>
+
+</head>
+
+<body>
+
+<!-- Begin page -->
+<div id="wrapper">
+
+
+    <!-- Topbar Start -->
+    <div th:replace="layout/Topbar :: topbar"></div>
+    <!-- end Topbar --> <!-- ========== Left Sidebar Start ========== -->
+    <div th:replace="layout/LeftSidebar :: left-sidebar"></div>
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title" th:text="${tittlePage}"></h4>
+                            <div class="page-title-right">
+                                <ol class="breadcrumb p-0 m-0">
+                                    <li class="breadcrumb-item"><a href="#">Velonic</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                                    <li class="breadcrumb-item active">Data Table</li>
+                                </ol>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="">
+                        <div class="card">
+                            <div class="card-header py-3 bg-transparent row">
+                                <h5 class="header-title mb-2"> Projects</h5>
+                            </div>
+                            <div id="cardCollpase3" class="collapse show">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-nowrap mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-body">#</th>
+                                                <th class="text-center">Id</th>
+                                                <th class="text-center">Tên sản phẩm</th>
+                                                <th class="text-center">Mã sản phẩm</th>
+                                                <th class="text-center">Số lượng</th>
+                                                <th class="text-center">Giá</th>
+                                                <th class="text-center">Tổng</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody th:each="invoiceDetail,invoiceDetailStatus : ${invoiceDTO.getInvoiceDetails()}">
+                                            <tr>
+                                                <td th:text="${invoiceDetailStatus.index+1}"></td>
+                                                <td th:text="${invoiceDetail.id}"></td>
+                                                <td th:text="${invoiceDetail.items.productInStock.product.name}"></td>
+                                                <td th:text="${invoiceDetail.items.productInStock.product.code}"></td>
+                                                <td th:text="${invoiceDetail.quantity}"></td>
+                                                <td th:text="${invoiceDetail.unitPrice}"></td>
+                                                <td th:text="${invoiceDetail.unitPrice * invoiceDetail.quantity}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card-->
+
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- end container-fluid -->
+
+        </div>
+        <!-- end content -->
+
+
+        <!-- Footer Start -->
+        <div th:replace="layout/Footer :: footer"></div>
+        <!-- end Footer -->
+
+    </div>
+    <!-- end content -->
+
+
+    <!-- Footer Start -->
+    <div th:replace="layout/Footer :: footer"></div>
+    <!-- end Footer -->
+
+</div>
+
+<!-- ============================================================== -->
+<!-- End Page content -->
+<!-- ============================================================== -->
+
+</div>
+<!-- END wrapper -->
+
+
+<!-- Right Sidebar -->
+<div th:replace="layout/RightSidebar :: right-sidebar"></div>
+<!-- /Right-bar -->
+
+<!-- Right bar overlay-->
+<div th:replace="layout/Right-bar-overlay :: right-bar-overlay"></div>
+
+<div th:replace="layout/Link-Footer :: link-footer"></div>
+<th:block th:replace="branch-list :: script-required-datatable">
+</th:block>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(
+        function () {
+            $('#admininvoicelistId').addClass('mm-active').siblings()
+                .removeClass('mm-active');
+            $('#admininvoicelistId').parents('li').show();
+        });
+    /*]]>*/
+</script>
+<script th:replace="branch-list :: script-page-list"></script>
+</body>
+</html>
