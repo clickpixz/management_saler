@@ -54,41 +54,6 @@
                         <div class="card">
                             <div class="card-header py-3 bg-transparent row">
                                 <h5 class="header-title mb-2"> Projects</h5>
-                                <div class="col-lg-2"></div>
-                                <div class="col-lg-6 card-body">
-                                    <form th:action="@{/admin/order/list/1}"
-                                          th:object="${searchForm}" method="post" enctype="multipart/form-data"
-                                          name="searchForm" id="searchForm"
-                                            class="parsley-examples">
-                                                <div class="form-group">
-                                                    <label for="code">Customer Name</label>
-                                                    <input id="code" type="text" th:field="*{name}"
-                                                           class="form-control" placeholder="Name Customer...">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="upTo">Price Upto</label>
-                                                    <input id="upTo" type="text" th:field="*{upTo}"
-                                                           class="form-control" placeholder="Price...">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="fromDate">FromDate</label>
-                                                    <input id="fromDate" type="date" class="form-control"
-                                                           th:field="*{fromDate}" placeholder="mm/dd/yyyy"
-                                                           data-provide="datepicker" data-date-autoclose="true">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="toDate">To Date</label>
-                                                    <input id="toDate" type="date" class="form-control"
-                                                           th:field="*{toDate}" placeholder="mm/dd/yyyy"
-                                                           data-provide="datepicker" data-date-autoclose="true">
-                                                </div>
-                                                <div class="form-group">
-                                                    <button class="btn btn-outline-info btn-rounded waves-effect width-md waves-light" type="submit">
-                                                        <i class="fas fa-search">Search</i>
-                                                    </button>
-                                                </div>
-                                    </form>
-                                </div>
                             </div>
                             <div id="cardCollpase3" class="collapse show">
                                 <div class="card-body">
@@ -98,30 +63,22 @@
                                             <tr>
                                                 <th class="text-body">#</th>
                                                 <th class="text-center">Id</th>
-                                                <th class="text-center">Customer Name</th>
-                                                <th class="text-center">Địa Chỉ giao hàng</th>
-                                                <th class="text-center">Trạng thái giao hàng</th>
-                                                <th class="text-center">Total Order</th>
-                                                <th class="text-center">Thời gian</th>
-                                                <th class="text-center">View</th>
+                                                <th class="text-center">Tên sản phẩm</th>
+                                                <th class="text-center">Mã sản phẩm</th>
+                                                <th class="text-center">Số lượng</th>
+                                                <th class="text-center">Giá</th>
+                                                <th class="text-center">Tổng</th>
                                             </tr>
                                             </thead>
-                                            <tbody th:each="order,orderStatus : ${orderDTOList}">
+                                            <tbody th:each="orderDetail,orderDetailStatus : ${orderDetailDTOList}">
                                             <tr>
-                                                <td th:text="${orderStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
-                                                <td th:text="${order.id}"></td>
-                                                <td th:text="${order.customer.name}"></td>
-                                                <td th:text="${order.deliveryAddress}"></td>
-                                                <td th:text="${order.statusDelivery}"></td>
-                                                <td th:text="${order.totalOrder}"></td>
-                                                <td th:text="${order.updateDate}"></td>
-                                                <th>
-                                                    <a th:href="@{'/admin/order-detail/list/1?orderId='+${order.id}}"
-                                                            class="btn btn-primary text-light">
-                                                        <i class="fas fa-cubes"></i>
-                                                        View
-                                                    </a>
-                                                </th>
+                                                <td th:text="${orderDetailStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
+                                                <td th:text="${orderDetail.id}"></td>
+                                                <td th:text="${orderDetail.items.productInStock.product.name}"></td>
+                                                <td th:text="${orderDetail.items.productInStock.product.code}"></td>
+                                                <td th:text="${orderDetail.quantity}"></td>
+                                                <td th:text="${orderDetail.unitPrice}"></td>
+                                                <td></td>
                                             </tr>
                                             </tbody>
                                         </table>

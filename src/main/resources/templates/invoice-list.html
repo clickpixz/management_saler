@@ -56,7 +56,7 @@
                                 <h5 class="header-title mb-2"> Projects</h5>
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-6 card-body">
-                                    <form th:action="@{/admin/order/list/1}"
+                                    <form th:action="@{/admin/invoice/list/1}"
                                           th:object="${searchForm}" method="post" enctype="multipart/form-data"
                                           name="searchForm" id="searchForm"
                                             class="parsley-examples">
@@ -98,26 +98,27 @@
                                             <tr>
                                                 <th class="text-body">#</th>
                                                 <th class="text-center">Id</th>
-                                                <th class="text-center">Customer Name</th>
-                                                <th class="text-center">Địa Chỉ giao hàng</th>
-                                                <th class="text-center">Trạng thái giao hàng</th>
+                                                <th class="text-center">Nhân viên bán hàng</th>
+                                                <th class="text-center">Tên khách hàng</th>
+                                                <th class="text-center">Chi nhánh</th>
+                                                <th class="text-center">Phone</th>
                                                 <th class="text-center">Total Order</th>
                                                 <th class="text-center">Thời gian</th>
                                                 <th class="text-center">View</th>
                                             </tr>
                                             </thead>
-                                            <tbody th:each="order,orderStatus : ${orderDTOList}">
+                                            <tbody th:each="invoice,invoiceStatus : ${invoiceDTOList}">
                                             <tr>
-                                                <td th:text="${orderStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
-                                                <td th:text="${order.id}"></td>
-                                                <td th:text="${order.customer.name}"></td>
-                                                <td th:text="${order.deliveryAddress}"></td>
-                                                <td th:text="${order.statusDelivery}"></td>
-                                                <td th:text="${order.totalOrder}"></td>
-                                                <td th:text="${order.updateDate}"></td>
+                                                <td th:text="${invoiceStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
+                                                <td th:text="${invoice.id}"></td>
+                                                <td th:text="${invoice.member.name}"></td>
+                                                <td th:text="${invoice.nameCustomer}"></td>
+                                                <td th:text="${invoice.member.branch.name}"></td>
+                                                <td th:text="${invoice.phone}"></td>
+                                                <td th:text="${invoice.totalOrder}"></td>
+                                                <td th:text="${invoice.updateDate}"></td>
                                                 <th>
-                                                    <a th:href="@{'/admin/order-detail/list/1?orderId='+${order.id}}"
-                                                            class="btn btn-primary text-light">
+                                                    <a class="btn btn-primary text-light">
                                                         <i class="fas fa-cubes"></i>
                                                         View
                                                     </a>
@@ -207,16 +208,16 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     function gotoPage(page) {
-        let url = '/admin/order/list/' + page;
+        let url = '/admin/invoice/list/' + page;
         $('#searchForm').attr('action', url);
         $('#searchForm').submit();
     }
 
     $(document).ready(
         function () {
-            $('#adminorderlistId').addClass('mm-active').siblings()
+            $('#admininvoicelistId').addClass('mm-active').siblings()
                 .removeClass('mm-active');
-            $('#adminorderlistId').parents('li').show();
+            $('#admininvoicelistId').parents('li').show();
         });
     /*]]>*/
 </script>
