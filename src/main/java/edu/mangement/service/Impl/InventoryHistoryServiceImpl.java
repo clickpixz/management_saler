@@ -108,6 +108,10 @@ public class InventoryHistoryServiceImpl implements InventoryHistoryService {
                 1
         );
         if (productInStock != null) {
+//            kiem tra xem neu la xuat kho thi sl xuat phai nho hon hien co
+            if (formInventory.getType() == 0 && productInStock.getQuantity() < formInventory.getQuantity()) {
+                throw new Exception("export quantity > product quantity");
+            }
 //            san pham da co trong kho
             if (formInventory.getType() == 1) {
                 //nhap hang
@@ -126,6 +130,10 @@ public class InventoryHistoryServiceImpl implements InventoryHistoryService {
                     .build();
             inventoryHistoryRepository.save(inventoryHistory);
         } else {
+//            check xem neu la xuat kho thi san pham do phai ton tai
+            if(formInventory.getType()==0){
+                throw new Exception("Product not exits !!!");
+            }
 //            san pham chua co trong kho
 //            them moi
             var product = productRepository

@@ -146,7 +146,6 @@ public class MemberController {
     public String save(Model model, @ModelAttribute(value = "modelForm") @Valid MemberDTO memberDTO,
                        BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
-            System.out.println(memberDTO);
             if (memberDTO.getId() != null) {
                 model.addAttribute("tittlePage", "Edit Member");
             } else {

@@ -8,15 +8,18 @@ import edu.mangement.model.ProductInStockDTO;
 import edu.mangement.service.BranchService;
 import edu.mangement.service.CategoryService;
 import edu.mangement.service.InventoryHistoryService;
+import edu.mangement.validate.FormInventoryValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 
@@ -33,6 +36,8 @@ public class InventoryHistoryController {
     private InventoryHistoryService inventoryHistoryService;
     @Autowired
     private BranchService branchService;
+    @Autowired
+    private FormInventoryValidator formInventoryValidator;
     @InitBinder
     public void initBinder(WebDataBinder bind) {
         if (bind.getTarget() == null) {
@@ -40,6 +45,9 @@ public class InventoryHistoryController {
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         bind.registerCustomEditor(Data.class, new CustomDateEditor(simpleDateFormat, false));
+        if (bind.getTarget().getClass() == FormInventory.class) {
+            bind.setValidator(formInventoryValidator);
+        }
     }
 
     @RequestMapping(value = {"/list", "/list/"})
@@ -107,15 +115,20 @@ public class InventoryHistoryController {
         return "form-import-export";
     }
     @PostMapping("/import/save")
-    public String saveImport(Model model ,HttpSession session,
-                             @ModelAttribute("formInventory") FormInventory formInventory){
-        System.out.println(formInventory);
+    public String saveImport(Model model , HttpSession session,
+                             @ModelAttribute("formInventory") @Valid FormInventory formInventory,
+                             BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("formInventory",formInventory);
+            model.addAttribute("tittlePage","Nhập xuất kho");
+            return "form-import-export";
+        }
         try {
             inventoryHistoryService.importProduct(formInventory,session);
             session.setAttribute(Constant.MSG_SUCCESS, "Edit success !!!");
         } catch (Exception e) {
             e.printStackTrace();
-            session.setAttribute(Constant.MSG_ERROR, "Process Has ERROR !!!");
+            session.setAttribute(Constant.MSG_ERROR, e.getMessage());
         }
         return "redirect:/admin/inventory-history/list";
     }
