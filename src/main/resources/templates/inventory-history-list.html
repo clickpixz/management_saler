@@ -108,17 +108,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-3"></div>
                                 <div class="col-lg-2">
-                                    <a class="btn btn-purple text-light" type="button" href="/admin/inventory-history/list">
+                                    <a class="btn btn-purple text-light" type="button" th:href="@{/admin/inventory-history/import}">
                                         <i class="mdi mdi-database-import"></i>
-                                        Nhập hàng
-                                    </a>
-                                </div>
-                                <div class="col-lg-2">
-                                    <a type="button" class="btn btn-info" href="/admin/inventory-history/list">
-                                        <i class="mdi mdi-database-export"></i>
-                                        Xuất hàng
+                                        Nhập xuất hàng
                                     </a>
                                 </div>
                             </div>
@@ -133,8 +126,8 @@
                                                 <th class="text-center">Mã Sản Phẩm</th>
                                                 <th class="text-center">Type</th>
                                                 <th class="text-center">Quantity</th>
-                                                <th class="text-center">Nhân viên</th>
                                                 <th class="text-center">Branch</th>
+                                                <th class="text-center">Thời gian</th>
                                                 <th class="text-center">View</th>
                                                 <th class="text-center">Edit</th>
                                             </tr>
@@ -144,10 +137,11 @@
                                                 <td th:text="${inventoryHistoryStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
                                                 <td th:text="${inventoryHistory.code}"></td>
                                                 <td th:text="${inventoryHistory.productInStock.product.code}"></td>
-                                                <td th:text="${inventoryHistory.type}"></td>
+                                                <td th:if="${inventoryHistory.type}">Nhập hàng</td>
+                                                <td th:unless="${inventoryHistory.type}">Xuất hàng</td>
                                                 <td th:text="${inventoryHistory.quantity}"></td>
-                                                <td th:text="${inventoryHistory.member.name}"></td>
                                                 <td th:text="${inventoryHistory.productInStock.branch.name}"></td>
+                                                <td th:text="${#dates.format(inventoryHistory.updateDate,'yyyy-MM-dd HH:mm:ss')}"></td>
                                                 <th>
                                                     <a class="btn btn-primary" th:href="@{'/admin/inventory-history/view/'+ ${inventoryHistory.id}}">
                                                         View
@@ -170,7 +164,7 @@
                                         <a class="page-link" href="javascript:void(0);" tabindex="-1">Previous</a>
                                     </li>
                                     <li th:if="${paging.indexPage != 1}" class="page-item">
-                                        <a class="page-link"
+                                        <a class="page-link" type="button"
                                            th:onclick="'javascript:gotoPage('+${paging.indexPage - 1}+');'"
                                            tabindex="-1">Previous</a>
                                     </li>
@@ -180,13 +174,13 @@
                                                th:text="${i}"></a>
                                         </li>
                                         <li th:if="${paging.indexPage !=  i}" class="page-item">
-                                            <a class="page-link"
+                                            <a class="page-link" type="button"
                                                th:text="${i}" th:onclick="'javascript:gotoPage('+${i}+');'"></a>
                                         </li>
 
                                     </th:block>
                                     <li th:if="${paging.indexPage != paging.totalPages}" class="page-item">
-                                        <a class="page-link"
+                                        <a class="page-link" type="button"
                                            th:onclick="'javascript:gotoPage('+${paging.indexPage + 1}+');'">Next</a>
                                     </li>
                                     <li th:if="${paging.indexPage == paging.totalPages}" class="page-item disabled">

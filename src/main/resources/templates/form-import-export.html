@@ -56,94 +56,68 @@
                                     <div class="card-body">
                                         <h4 class="header-title mb-4" th:text="${tittlePage}"></h4>
 
-                                        <form class="parsley-examples" th:action="@{/admin/inventory-history/save}" th:object="${modelForm}" method="post" enctype="multipart/form-data">
-                                            <input type="hidden" name = "id" th:field="*{id}">
-                                            <input type="hidden" th:field="*{activeFlag}" name="activeFlag">
+                                        <form class="parsley-examples" th:action="@{/admin/inventory-history/import/save}"
+                                              th:object="${formInventory}" method="post" enctype="multipart/form-data">
 
                                             <div class="form-group">
-                                                <label for="inventory-history-id">Mã hóa đơn<span
+                                                <label for="inventory-code">Mã hóa đơn<span
                                                         class="text-danger">*</span></label>
-                                                <input type="text" th:field="*{code}" disabled="true"
+                                                <input type="text" th:field="*{inventoryCode}"
                                                        parsley-trigger="change" required="true" placeholder="Mã hóa đơn"
-                                                       class="form-control" id="inventory-history-id">
+                                                       class="form-control" id="inventory-code">
+                                                <span th:class="text-danger" th:if="${#fields.hasErrors('inventoryCode')}"
+                                                      th:errors="*{inventoryCode}"></span>
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="product-in-stock-id">Mã sản phẩm trong kho<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" th:field="*{productInStock.id}" th:disabled="${viewOnly}"
-                                                       parsley-trigger="change" required="true" placeholder="Mã sản phẩm trong kho"
-                                                       class="form-control" id="product-in-stock-id">
-                                            </div>
-
-                                            <div th:if="${viewOnly}" class="form-group">
                                                 <label for="product-code">Product code</label>
-                                                <input type="text"  th:field="*{productInStock.product.code}"
-                                                       th:disabled="${viewOnly}" placeholder="Product code ..."
-                                                       class="form-control" id="product-code">
-                                            </div>
-                                            <div th:if="${viewOnly}" class="form-group">
-                                                <label for="product-name">Product name</label>
-                                                <input type="text"  th:field="*{productInStock.product.name}"
-                                                       th:disabled="${viewOnly}" placeholder="Product name ..."
-                                                       class="form-control" id="product-name">
-                                            </div>
-                                            <div th:if="${viewOnly}" class="form-group">
-                                                <label for="branch">Chi nhánh</label>
-                                                <input type="text"  th:field="*{member.branch.name}"
-                                                       th:disabled="${viewOnly}"
-                                                       class="form-control" id="branch">
-                                            </div>
-
-                                            <div th:if="${viewOnly}" class="form-group">
-                                                <label for="member">Nhân viên<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" th:field="*{member.name}" th:disabled="${viewOnly}"
-                                                       required="true" placeholder="Nhân viên"
-                                                       class="form-control" id="member">
+                                                <input type="text"  th:field="*{productCode}"
+                                                       placeholder="Product code ..." class="form-control" id="product-code">
+                                                <span th:class="text-danger" th:if="${#fields.hasErrors('productCode')}"
+                                                      th:errors="*{productCode}"></span>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="type">Loại</label>
-                                                <select th:field="*{type}" id="type" name="type" th:disabled="${viewOnly}">
+                                                <select th:field="*{type}" id="type" name="type">
                                                     <option value="1" th:selected="*{type == 1}">Nhập hàng</option>
                                                     <option value="0" th:selected="*{type == 0}">Xuất hàng</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="size">Kích cỡ</label>
+                                                <select th:field="*{size}" id="size" name="size">
+                                                    <option value="S">S</option>
+                                                    <option value="M">M</option>
+                                                    <option value="L">L</option>
+                                                    <option value="XL">XL</option>
+                                                    <option value="XXL">XXL</option>
                                                 </select>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="quantity">Số lượng</label>
-                                                <input type="number" th:field="*{quantity}" th:disabled="${viewOnly}" id="quantity"
+                                                <input type="number" th:field="*{quantity}" id="quantity"
                                                       required="true"    placeholder="Quantity ... " class="form-control">
                                             </div>
+
                                             <div class="form-group">
                                                 <label for="price">Giá</label>
-                                                <input type="number" th:field="*{productInStock.price}" th:disabled="${viewOnly}" id="price"
+                                                <input type="number" th:field="*{price}" id="price"
                                                       required="true"    placeholder="Price ... " class="form-control">
                                             </div>
 
-                                            <div th:if="${viewOnly}" class="form-group">
-                                                <label for="createDate">Ngày tạo</label>
-                                                <input type="text" th:field="*{createDate}" th:disabled="${viewOnly}"
-                                                       id="createDate" class="form-control">
-                                            </div>
-
-                                            <div th:if="${viewOnly}" class="form-group">
-                                                <label for="updateDate">Ngày sửa gần nhất</label>
-                                                <input type="text" th:field="*{updateDate}" th:disabled="${viewOnly}"
-                                                       id="updateDate" class="form-control">
-                                            </div>
                                             <div class="form-group">
                                                 <label for="description">Mô tả</label>
-                                                <textarea type="text" th:field="*{description}" th:disabled="${viewOnly}"
+                                                <textarea type="text" th:field="*{description}"
                                                           id="description" class="form-control"></textarea>
                                             </div>
 
                                             <div class="form-group text-right mb-0">
-                                                <button class="btn btn-primary waves-effect waves-light mr-1" th:disabled="${viewOnly}" type="submit">
+                                                <button class="btn btn-primary waves-effect waves-light mr-1"type="submit">
                                                     Submit
                                                 </button>
-                                                <button type="reset" th:disabled="${viewOnly}" class="btn btn-secondary waves-effect waves-light">
+                                                <button type="reset" class="btn btn-secondary waves-effect waves-light">
                                                     Cancel
                                                 </button>
                                             </div>

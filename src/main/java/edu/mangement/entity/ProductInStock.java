@@ -31,6 +31,13 @@ import java.util.List;
 @ToString(exclude = {"inventoryHistories","items"})
 @EntityListeners(AuditingEntityListener.class)
 @Indexed
+@NamedQueries(
+        @NamedQuery(name = "ProductInStock.checkProductInStockExits",
+                query = "SELECT p FROM ProductInStock p where p.product.code =:productCode" +
+                        " and p.size =:size and p.branch.id =:branchId and p.price =:price and " +
+                        "p.activeFlag =:activeFlag"
+        )
+)
 public class ProductInStock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

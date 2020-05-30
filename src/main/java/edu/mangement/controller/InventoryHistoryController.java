@@ -1,6 +1,7 @@
 package edu.mangement.controller;
 
 import edu.mangement.constant.Constant;
+import edu.mangement.model.FormInventory;
 import edu.mangement.model.InventoryHistoryDTO;
 import edu.mangement.model.Paging;
 import edu.mangement.model.ProductInStockDTO;
@@ -98,5 +99,24 @@ public class InventoryHistoryController {
     public void initSelectBox(Model model){
         var allBranch = branchService.findAllBranch(Pageable.unpaged());
         model.addAttribute("allBranch",allBranch);
+    }
+    @GetMapping("/import")
+    public String showForm(Model model){
+        model.addAttribute("formInventory",new FormInventory());
+        model.addAttribute("tittlePage","Nhập xuất kho");
+        return "form-import-export";
+    }
+    @PostMapping("/import/save")
+    public String saveImport(Model model ,HttpSession session,
+                             @ModelAttribute("formInventory") FormInventory formInventory){
+        System.out.println(formInventory);
+        try {
+            inventoryHistoryService.importProduct(formInventory,session);
+            session.setAttribute(Constant.MSG_SUCCESS, "Edit success !!!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.setAttribute(Constant.MSG_ERROR, "Process Has ERROR !!!");
+        }
+        return "redirect:/admin/inventory-history/list";
     }
 }

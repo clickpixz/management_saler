@@ -3,13 +3,16 @@ package edu.mangement.service.Impl;
 import edu.mangement.constant.Constant;
 import edu.mangement.entity.InventoryHistory;
 import edu.mangement.entity.ProductInStock;
+import edu.mangement.mapper.BranchMapper;
 import edu.mangement.mapper.InventoryHistoryMapper;
 import edu.mangement.mapper.MemberMapper;
+import edu.mangement.model.FormInventory;
 import edu.mangement.model.InventoryHistoryDTO;
 import edu.mangement.model.MemberDTO;
 import edu.mangement.model.Paging;
 import edu.mangement.repository.InventoryHistoryRepository;
 import edu.mangement.repository.ProductInStockRepository;
+import edu.mangement.repository.ProductRepository;
 import edu.mangement.service.InventoryHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,6 +43,8 @@ public class InventoryHistoryServiceImpl implements InventoryHistoryService {
     private InventoryHistoryRepository inventoryHistoryRepository;
     @Autowired
     private ProductInStockRepository productInStockRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     public List<InventoryHistoryDTO> search(InventoryHistoryDTO inventoryHistoryDTO, Paging paging) {
@@ -92,17 +97,75 @@ public class InventoryHistoryServiceImpl implements InventoryHistoryService {
         }
     }
 
+    @Override
+    public void importProduct(FormInventory formInventory, HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute(Constant.USER_INFO);
+        var productInStock = productInStockRepository.checkProductInStockExits(
+                formInventory.getProductCode(),
+                formInventory.getSize(),
+                memberDTO.getBranch().getId(),
+                formInventory.getPrice(),
+                1
+        );
+        if (productInStock != null) {
+//            san pham da co trong kho
+            if (formInventory.getType() == 1) {
+                //nhap hang
+                productInStock.setQuantity(productInStock.getQuantity() + formInventory.getQuantity());
+            } else {
+                productInStock.setQuantity(productInStock.getQuantity() - formInventory.getQuantity());
+            }
+            var inventoryHistory = InventoryHistory.builder()
+                    .code(formInventory.getInventoryCode())
+                    .type(formInventory.getType())
+                    .quantity(formInventory.getQuantity())
+                    .description(formInventory.getDescription())
+                    .activeFlag(1)
+                    .member(MemberMapper.toEntity(memberDTO))
+                    .productInStock(productInStock)
+                    .build();
+            inventoryHistoryRepository.save(inventoryHistory);
+        } else {
+//            san pham chua co trong kho
+//            them moi
+            var product = productRepository
+                    .findProductByCodeAndActiveFlag(formInventory.getProductCode(), 1);
+            //them san pham moi vao kho
+            ProductInStock save = productInStockRepository.save(
+                    ProductInStock.builder()
+                            .size(formInventory.getSize())
+                            .quantity(formInventory.getQuantity())
+                            .price(formInventory.getPrice())
+                            .activeFlag(1)
+                            .branch(BranchMapper.toEntity(memberDTO.getBranch()))
+                            .product(product)
+                            .build()
+            );
+            //luu hoa don
+            var newInventoryHistory = InventoryHistory.builder()
+                    .code(formInventory.getInventoryCode())
+                    .type(formInventory.getType())
+                    .quantity(formInventory.getQuantity())
+                    .description(formInventory.getDescription())
+                    .activeFlag(1)
+                    .member(MemberMapper.toEntity(memberDTO))
+                    .productInStock(save)
+                    .build();
+            inventoryHistoryRepository.save(newInventoryHistory);
+        }
+    }
+
     private InventoryHistoryDTO calculateForProductChange(InventoryHistoryDTO inventoryHistoryDTO, InventoryHistory inventoryHistory, ProductInStock productInStock) {
         //neu ta doi san pham #
         //neu truoc do la hoa don them moi vao kho
 //                => delete cai san pham trong kho do di
 //                cap nhat lai san pham moi
         var p1 = inventoryHistory.getProductInStock();
-        if(inventoryHistory.getQuantity() == inventoryHistory.getProductInStock().getQuantity()){
+        if (inventoryHistory.getQuantity() == inventoryHistory.getProductInStock().getQuantity()) {
             p1.setActiveFlag(0);//remove
-            if(inventoryHistoryDTO.getType() == 1 ){
+            if (inventoryHistoryDTO.getType() == 1) {
                 productInStock.setQuantity(productInStock.getQuantity() + inventoryHistory.getQuantity());
-            }else if(inventoryHistoryDTO.getType() == 0 ){
+            } else if (inventoryHistoryDTO.getType() == 0) {
                 productInStock.setQuantity(productInStock.getQuantity() - inventoryHistory.getQuantity());
             }
             productInStockRepository.save(p1);
@@ -111,21 +174,21 @@ public class InventoryHistoryServiceImpl implements InventoryHistoryService {
             inventoryHistory.setType(inventoryHistoryDTO.getType());
             inventoryHistory.setQuantity(inventoryHistoryDTO.getQuantity());
             return InventoryHistoryMapper.toDTO(save);
-        }else {
+        } else {
 //                    khong phai them moi vao kho
 //                    cap nhat lai so luong
 //                    roll back lai sl cho sp cu
-            if(inventoryHistory.getType() == 1){
+            if (inventoryHistory.getType() == 1) {
                 p1.setQuantity(p1.getQuantity() - inventoryHistory.getQuantity());
-            }else {
-                p1.setQuantity(p1.getQuantity()+ inventoryHistory.getQuantity());
+            } else {
+                p1.setQuantity(p1.getQuantity() + inventoryHistory.getQuantity());
             }
             productInStockRepository.save(p1);
             //cap nhat so luong cho sp moi
-            if(inventoryHistoryDTO.getType() == 1){
+            if (inventoryHistoryDTO.getType() == 1) {
                 productInStock.setQuantity(productInStock.getQuantity() - inventoryHistoryDTO.getQuantity());
-            }else {
-                productInStock.setQuantity(productInStock.getQuantity()+ inventoryHistoryDTO.getQuantity());
+            } else {
+                productInStock.setQuantity(productInStock.getQuantity() + inventoryHistoryDTO.getQuantity());
             }
             inventoryHistory.setProductInStock(productInStock);
             var save = inventoryHistoryRepository.save(inventoryHistory);
@@ -142,18 +205,18 @@ public class InventoryHistoryServiceImpl implements InventoryHistoryService {
             var sl1 = p1.getQuantity() - inventoryHistory.getQuantity() + inventoryHistoryDTO.getQuantity();
             p1.setQuantity(sl1);
             inventoryHistory.setProductInStock(p1);
-        } else if (inventoryHistory.getType() ==  1 && inventoryHistoryDTO.getType() == 0) {
+        } else if (inventoryHistory.getType() == 1 && inventoryHistoryDTO.getType() == 0) {
 //              neu ban dau la nhap hang nhung lai la xuat hang
             var p2 = inventoryHistory.getProductInStock();
             var sl2 = p2.getQuantity() - inventoryHistory.getQuantity() - inventoryHistoryDTO.getQuantity();
             p2.setQuantity(sl2);
             inventoryHistory.setProductInStock(p2);
-        } else if(inventoryHistory.getType() == 0 && inventoryHistoryDTO.getType() == 0){
+        } else if (inventoryHistory.getType() == 0 && inventoryHistoryDTO.getType() == 0) {
             var p3 = inventoryHistory.getProductInStock();
             var sl3 = p3.getQuantity() + inventoryHistory.getQuantity() - inventoryHistoryDTO.getQuantity();
             p3.setQuantity(sl3);
             inventoryHistory.setProductInStock(p3);
-        } else if(inventoryHistory.getType() == 0 && inventoryHistoryDTO.getType() == 1){
+        } else if (inventoryHistory.getType() == 0 && inventoryHistoryDTO.getType() == 1) {
             var p4 = inventoryHistory.getProductInStock();
             var sl4 = p4.getQuantity() + inventoryHistory.getQuantity() + inventoryHistoryDTO.getQuantity();
             p4.setQuantity(sl4);

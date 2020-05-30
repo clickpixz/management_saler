@@ -1,5 +1,6 @@
 package edu.mangement.service;
 
+import edu.mangement.model.FormInventory;
 import edu.mangement.model.InventoryHistoryDTO;
 import edu.mangement.model.Paging;
 import org.springframework.stereotype.Service;
@@ -18,4 +19,5 @@ public interface InventoryHistoryService {
     List<InventoryHistoryDTO> search(InventoryHistoryDTO inventoryHistoryDTO, Paging paging);
     InventoryHistoryDTO findById(Long id);
     InventoryHistoryDTO editInventoryHistory(InventoryHistoryDTO inventoryHistoryDTO, HttpSession session) throws Exception;
+    void importProduct(FormInventory formInventory,HttpSession session) throws Exception;
 }
