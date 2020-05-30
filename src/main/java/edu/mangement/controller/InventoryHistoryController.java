@@ -13,10 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.xml.crypto.Data;
@@ -62,6 +59,41 @@ public class InventoryHistoryController {
         model.addAttribute("paging", paging);
         initSelectBox(model);
         return "inventory-history-list";
+    }
+    @GetMapping("/view/{id}")
+    public String view(Model model,@PathVariable("id") Long id){
+        var inventoryHistoryDTO = inventoryHistoryService.findById(id);
+        if (inventoryHistoryDTO != null) {
+            model.addAttribute("tittlePage", "Chi tiết chi đơn nhập xuất kho");
+            model.addAttribute("modelForm", inventoryHistoryDTO);
+            model.addAttribute("viewOnly", true);
+            return "inventory-history-action";
+        } else {
+            return "pages-404_alt";
+        }
+    }
+    @GetMapping("/edit/{id}")
+    public String edit(Model model,@PathVariable("id") Long id){
+        var inventoryHistoryDTO = inventoryHistoryService.findById(id);
+        if (inventoryHistoryDTO != null) {
+            model.addAttribute("tittlePage", "Sửa đơn nhập xuất kho");
+            model.addAttribute("modelForm", inventoryHistoryDTO);
+            model.addAttribute("viewOnly", false);
+            return "inventory-history-action";
+        } else {
+            return "pages-404_alt";
+        }
+    }
+    @PostMapping("/save")
+    public String save(HttpSession session,@ModelAttribute("modelForm") InventoryHistoryDTO inventoryHistoryDTO){
+        try {
+            inventoryHistoryService.editInventoryHistory(inventoryHistoryDTO,session);
+            session.setAttribute(Constant.MSG_SUCCESS, "Edit success !!!");
+        } catch (Exception e) {
+            session.setAttribute(Constant.MSG_ERROR, "Process Has ERROR !!!");
+            e.printStackTrace();
+        }
+        return "redirect:/admin/inventory-history/list";
     }
     public void initSelectBox(Model model){
         var allBranch = branchService.findAllBranch(Pageable.unpaged());

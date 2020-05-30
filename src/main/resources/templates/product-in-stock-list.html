@@ -140,7 +140,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <nav aria-label="Page navigation example" th:fragment="menu-paging">
+                            <nav th:if="${paging.totalPages > 0}" aria-label="Page navigation example" th:fragment="menu-paging">
                                 <ul class="pagination justify-content-center">
                                     <li th:if="${paging.indexPage == 1}" class="page-item disabled">
                                         <a class="page-link" href="javascript:void(0);" tabindex="-1">Previous</a>

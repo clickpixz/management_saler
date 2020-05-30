@@ -149,12 +149,12 @@
                                                 <td th:text="${inventoryHistory.member.name}"></td>
                                                 <td th:text="${inventoryHistory.productInStock.branch.name}"></td>
                                                 <th>
-                                                    <a class="btn btn-primary">
+                                                    <a class="btn btn-primary" th:href="@{'/admin/inventory-history/view/'+ ${inventoryHistory.id}}">
                                                         View
                                                     </a>
                                                 </th>
                                                 <th>
-                                                    <a class="btn btn-block">
+                                                    <a class="btn btn-info" th:href="@{'/admin/inventory-history/edit/'+${inventoryHistory.id}}">
                                                         Edit
                                                     </a>
                                                 </th>

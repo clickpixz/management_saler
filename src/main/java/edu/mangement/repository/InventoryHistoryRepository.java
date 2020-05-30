@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InventoryHistoryRepository extends JpaRepository<InventoryHistory,Long> {
     Page<InventoryHistory> findAllByActiveFlag(int activeFlag, Pageable pageable);
-    InventoryHistory findInventoryHistoryByActiveFlag(int activeFlag);
     InventoryHistory findInventoryHistoryByCodeAndActiveFlag(String code,int activeFlag);
+    InventoryHistory findInventoryHistoryByIdAndActiveFlag(Long id , int activeFlag);
 }

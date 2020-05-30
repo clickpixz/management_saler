@@ -4,6 +4,7 @@ import edu.mangement.model.InventoryHistoryDTO;
 import edu.mangement.model.Paging;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -15,4 +16,6 @@ import java.util.List;
 @Service
 public interface InventoryHistoryService {
     List<InventoryHistoryDTO> search(InventoryHistoryDTO inventoryHistoryDTO, Paging paging);
+    InventoryHistoryDTO findById(Long id);
+    InventoryHistoryDTO editInventoryHistory(InventoryHistoryDTO inventoryHistoryDTO, HttpSession session) throws Exception;
 }
