@@ -1,5 +1,6 @@
 package edu.mangement.service;
 
+import edu.mangement.model.FormPushProduct;
 import edu.mangement.model.Paging;
 import edu.mangement.model.ProductInStockDTO;
 import org.springframework.data.domain.Pageable;
@@ -19,4 +20,5 @@ public interface ProductInStockService {
     ProductInStockDTO findById(Long id);
     ProductInStockDTO findByCode(String code);
     List<ProductInStockDTO> search(ProductInStockDTO productInStockDTO, Paging paging);
+    void pushProduct(FormPushProduct formPushProduct) throws Exception;
 }

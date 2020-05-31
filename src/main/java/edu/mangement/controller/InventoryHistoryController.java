@@ -94,7 +94,7 @@ public class InventoryHistoryController {
         }
     }
     @PostMapping("/save")
-    public String save(HttpSession session,@ModelAttribute("modelForm") InventoryHistoryDTO inventoryHistoryDTO){
+    public String save(HttpSession session,@ModelAttribute("modelForm") @Valid InventoryHistoryDTO inventoryHistoryDTO){
         try {
             inventoryHistoryService.editInventoryHistory(inventoryHistoryDTO,session);
             session.setAttribute(Constant.MSG_SUCCESS, "Edit success !!!");

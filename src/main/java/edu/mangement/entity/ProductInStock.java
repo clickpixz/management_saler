@@ -28,16 +28,20 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"inventoryHistories","items"})
+@ToString(exclude = {"inventoryHistories", "items"})
 @EntityListeners(AuditingEntityListener.class)
 @Indexed
-@NamedQueries(
+@NamedQueries({
         @NamedQuery(name = "ProductInStock.checkProductInStockExits",
                 query = "SELECT p FROM ProductInStock p where p.product.code =:productCode" +
                         " and p.size =:size and p.branch.id =:branchId and p.price =:price and " +
                         "p.activeFlag =:activeFlag"
-        )
-)
+        ),
+        @NamedQuery(name = "ProductInStock.checkProductExitsInItems",
+                query = "SELECT p from ProductInStock p WHERE p.activeFlag =:activeFlag and p.id =:id" +
+                        " and p.id in (select i.id from Items i)"
+        ),
+})
 public class ProductInStock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

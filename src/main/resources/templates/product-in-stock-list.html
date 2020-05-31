@@ -9,6 +9,7 @@
     <meta content="Coderthemes" name="author">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <th:block th:replace="layout/Link-Top :: link-top"></th:block>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 
@@ -59,46 +60,47 @@
                                     <form th:action="@{/admin/product-in-stock/list/1}"
                                           th:object="${searchForm}" method="post" enctype="multipart/form-data"
                                           name="searchForm" id="searchForm"
-                                            class="parsley-examples">
-                                                <div class="form-group">
-                                                    <label for="product.code">Code</label>
-                                                    <input id="product.code" type="text" th:field="*{product.code}"
-                                                           class="form-control" placeholder="Code...">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="product.category.id">Category</label>
-                                                    <select id="product.category.id" class="form-control" th:field="*{product.category.id}">
-                                                        <option value="">Select</option>
-                                                        <option th:each="category : ${allCategory}"
-                                                                th:value="${category.id}"
-                                                                th:text="${category.name}"></option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="branch.id">Branch</label>
-                                                    <select id="branch.id" class="form-control" th:field="*{branch.id}">
-                                                        <option value="">Select</option>
-                                                        <option th:each="branch : ${allBranch}"
-                                                                th:value="${branch.id}"
-                                                                th:text="${branch.name}"></option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="size">Size</label>
-                                                    <select class="form-control" th:field="*{size}" id="size">
-                                                        <option value="">Select</option>
-                                                        <option value="S">S</option>
-                                                        <option value="M">M</option>
-                                                        <option value="L">L</option>
-                                                        <option value="XL">XL</option>
-                                                        <option value="XXL">XXL</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <button class="btn btn-primary" type="submit">
-                                                        <i class="fas fa-search">Search</i>
-                                                    </button>
-                                                </div>
+                                          class="parsley-examples">
+                                        <div class="form-group">
+                                            <label for="product.code">Code</label>
+                                            <input id="product.code" type="text" th:field="*{product.code}"
+                                                   class="form-control" placeholder="Code...">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="product.category.id">Category</label>
+                                            <select id="product.category.id" class="form-control"
+                                                    th:field="*{product.category.id}">
+                                                <option value="">Select</option>
+                                                <option th:each="category : ${allCategory}"
+                                                        th:value="${category.id}"
+                                                        th:text="${category.name}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="branch.id">Branch</label>
+                                            <select id="branch.id" class="form-control" th:field="*{branch.id}">
+                                                <option value="">Select</option>
+                                                <option th:each="branch : ${allBranch}"
+                                                        th:value="${branch.id}"
+                                                        th:text="${branch.name}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="size">Size</label>
+                                            <select class="form-control" th:field="*{size}" id="size">
+                                                <option value="">Select</option>
+                                                <option value="S">S</option>
+                                                <option value="M">M</option>
+                                                <option value="L">L</option>
+                                                <option value="XL">XL</option>
+                                                <option value="XXL">XXL</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" type="submit">
+                                                <i class="fas fa-search">Search</i>
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -110,12 +112,13 @@
                                             <tr>
                                                 <th class="text-body">#</th>
                                                 <th class="text-center">Code</th>
-                                                <th class="text-center">Name</th>
-                                                <th class="text-center">Category</th>
                                                 <th class="text-center">Branch</th>
                                                 <th class="text-center">Size</th>
                                                 <th class="text-center">Quantity</th>
                                                 <th class="text-center">Price</th>
+                                                <th class="text-center">View</th>
+                                                <th class="text-center">Edit</th>
+                                                <th class="text-center">Delete</th>
                                                 <th class="text-center">Đăng bán</th>
                                             </tr>
                                             </thead>
@@ -123,14 +126,28 @@
                                             <tr>
                                                 <td th:text="${productInStockStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
                                                 <td th:text="${productInStock.product.code}"></td>
-                                                <td th:text="${productInStock.product.name}"></td>
-                                                <td th:text="${productInStock.product.category.name}"></td>
                                                 <td th:text="${productInStock.branch.name}"></td>
                                                 <td th:text="${productInStock.size}"></td>
                                                 <td th:text="${productInStock.quantity}"></td>
                                                 <td th:text="${productInStock.price}"></td>
                                                 <td>
-                                                    <a class="btn">
+                                                    <a class="btn"
+                                                        <i class="fas fa-angle-double-up"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn"
+                                                        <i class="fas fa-angle-double-up"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn"
+                                                        <i class="fas fa-angle-double-up"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn"
+                                                       th:onclick="'javascript:fire_ajax_submit('+ ${productInStock.id} + ','+${productInStock.price}+');'">
                                                         <i class="fas fa-angle-double-up"></i>
                                                     </a>
                                                 </td>
@@ -140,7 +157,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <nav th:if="${paging.totalPages > 0}" aria-label="Page navigation example" th:fragment="menu-paging">
+                            <nav th:if="${paging.totalPages > 0}" aria-label="Page navigation example"
+                                 th:fragment="menu-paging">
                                 <ul class="pagination justify-content-center">
                                     <li th:if="${paging.indexPage == 1}" class="page-item disabled">
                                         <a class="page-link" href="javascript:void(0);" tabindex="-1">Previous</a>
@@ -230,6 +248,30 @@
                 .removeClass('mm-active');
             $('#adminproduct-in-stocklistId').parents('li').show();
         });
+
+    function fire_ajax_submit(p1, p2) {
+        var search = {}
+        search["productInStockId"] = p1;
+        search["price"] = p2;
+        // $("#btn-search").prop("disabled", true);
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/admin/api/v1/push",
+            data: JSON.stringify(search),
+            dataType: 'json',
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+                toastr["success"]("Success", data.message)
+            },
+            error: function (e) {
+                toastr["error"]("Error;", e.responseText)
+            }
+        });
+
+    }
+
     /*]]>*/
 </script>
 <script th:replace="branch-list :: script-page-list"></script>

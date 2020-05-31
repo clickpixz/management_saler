@@ -1,9 +1,12 @@
 package edu.mangement.service.Impl;
 
+import edu.mangement.entity.Items;
 import edu.mangement.entity.ProductInStock;
 import edu.mangement.mapper.ProductInStockMapper;
+import edu.mangement.model.FormPushProduct;
 import edu.mangement.model.Paging;
 import edu.mangement.model.ProductInStockDTO;
+import edu.mangement.repository.ItemsRepository;
 import edu.mangement.repository.ProductInStockRepository;
 import edu.mangement.service.ProductInStockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +33,8 @@ import java.util.stream.Collectors;
 public class ProductInStockServiceImpl implements ProductInStockService {
     @Autowired
     private ProductInStockRepository productInStockRepository;
+    @Autowired
+    private ItemsRepository itemsRepository;
     @Autowired
     private EntityManager entityManager;
 
@@ -82,6 +88,45 @@ public class ProductInStockServiceImpl implements ProductInStockService {
             paging.setTotalPages((int) Math.ceil(paging.getTotalRows() / (double) paging.getRecordPerPage()));
         }
         return query.getResultList().stream().map(ProductInStockMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public void pushProduct(FormPushProduct formPushProduct) throws Exception {
+        if (formPushProduct!=null&&formPushProduct.getProductInStockId()!=null&&formPushProduct.getPrice()!=null){
+            if(formPushProduct.getProductInStockId()<=0){
+                throw new Exception(("Product not exits !!!"));
+            }
+            if(formPushProduct.getPrice().compareTo(BigDecimal.ZERO)<1){
+                throw new Exception("Price must greater than 0");
+            }
+            var productInStock = productInStockRepository
+                    .findProductInStockByIdAndActiveFlag(formPushProduct.getProductInStockId(), 1);
+            if(productInStock==null){
+                throw new Exception("Product not Exits in Stock !!!");
+            }
+            List<Items> itemsList = itemsRepository.findItemsByProductInStock_Id(productInStock.getId());
+            if (itemsList==null||itemsList.isEmpty()){
+//                => them moi vao kho
+                var items = Items.builder()
+                        .price(formPushProduct.getPrice())
+                        .productInStock(productInStock)
+                        .activeFlag(1)
+                        .build();
+                itemsRepository.save(items);
+            }else {
+                var items = itemsList.get(0);
+                if(items.getActiveFlag() == 1){
+                    throw new Exception("Sản phẩm đã được đăng bán từ trước");
+                }else {
+//                    => active va sua gia
+                    items.setActiveFlag(1);
+                    items.setPrice(formPushProduct.getPrice());
+                    itemsRepository.save(items);
+                }
+            }
+        }else {
+            throw new Exception("Field must be not null");
+        }
     }
 
     private void prepareQuery(ProductInStockDTO productInStockDTO, StringBuilder queryStr, StringBuilder countQueryStr, Map<String, Object> mapParams) {
