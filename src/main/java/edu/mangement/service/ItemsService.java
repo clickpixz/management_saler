@@ -16,4 +16,7 @@ import java.util.List;
 @Service
 public interface ItemsService {
     List<ItemsDTO> search(ItemsDTO itemsDTO,Paging paging);
+    ItemsDTO findById(Long id);
+    void saveItems(ItemsDTO itemsDTO) throws Exception;
+
 }

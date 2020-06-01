@@ -100,10 +100,17 @@
                                                 <td th:text="${customer.username}"></td>
                                                 <td th:text="${customer.name}"></td>
                                                 <td th:text="${customer.email}"></td>
-                                                <td><a type="button" class="btn btn-primary waves-effect width-md waves-light"
-                                                       th:href="@{'/admin/customer/view/'+${customer.id}}">View</a></td>
-                                                <td><a type="button" class="btn btn-pink waves-effect width-md waves-light text-light"
-                                                       th:onclick="'javascript:confirmDelete('+${customer.id}+');'">Delete</a>
+                                                <td>
+                                                    <a type="button" class="btn btn-primary waves-effect width-md waves-light"
+                                                       th:href="@{'/admin/customer/view/'+${customer.id}}">
+                                                        View<i class="fas fa-street-view"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a type="button" class="btn btn-pink waves-effect width-md waves-light text-light"
+                                                       th:onclick="'javascript:confirmDelete('+${customer.id}+');'">
+                                                        Delete<i class="mdi mdi-delete-empty"></i>
+                                                    </a>
                                                 </td>
                                             </tr>
                                             </tbody>

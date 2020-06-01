@@ -21,4 +21,5 @@ public interface ProductInStockService {
     ProductInStockDTO findByCode(String code);
     List<ProductInStockDTO> search(ProductInStockDTO productInStockDTO, Paging paging);
     void pushProduct(FormPushProduct formPushProduct) throws Exception;
+    void saveProduct(ProductInStockDTO productInStockDTO) throws Exception;
 }

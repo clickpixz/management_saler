@@ -135,9 +135,8 @@ public class ProductController {
                 e.printStackTrace();
             }
             return "redirect:/admin/product/list";
-        } else {
-            return "pages-404_alt";
         }
+        return "pages-404_alt";
     }
 
     @PostMapping("/save")

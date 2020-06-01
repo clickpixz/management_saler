@@ -129,6 +129,11 @@ public class ProductInStockServiceImpl implements ProductInStockService {
         }
     }
 
+    @Override
+    public void saveProduct(ProductInStockDTO productInStockDTO) throws Exception {
+        productInStockRepository.save(ProductInStockMapper.toEntity(productInStockDTO));
+    }
+
     private void prepareQuery(ProductInStockDTO productInStockDTO, StringBuilder queryStr, StringBuilder countQueryStr, Map<String, Object> mapParams) {
         StringBuilder appendStr = new StringBuilder();
         //map params for search

@@ -4,6 +4,7 @@ import edu.mangement.entity.Items;
 import edu.mangement.mapper.ItemsMapper;
 import edu.mangement.model.ItemsDTO;
 import edu.mangement.model.Paging;
+import edu.mangement.repository.ItemsRepository;
 import edu.mangement.service.ItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import javax.persistence.TypedQuery;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -26,6 +28,8 @@ import java.util.stream.Collectors;
 public class ItemsServiceImpl implements ItemsService {
     @Autowired
     private EntityManager entityManager;
+    @Autowired
+    private ItemsRepository itemsRepository;
 
     @Override
     public List<ItemsDTO> search(ItemsDTO itemsDTO, Paging paging) {
@@ -38,6 +42,19 @@ public class ItemsServiceImpl implements ItemsService {
         prepareStatement(mapParams, query, countQuery);
         pagingProcessor(paging, query, countQuery);
         return query.getResultList().stream().map(ItemsMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public ItemsDTO findById(Long id) {
+        return Optional.ofNullable(id)
+                .map(itemsId->itemsRepository.getOne(itemsId))
+                .map(ItemsMapper::toDTO)
+                .orElse(null);
+    }
+
+    @Override
+    public void saveItems(ItemsDTO itemsDTO) throws Exception{
+        itemsRepository.save(ItemsMapper.toEntity(itemsDTO));
     }
 
     private void prepareStatement(Map<String, Object> mapParams, TypedQuery<Items> query, Query countQuery) {

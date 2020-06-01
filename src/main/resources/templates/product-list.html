@@ -62,7 +62,8 @@
                                 <h5 class="header-title mb-2"> Projects</h5>
                                 <div class="col-md-3">
                                     <form class="app-search" th:action="@{/admin/product/list/1}"
-                                          th:object="${searchForm}" method="post" enctype="multipart/form-data" name="searchForm" id="searchForm">
+                                          th:object="${searchForm}" method="post" enctype="multipart/form-data"
+                                          name="searchForm" id="searchForm">
                                         <div class="app-search-box">
                                             <div class="input-group">
                                                 <input type="text" th:field="*{field}"
@@ -108,12 +109,26 @@
                                                 <td>
                                                     <img th:src="@{'/'+${product.image}}" class="img-fluid">
                                                 </td>
-                                                <td><a type="button" class="btn btn-primary waves-effect width-md waves-light"
-                                                       th:href="@{'/admin/product/view/'+${product.id}}">View</a></td>
-                                                <td><a type="button" class="btn btn-primary waves-effect width-md waves-light"
-                                                       th:href="@{'/admin/product/edit/'+${product.id}}">Edit</a></td>
-                                                <td><a type="button" class="btn btn-pink waves-effect width-md waves-light text-light"
-                                                       th:onclick="'javascript:confirmDelete('+${product.id}+');'">Delete</a>
+                                                <td>
+                                                    <a type="button" class="waves-effect width-md waves-light"
+                                                       th:href="@{'/admin/product/view/'+${product.id}}">
+                                                        View
+                                                        <i class="fas fa-street-view"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a type="button" class="waves-effect width-md waves-light"
+                                                       th:href="@{'/admin/product/edit/'+${product.id}}">
+                                                        Edit
+                                                        <i class="mdi mdi-delete-empty"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a type="button" class="waves-effect width-md waves-light"
+                                                       th:onclick="'javascript:confirmDelete('+${product.id}+');'">
+                                                        Delete
+                                                        <i class="mdi mdi-delete-empty"></i>
+                                                    </a>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -137,7 +152,7 @@
                                         </li>
                                         <li th:if="${paging.indexPage !=  i}" class="page-item">
                                             <a class="page-link"
-                                               th:text="${i}" th:onclick="'javascript:gotoPage('+${i}+');'" ></a>
+                                               th:text="${i}" th:onclick="'javascript:gotoPage('+${i}+');'"></a>
                                         </li>
 
                                     </th:block>
@@ -198,12 +213,13 @@
 </th:block>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    function gotoPage(page){
-        let url = '/admin/product/list/'+page;
+    function gotoPage(page) {
+        let url = '/admin/product/list/' + page;
         console.log(url);
-        $('#searchForm').attr('action',url);
+        $('#searchForm').attr('action', url);
         $('#searchForm').submit();
     }
+
     function confirmDelete(id) {
         if (confirm('Do you want delete this record?')) {
             window.location.href = '/admin/product/delete/' + id;

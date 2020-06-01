@@ -131,23 +131,25 @@
                                                 <td th:text="${productInStock.quantity}"></td>
                                                 <td th:text="${productInStock.price}"></td>
                                                 <td>
-                                                    <a class="btn"
-                                                        <i class="fas fa-angle-double-up"></i>
+                                                    <a class="btn btn-link" th:href="@{'/admin/product-in-stock/view/'+${productInStock.id}}">
+                                                        <i class="fas fa-street-view"></i>
+                                                        View
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a class="btn"
-                                                        <i class="fas fa-angle-double-up"></i>
+                                                    <a class="btn btn-link" th:href="@{'/admin/product-in-stock/edit/'+${productInStock.id}}">
+                                                        <i class="fas fa-edit"></i>
+                                                        Edit
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a class="btn"
-                                                        <i class="fas fa-angle-double-up"></i>
+                                                    <a class="btn btn-link" th:onclick="'javascript:confirmDelete('+${productInStock.id}+');'">
+                                                        <i class="mdi mdi-delete-empty"></i>
+                                                        Delete
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a class="btn"
-                                                       th:onclick="'javascript:fire_ajax_submit('+ ${productInStock.id} + ','+${productInStock.price}+');'">
+                                                    <a class="btn btn-link" th:onclick="'javascript:fire_ajax_submit('+ ${productInStock.id} + ','+${productInStock.price}+');'">
                                                         <i class="fas fa-angle-double-up"></i>
                                                     </a>
                                                 </td>
@@ -236,6 +238,13 @@
 </th:block>
 <script th:inline="javascript">
     /*<![CDATA[*/
+
+    function confirmDelete(id) {
+        if (confirm('Do you want delete this record?')) {
+            window.location.href = '/admin/product-in-stock/delete/' + id;
+        }
+    }
+
     function gotoPage(page) {
         let url = '/admin/product-in-stock/list/' + page;
         $('#searchForm').attr('action', url);

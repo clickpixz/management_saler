@@ -110,11 +110,14 @@
                                             <tr>
                                                 <th class="text-body">#</th>
                                                 <th class="text-center">Code</th>
-                                                <th class="text-center">Name</th>
                                                 <th class="text-center">Category</th>
                                                 <th class="text-center">Branch</th>
                                                 <th class="text-center">Size</th>
                                                 <th class="text-center">Quantity</th>
+                                                <th class="text-center">Price</th>
+                                                <th class="text-center">View</th>
+                                                <th class="text-center">Edit</th>
+                                                <th class="text-center">Delete</th>
                                                 <th class="text-center">Gỡ</th>
                                             </tr>
                                             </thead>
@@ -122,11 +125,29 @@
                                             <tr>
                                                 <td th:text="${itemsStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
                                                 <td th:text="${items.productInStock.product.code}"></td>
-                                                <td th:text="${items.productInStock.product.name}"></td>
                                                 <td th:text="${items.productInStock.product.category.name}"></td>
                                                 <td th:text="${items.productInStock.branch.name}"></td>
                                                 <td th:text="${items.productInStock.size}"></td>
                                                 <td th:text="${items.productInStock.quantity}"></td>
+                                                <td th:text="${#numbers.formatDecimal( items.price , 2 ,0)+'$'}"></td>
+                                                <td>
+                                                    <a class="btn btn-link" th:href="@{'/admin/items/view/'+${items.id}}">
+                                                        <i class="fas fa-street-view"></i>
+                                                        View
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-link" th:href="@{'/admin/items/edit/'+${items.id}}">
+                                                        <i class="fas fa-edit"></i>
+                                                        Edit
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-link" th:onclick="'javascript:confirmDelete('+${items.id}+');'">
+                                                        <i class="mdi mdi-delete-empty"></i>
+                                                        Delete
+                                                    </a>
+                                                </td>
                                                 <td>
                                                     <a class="btn">
                                                         <i class="fas fa-hand-point-down"></i>
@@ -220,6 +241,11 @@
         let url = '/admin/items/list/' + page;
         $('#searchForm').attr('action', url);
         $('#searchForm').submit();
+    }
+    function confirmDelete(id) {
+        if (confirm('Do you want delete this record?')) {
+            window.location.href = '/admin/items/delete/' + id;
+        }
     }
 
     $(document).ready(

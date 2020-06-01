@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -19,14 +20,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Configuration
 public class ItemsDTO {
     private Long id;
+    @Min(value = 0,message = "Price must be greater than 0 ")
     private BigDecimal price;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
-    @Value("1")
     private Integer activeFlag;
     private ProductInStockDTO productInStock;
+    private Long productInStockId;
 }
