@@ -1,14 +1,11 @@
 package edu.mangement.controller.api;
 
-import edu.mangement.constant.Constant;
 import edu.mangement.model.FormPushProduct;
+import edu.mangement.model.form.api.AjaxResponse;
+import edu.mangement.model.form.api.FormRevokeItems;
+import edu.mangement.service.ItemsService;
 import edu.mangement.service.ProductInStockService;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,25 +22,30 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 @RequestMapping("/admin/api/v1")
-public class RestPushProduct {
+public class RestProduct {
     @Autowired
     private ProductInStockService productInStockService;
+    @Autowired
+    private ItemsService itemsService;
 
     @PostMapping("/push")
-    public ResponseEntity<?> pushUp(@RequestBody FormPushProduct formPushProduct, HttpSession session) {
+    public ResponseEntity<?> pushUp(@RequestBody FormPushProduct formPushProduct) {
         try {
             productInStockService.pushProduct(formPushProduct);
             return ResponseEntity.ok(new AjaxResponse("Insert success !!!"));
         } catch (Exception e) {
-            System.out.println("aaaa");
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    class AjaxResponse{
-        private String message;
+    @PostMapping("/revoke")
+    public ResponseEntity<?> revokeItems(@RequestBody FormRevokeItems formRevokeItems){
+        try {
+            itemsService.revokeItems(formRevokeItems);
+            return ResponseEntity.ok(new AjaxResponse("Revoke Success !!!"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

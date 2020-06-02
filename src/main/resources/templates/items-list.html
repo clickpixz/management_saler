@@ -149,7 +149,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a class="btn">
+                                                    <a class="btn btn-link" th:onclick="'javascript:fire_ajax_submit('+${items.id}+');'">
                                                         <i class="fas fa-hand-point-down"></i>
                                                     </a>
                                                 </td>
@@ -246,6 +246,27 @@
         if (confirm('Do you want delete this record?')) {
             window.location.href = '/admin/items/delete/' + id;
         }
+    }
+    function fire_ajax_submit(p1) {
+        var search = {}
+        search["itemsId"] = p1;
+        // $("#btn-search").prop("disabled", true);
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/admin/api/v1/revoke",
+            data: JSON.stringify(search),
+            dataType: 'json',
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+                toastr["success"]("Success", data.message)
+            },
+            error: function (e) {
+                toastr["error"]("Error;", e.responseText)
+            }
+        });
+
     }
 
     $(document).ready(

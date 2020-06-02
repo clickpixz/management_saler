@@ -4,6 +4,7 @@ import edu.mangement.entity.Items;
 import edu.mangement.mapper.ItemsMapper;
 import edu.mangement.model.ItemsDTO;
 import edu.mangement.model.Paging;
+import edu.mangement.model.form.api.FormRevokeItems;
 import edu.mangement.repository.ItemsRepository;
 import edu.mangement.service.ItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,22 @@ public class ItemsServiceImpl implements ItemsService {
     @Override
     public void saveItems(ItemsDTO itemsDTO) throws Exception{
         itemsRepository.save(ItemsMapper.toEntity(itemsDTO));
+    }
+
+    @Override
+    public void revokeItems(FormRevokeItems formRevokeItems) throws Exception{
+        if(formRevokeItems==null){
+            throw new Exception("Process Error !!!");
+        }
+        if(formRevokeItems.getItemsId()==null||formRevokeItems.getItemsId()<=0){
+            throw new Exception("Items Not Exits !!!");
+        }
+        Items items = itemsRepository.findItemsByIdAndActiveFlag(formRevokeItems.getItemsId(),1);
+        if(items==null){
+            throw new Exception("Items Not Exits !!!");
+        }
+        items.setActiveFlag(0);
+        itemsRepository.save(items);
     }
 
     private void prepareStatement(Map<String, Object> mapParams, TypedQuery<Items> query, Query countQuery) {

@@ -15,4 +15,5 @@ import java.util.List;
 @Repository
 public interface ItemsRepository extends JpaRepository<Items,Long> {
     List<Items> findItemsByProductInStock_Id(Long productInStockId);
+    Items findItemsByIdAndActiveFlag(Long id,int activeFlag);
 }
