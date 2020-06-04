@@ -1,11 +1,15 @@
 package edu.mangement.repository;
 
 import edu.mangement.entity.Customer;
+import edu.mangement.entity.sp.CustomerResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**

@@ -1,5 +1,6 @@
 package edu.mangement.service;
 
+import edu.mangement.entity.sp.CustomerResult;
 import edu.mangement.model.CustomerDTO;
 import edu.mangement.model.Paging;
 import edu.mangement.model.SearchForm;
@@ -7,6 +8,7 @@ import javafx.util.Pair;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,4 +24,5 @@ public interface CustomerService {
     CustomerDTO saveCustomer(CustomerDTO customerDTO) throws Exception;
     void deleteCustomer(CustomerDTO customerDTO) throws Exception;
     List<CustomerDTO> search(SearchForm searchForm, Paging paging);
+    List<CustomerResult> getNewCustomerByWeek(Date dateFrom);
 }

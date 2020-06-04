@@ -1,6 +1,7 @@
 package edu.mangement.service.Impl;
 
 import edu.mangement.entity.Customer;
+import edu.mangement.entity.sp.CustomerResult;
 import edu.mangement.mapper.CustomerMapper;
 import edu.mangement.model.CustomerDTO;
 import edu.mangement.model.Paging;
@@ -9,17 +10,14 @@ import edu.mangement.repository.CustomerRepository;
 import edu.mangement.service.CustomerService;
 import edu.mangement.service.FullTextSearchEngine;
 import javafx.util.Pair;
-import org.apache.lucene.search.Query;
-import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
-import org.hibernate.search.jpa.Search;
-import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,6 +35,8 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
     @Autowired
     private FullTextSearchEngine<Customer> fullTextSearchEngine;
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     public CustomerDTO findByCustomerId(Long id) {
@@ -77,5 +77,12 @@ public class CustomerServiceImpl implements CustomerService {
                         "username", "name", "address", "email", "phone", "birthday");
         List<Customer> resultList = fullTextQuery.getResultList();
         return resultList.stream().map(CustomerMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CustomerResult> getNewCustomerByWeek(Date dateFrom) {
+        return entityManager
+                .createNamedStoredProcedureQuery("Customer.getNewUserByWeek")
+                .setParameter("DATE_FROM",dateFrom).getResultList();
     }
 }

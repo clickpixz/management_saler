@@ -1,5 +1,6 @@
 package edu.mangement.entity;
 
+import edu.mangement.entity.sp.MenuResult;
 import lombok.*;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -28,11 +29,24 @@ import java.util.List;
 @ToString(exclude = "auths")
 @EntityListeners(AuditingEntityListener.class)
 @Configuration
-@NamedQueries(
+@NamedQueries({
         @NamedQuery(name = "Menu.findMenuUse",
-        query = "SELECT a.menu from Auth a inner join a.menu inner join a.role " +
+            query = "SELECT a.menu from Auth a inner join a.menu inner join a.role " +
                 "where a.role.id = :roleId and a.role.activeFlag = 1 and a.activeFlag=1 and a.permission =1" +
                 " and a.menu.activeFlag=1")
+        }
+)
+@SqlResultSetMapping(
+        name = "menuMapping",
+        classes = {
+                @ConstructorResult(
+                        targetClass = MenuResult.class,
+                        columns = {
+                                @ColumnResult(name = "dayOfTheMonth",type = String.class),
+                                @ColumnResult(name = "quantity",type = Long.class)
+                        }
+                )
+        }
 )
 @Indexed
 public class Menu {
