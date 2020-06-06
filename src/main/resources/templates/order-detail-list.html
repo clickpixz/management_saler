@@ -71,13 +71,13 @@
                                             </tr>
                                             </thead>
                                             <tbody th:each="orderDetail,orderDetailStatus : ${orderDetailDTOList}">
-                                            <tr>
+                                            <tr class="text-center">
                                                 <td th:text="${orderDetailStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
                                                 <td th:text="${orderDetail.id}"></td>
                                                 <td th:text="${orderDetail.items.productInStock.product.name}"></td>
                                                 <td th:text="${orderDetail.items.productInStock.product.code}"></td>
                                                 <td th:text="${orderDetail.quantity}"></td>
-                                                <td th:text="${orderDetail.unitPrice}"></td>
+                                                <td th:text="${#numbers.formatDecimal(orderDetail.unitPrice,3,0)}"></td>
                                                 <td></td>
                                             </tr>
                                             </tbody>

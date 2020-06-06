@@ -23,4 +23,5 @@ public interface ProductService {
     ProductDTO saveProduct(ProductDTO productDTO) throws Exception;
     void deleteProduct(ProductDTO productDTO) throws Exception;
     List<ProductDTO> searchProduct(SearchForm searchForm, Paging paging);
+    Long getTotalQuantityProductSell();
 }

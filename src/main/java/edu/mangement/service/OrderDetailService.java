@@ -1,10 +1,12 @@
 package edu.mangement.service;
 
+import edu.mangement.entity.sp.TopProductSell;
 import edu.mangement.model.OrderDetailDTO;
 import edu.mangement.model.Paging;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,4 +18,5 @@ import java.util.List;
 @Service
 public interface OrderDetailService {
     List<OrderDetailDTO> findOrderDetailByOrderId(Long orderId, Paging paging,Pageable pageable);
+    List<TopProductSell> getTopProductSell(Date date,Paging paging);
 }

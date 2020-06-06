@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +34,8 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private EntityManager entityManager;
     @Autowired
     private FullTextSearchEngine<Product> fullTextSearchEngine;
     @Override
@@ -94,5 +97,12 @@ public class ProductServiceImpl implements ProductService {
                         "name", "code", "material", "description");
         List<Product> resultList = fullTextQuery.getResultList();
         return resultList.stream().map(ProductMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Long getTotalQuantityProductSell() {
+        return Long.valueOf((Integer)entityManager.
+                createNamedStoredProcedureQuery("Product.getTotalQuantityProductSell")
+                .getSingleResult());
     }
 }

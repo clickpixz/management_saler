@@ -107,13 +107,13 @@
                                             </tr>
                                             </thead>
                                             <tbody th:each="order,orderStatus : ${orderDTOList}">
-                                            <tr>
+                                            <tr class="text-center">
                                                 <td th:text="${orderStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
                                                 <td th:text="${order.id}"></td>
                                                 <td th:text="${order.customer.name}"></td>
                                                 <td th:text="${order.deliveryAddress}"></td>
                                                 <td th:text="${order.statusDelivery}"></td>
-                                                <td th:text="${order.totalOrder}"></td>
+                                                <td th:text="${#numbers.formatDecimal(order.totalOrder,3,0)}"></td>
                                                 <td th:text="${order.updateDate}"></td>
                                                 <th>
                                                     <a th:href="@{'/admin/order-detail/list/1?orderId='+${order.id}}"
@@ -134,7 +134,7 @@
                                         <a class="page-link" href="javascript:void(0);" tabindex="-1">Previous</a>
                                     </li>
                                     <li th:if="${paging.indexPage != 1}" class="page-item">
-                                        <a class="page-link"
+                                        <a class="page-link" href="javascript:void(0);"
                                            th:onclick="'javascript:gotoPage('+${paging.indexPage - 1}+');'"
                                            tabindex="-1">Previous</a>
                                     </li>
@@ -144,13 +144,13 @@
                                                th:text="${i}"></a>
                                         </li>
                                         <li th:if="${paging.indexPage !=  i}" class="page-item">
-                                            <a class="page-link"
+                                            <a class="page-link" href="javascript:void(0);"
                                                th:text="${i}" th:onclick="'javascript:gotoPage('+${i}+');'"></a>
                                         </li>
 
                                     </th:block>
                                     <li th:if="${paging.indexPage != paging.totalPages}" class="page-item">
-                                        <a class="page-link"
+                                        <a class="page-link" href="javascript:void(0);"
                                            th:onclick="'javascript:gotoPage('+${paging.indexPage + 1}+');'">Next</a>
                                     </li>
                                     <li th:if="${paging.indexPage == paging.totalPages}" class="page-item disabled">

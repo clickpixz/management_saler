@@ -1,5 +1,6 @@
 package edu.mangement.entity;
 
+import edu.mangement.entity.sp.TopProductSell;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +30,32 @@ import java.util.Date;
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 @Indexed
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(
+                name = "OrderDetail.TopProductSell",
+                procedureName = "Sp_getTopProductSalerOnlineByMonth",
+                resultSetMappings = "TopProductSell",
+                parameters = {
+                        @StoredProcedureParameter(
+                                name = "DATE_FROM",
+                                type = Date.class,
+                                mode = ParameterMode.IN
+                        )
+                }
+        ),
+})
+@SqlResultSetMapping(
+        name = "TopProductSell",
+        classes = {
+                @ConstructorResult(
+                        targetClass = TopProductSell.class,
+                        columns = {
+                                @ColumnResult(name = "product_id", type = Long.class),
+                                @ColumnResult(name = "sl", type = Long.class)
+                        }
+                )
+        }
+)
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

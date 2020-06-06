@@ -115,7 +115,7 @@
                                                 <td th:text="${invoice.nameCustomer}"></td>
                                                 <td th:text="${invoice.member.branch.name}"></td>
                                                 <td th:text="${invoice.phone}"></td>
-                                                <td th:text="${invoice.totalOrder}"></td>
+                                                <td th:text="${#numbers.formatDecimal(invoice.totalOrder,2,0)}"></td>
                                                 <td th:text="${invoice.updateDate}"></td>
                                                 <th>
                                                     <a th:href="@{'/admin/invoice-detail/list?invoiceId='+${invoice.id}}"

@@ -26,6 +26,12 @@ import java.util.List;
 @ToString(exclude = "productInStocks")
 @EntityListeners(AuditingEntityListener.class)
 @Indexed
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(
+                name = "Product.getTotalQuantityProductSell",
+                procedureName = "Sp_getTotalQuantityProductSell"
+        )
+})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
