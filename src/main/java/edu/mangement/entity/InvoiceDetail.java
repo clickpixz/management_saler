@@ -31,6 +31,20 @@ import java.util.Date;
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 @Indexed
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(
+                name = "InvoiceDetail.getTopSeller",
+                procedureName = "Sp_getTopProductSalerOffline",
+                resultSetMappings = "TopProductSell",
+                parameters = {
+                        @StoredProcedureParameter(
+                                name = "DATE_FROM",
+                                type = Date.class,
+                                mode = ParameterMode.IN
+                        )
+                }
+        ),
+})
 public class InvoiceDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
