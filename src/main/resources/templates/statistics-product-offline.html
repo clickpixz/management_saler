@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+    <head>
+        <meta charset="utf-8">
+        <title th:text="${tittlePage}"></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Responsive bootstrap 4 admin template" name="description">
+        <meta content="Coderthemes" name="author">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <th:block th:replace="layout/Link-Top :: link-top"></th:block>
+        </th:block>
+        <script th:src="@{/assets/js/Chart.js}"></script>
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+
+            <!-- Topbar Start -->
+            <div th:replace="layout/Topbar :: topbar"></div>
+            <!-- end Topbar --> <!-- ========== Left Sidebar Start ========== -->
+            <div th:replace="layout/LeftSidebar :: left-sidebar"></div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <h4 class="page-title" th:text="${tittlePage}"></h4>
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb p-0 m-0">
+                                            <li class="breadcrumb-item"><a href="#">Velonic</a></li>
+                                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                                            <li class="breadcrumb-item active">Data Table</li>
+                                        </ol>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header py-3 bg-transparent">
+                                        <div class="card-widgets">
+                                            <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
+                                            <a data-toggle="collapse" href="#cardCollpase3" role="button" aria-expanded="false"
+                                               aria-controls="cardCollpase3"><i class="mdi mdi-minus"></i></a>
+                                            <a href="#" data-toggle="remove"><i class="mdi mdi-close"></i></a>
+                                        </div>
+                                        <h5 class="header-title mb-2" th:text="${tittleTable}"></h5>
+                                    </div>
+                                    <div id="cardCollpase" class="collapse show">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-nowrap mb-0">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="text-body">#</th>
+                                                        <th class="text-center">Product Name</th>
+                                                        <th class="text-center">Product Code</th>
+                                                        <th class="text-center">Category</th>
+                                                        <th class="text-center">Vendor</th>
+                                                        <th class="text-center">Quantity</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="text-center">
+                                                    <tr th:each="topProductSell,status : ${topProductSellsOffline}">
+                                                        <td th:text="${status.index+1}"></td>
+                                                        <th th:text="${topProductSell.productDTO.name}"></th>
+                                                        <th th:text="${topProductSell.productDTO.code}"></th>
+                                                        <th th:text="${topProductSell.productDTO.category.name}"></th>
+                                                        <th th:text="${topProductSell.productDTO.vendor.name}"></th>
+                                                        <th th:text="${topProductSell.quantity}"></th>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end card-->
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                    </div>
+                    <!-- end container-fluid -->
+
+                </div>
+                <!-- end content -->
+
+
+                <!-- Footer Start -->
+                <div th:replace="layout/Footer :: footer"></div>
+                <!-- end Footer -->
+
+            </div>
+                <!-- end content -->
+
+
+                <!-- Footer Start -->
+                <div th:replace="layout/Footer :: footer"></div>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- Right Sidebar -->
+        <div th:replace="layout/RightSidebar :: right-sidebar"></div>
+        <!-- /Right-bar -->
+
+        <!-- Right bar overlay-->
+        <div th:replace="layout/Right-bar-overlay :: right-bar-overlay"></div>
+
+        <div th:replace="layout/Link-Footer :: link-footer"></div>
+    <script>
+        $(document).ready(
+            function () {
+                $('#adminstatisticsinvoiceId').addClass('mm-active').siblings()
+                    .removeClass('mm-active');
+                $('#adminstatisticsinvoiceId').parents('li').show();
+            });
+    </script>
+        <script th:src="@{/assets/js/statistics-product-offline-init.js}">
+        </script>
+    </body>
+</html>

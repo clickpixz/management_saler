@@ -1,5 +1,6 @@
 package edu.mangement.entity;
 
+import edu.mangement.entity.sp.DayQuantityMapper;
 import lombok.*;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -20,7 +21,7 @@ import java.util.List;
  * TIME : 11:03 PM
  */
 @Entity
-@Table(name = "Orders" ,schema = "dbo",catalog = "CKTDDQ")
+@Table(name = "Orders", schema = "dbo", catalog = "CKTDDQ")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,6 +29,32 @@ import java.util.List;
 @ToString(exclude = "orderDetails")
 @EntityListeners(AuditingEntityListener.class)
 @Indexed
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(
+                name = "Order.countOrderByDay",
+                procedureName = "Sp_CountOrderByDay",
+                resultSetMappings = "DayQuantityMapper",
+                parameters = {
+                        @StoredProcedureParameter(
+                                name = "DATE_FROM",
+                                type = Date.class,
+                                mode = ParameterMode.IN
+                        )
+                }
+        ),
+})
+@SqlResultSetMapping(
+        name = "DayQuantityMapper",
+        classes = {
+                @ConstructorResult(
+                        targetClass = DayQuantityMapper.class,
+                        columns = {
+                                @ColumnResult(name = "DAY_IN_WEEK", type = String.class),
+                                @ColumnResult(name = "quantity", type = Long.class)
+                        }
+                )
+        }
+)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
