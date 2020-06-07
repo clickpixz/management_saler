@@ -1,5 +1,6 @@
 package edu.mangement.utils;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -10,8 +11,8 @@ import java.util.TreeMap;
  * TIME : 4:51 PM
  */
 public class MapAPIUtils {
-    public Map<String,Long> getMapDay(){
-        Map<String,Long> map = new TreeMap<>();
+    public static Map<String,Long> getMapDay(){
+        Map<String,Long> map = new LinkedHashMap<>();
         map.put(DAY.MonthDay,0L);
         map.put(DAY.Tuesday,0L);
         map.put(DAY.Wednesday,0L);

@@ -1,11 +1,14 @@
 package edu.mangement.service.Impl;
 
 import edu.mangement.entity.Order;
+import edu.mangement.entity.sp.DayQuantityMapper;
 import edu.mangement.mapper.OrderMapper;
 import edu.mangement.model.OrderDTO;
 import edu.mangement.model.OrderFilterForm;
 import edu.mangement.model.Paging;
 import edu.mangement.service.OrderService;
+import edu.mangement.utils.DateFormatUtils3;
+import edu.mangement.utils.MapAPIUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +44,17 @@ public class OrderServiceImpl implements OrderService {
         prepareStatement(mapParams, query, countQuery);
         pagingProcessor(paging, query, countQuery);
         return query.getResultList().stream().map(OrderMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<String, Long> countOrderByDay(Date date) {
+        var mapDay = MapAPIUtils.getMapDay();
+        List<DayQuantityMapper> resultList = entityManager.createNamedStoredProcedureQuery("Order.countOrderByDay")
+                .setParameter("DATE_FROM", date).getResultList();
+        resultList.forEach(dayQuantityMapper -> {
+            mapDay.put(dayQuantityMapper.getDay(),dayQuantityMapper.getQuantity());
+        });
+        return mapDay;
     }
 
     private void prepareStatement(Map<String, Object> mapParams, TypedQuery<Order> query, Query countQuery) {

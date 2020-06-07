@@ -27,6 +27,20 @@ import java.util.List;
 @ToString(exclude = "invoiceDetails")
 @EntityListeners(AuditingEntityListener.class)
 @Indexed
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(
+                name = "Invoice.countInvoiceByDay",
+                procedureName = "Sp_countInvoiceByDay",
+                resultSetMappings = "DayQuantityMapper",
+                parameters = {
+                        @StoredProcedureParameter(
+                                name = "DATE_FROM",
+                                type = Date.class,
+                                mode = ParameterMode.IN
+                        )
+                }
+        ),
+})
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

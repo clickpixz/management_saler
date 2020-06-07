@@ -5,7 +5,9 @@ import edu.mangement.model.OrderFilterForm;
 import edu.mangement.model.Paging;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA
@@ -17,4 +19,6 @@ import java.util.List;
 public interface InvoiceService {
     List<InvoiceDTO> search(OrderFilterForm orderFilterForm, Paging paging);
     InvoiceDTO getById(Long id);
+    Map<String,Long> countInvoiceByDay(Date date);
+
 }

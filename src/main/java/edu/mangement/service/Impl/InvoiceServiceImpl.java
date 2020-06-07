@@ -1,12 +1,14 @@
 package edu.mangement.service.Impl;
 
 import edu.mangement.entity.Invoice;
+import edu.mangement.entity.sp.DayQuantityMapper;
 import edu.mangement.mapper.InvoiceMapper;
 import edu.mangement.model.InvoiceDTO;
 import edu.mangement.model.OrderFilterForm;
 import edu.mangement.model.Paging;
 import edu.mangement.repository.InvoiceRepository;
 import edu.mangement.service.InvoiceService;
+import edu.mangement.utils.MapAPIUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,10 +17,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -54,6 +53,17 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .map(invoiceId -> invoiceRepository.getInvoiceByIdAndActiveFlag(invoiceId,1))
                 .map(InvoiceMapper::toDTO)
                 .orElse(null);
+    }
+
+    @Override
+    public Map<String, Long> countInvoiceByDay(Date date) {
+        var mapDay = MapAPIUtils.getMapDay();
+        List<DayQuantityMapper> resultList = entityManager.createNamedStoredProcedureQuery("Invoice.countInvoiceByDay")
+                .setParameter("DATE_FROM", date).getResultList();
+        resultList.forEach(dayQuantityMapper -> {
+            mapDay.put(dayQuantityMapper.getDay(),dayQuantityMapper.getQuantity());
+        });
+        return mapDay;
     }
 
     private void prepareStatement(Map<String, Object> mapParams, TypedQuery<Invoice> query, Query countQuery) {
