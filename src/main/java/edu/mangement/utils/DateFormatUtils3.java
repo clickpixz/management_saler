@@ -11,19 +11,13 @@ import java.util.Date;
  * TIME : 11:00 PM
  */
 public class DateFormatUtils3 {
-    private static SimpleDateFormat basicDateFormat = null;
+    public static SimpleDateFormat basicDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");;
     public static SimpleDateFormat getFormat(String pattern){
         return new SimpleDateFormat(pattern);
     }
-    public static SimpleDateFormat getBasicFormat(){
-        if(basicDateFormat==null){
-            basicDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        }
-        return basicDateFormat;
-    }
     public static Date getDateBasicType(String dateStr){
         try {
-            return getBasicFormat().parse(dateStr);
+            return basicDateFormat.parse(dateStr);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -31,7 +25,7 @@ public class DateFormatUtils3 {
     }
     public static Date parseBasicType(Date date){
         try {
-            return getBasicFormat().parse(String.valueOf(date));
+            return basicDateFormat.parse(String.valueOf(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }

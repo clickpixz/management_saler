@@ -17,10 +17,10 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 /**
  * Created by IntelliJ IDEA
@@ -83,6 +83,30 @@ public class CustomerServiceImpl implements CustomerService {
     public List<CustomerResult> getNewCustomerByWeek(Date dateFrom) {
         return entityManager
                 .createNamedStoredProcedureQuery("Customer.getNewUserByWeek")
-                .setParameter("DATE_FROM",dateFrom).getResultList();
+                .setParameter("DATE_FROM", dateFrom).getResultList();
+    }
+
+    @Override
+    public Map<String, Long> countCustomerRegisters30DaysLeft(Date date) {
+        List<CustomerResult> resultList = entityManager
+                .createNamedStoredProcedureQuery("Customer.countNewCustomer30DayLeft")
+                .setParameter("DATE_FROM", new Date()).getResultList();
+        LinkedHashMap<Long, Long> collect = resultList.stream()
+                .collect(Collectors.toMap(CustomerResult::getDateFrom,
+                        CustomerResult::getQuantity,
+                        (o, n) -> n,
+                        LinkedHashMap::new));
+//        double average = resultList.stream().mapToLong(CustomerResult::getQuantity).average().orElse(0);
+        Set<Long> longs = collect.keySet();
+        LocalDate localDate = LocalDate.now();
+        Map<String, Long> map = new LinkedHashMap<>();
+        LongStream.range(0, 30).forEach(value -> {
+            if (longs.contains(value)) {
+                map.put(localDate.minusDays(value).toString(), collect.get(value));
+            } else {
+                map.put(localDate.minusDays(value).toString(), 0L);
+            }
+        });
+       return map;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA
@@ -25,4 +26,5 @@ public interface CustomerService {
     void deleteCustomer(CustomerDTO customerDTO) throws Exception;
     List<CustomerDTO> search(SearchForm searchForm, Paging paging);
     List<CustomerResult> getNewCustomerByWeek(Date dateFrom);
+    Map<String, Long> countCustomerRegisters30DaysLeft(Date date);
 }

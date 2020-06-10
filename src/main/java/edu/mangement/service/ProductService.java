@@ -7,7 +7,9 @@ import javafx.util.Pair;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA
@@ -24,4 +26,5 @@ public interface ProductService {
     void deleteProduct(ProductDTO productDTO) throws Exception;
     List<ProductDTO> searchProduct(SearchForm searchForm, Paging paging);
     Long getTotalQuantityProductSell();
+    Map<String,Long> contProductSold(Date date,Long id);
 }

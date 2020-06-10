@@ -1,6 +1,7 @@
 package edu.mangement.service.Impl;
 
 import edu.mangement.entity.Product;
+import edu.mangement.entity.sp.DayQuantityMapper;
 import edu.mangement.mapper.ProductMapper;
 import edu.mangement.model.Paging;
 import edu.mangement.model.ProductDTO;
@@ -8,6 +9,7 @@ import edu.mangement.model.SearchForm;
 import edu.mangement.repository.ProductRepository;
 import edu.mangement.service.FullTextSearchEngine;
 import edu.mangement.service.ProductService;
+import edu.mangement.utils.DateFormatUtils3;
 import edu.mangement.utils.FileProcessUtils;
 import javafx.util.Pair;
 import org.apache.lucene.search.Query;
@@ -19,8 +21,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -104,5 +105,17 @@ public class ProductServiceImpl implements ProductService {
         return Long.valueOf((Integer)entityManager.
                 createNamedStoredProcedureQuery("Product.getTotalQuantityProductSell")
                 .getSingleResult());
+    }
+
+    @Override
+    public Map<String, Long> contProductSold(Date date, Long id) {
+        List<DayQuantityMapper> resultList = entityManager.createNamedStoredProcedureQuery("Product.countProductSoldInYear")
+                .setParameter("DATE_FROM", date)
+                .setParameter("productId", id)
+                .getResultList();
+        Map<String, Long> map = new LinkedHashMap<>();
+//        map.put("")
+//        resultList.stream().collect()
+        return null;
     }
 }

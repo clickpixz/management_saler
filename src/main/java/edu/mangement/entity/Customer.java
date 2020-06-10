@@ -38,6 +38,17 @@ import java.util.List;
                             mode = ParameterMode.IN
                     )
                 }
+        ),
+        @NamedStoredProcedureQuery(name = "Customer.countNewCustomer30DayLeft",
+                procedureName = "Sp_countNewCustomer30DayLeft",
+                resultSetMappings = "NewCustomerByWeek",
+                parameters = {
+                        @StoredProcedureParameter(
+                                name = "DATE_FROM",
+                                type = Date.class,
+                                mode = ParameterMode.IN
+                        )
+                }
         )
 })
 @SqlResultSetMapping(
@@ -46,8 +57,8 @@ import java.util.List;
                 @ConstructorResult(
                         targetClass = CustomerResult.class,
                         columns = {
-                                @ColumnResult(name = "DAY_ON_WEEK",type = String.class),
-                                @ColumnResult(name = "TOTAL_NEW_CUSTOMER",type = Long.class)
+                                @ColumnResult(name = "DAY_LEFT",type = Long.class),
+                                @ColumnResult(name = "QUANTITY",type = Long.class)
                         }
                 )
         }
