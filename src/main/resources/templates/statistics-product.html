@@ -58,6 +58,9 @@
                                         <button id="btn-search" class="btn btn-primary waves-effect waves-light mr-1" type="submit">
                                             Submit
                                         </button>
+                                        <button type="reset" class="btn btn-secondary waves-effect waves-light">
+                                            Cancel
+                                        </button>
                                     </div>
                                 </form>
 
@@ -113,92 +116,6 @@
         });
 </script>
 <script th:src="@{/assets/js/canvasjs.min.js}"></script>
-<script>
-    $(document).ready(function () {
-
-        $("#search-form").submit(function (event) {
-
-            //stop submit the form, we will post it manually.
-            event.preventDefault();
-
-            fire_ajax_submit();
-
-        });
-
-    });
-
-    function fire_ajax_submit() {
-
-        var search = {}
-        search["name"] = $("#product_code").val();
-        console.log(search)
-        $("#btn-search").prop("disabled", true);
-
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            url: "/api/search",
-            data: JSON.stringify(search),
-            dataType: 'json',
-            cache: false,
-            timeout: 600000,
-            success: function (data) {
-
-                var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
-                    + JSON.stringify(data, null, 4) + "&lt;/pre&gt;";
-                $('#feedback').html(json);
-
-                console.log("SUCCESS : ", data);
-                $("#btn-search").prop("disabled", false);
-
-            },
-            error: function (e) {
-                console.log("Error")
-            }
-        });
-
-    }
-</script>
-<script>
-    const url_api = "http://localhost:8080/admin/api/v1/customer";
-    const dataChart = [];
-    window.onload = async function () {
-        await getCustomerData();
-        var chart = new CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            title: {
-                text: "Customer Register 30 day left"
-            },
-            axisY: {
-                title: "Units Sold",
-                valueFormatString: "#",
-                suffix: "",
-                stripLines: [{
-                    value: 25,
-                    label: "Average"
-                }]
-            },
-            data: [{
-                yValueFormatString: "# Units",
-                xValueFormatString: "YYYY-MM-DD",
-                type: "spline",
-                dataPoints: dataChart
-            }]
-        });
-        chart.render();
-    }
-
-    async function getCustomerData() {
-        const response = await fetch(url_api);
-        const data = await response.json();
-        console.log(data.object)
-        for (const property in data.object) {
-            console.log(`${property}: ${data.object[property]}`);
-
-            dataChart.push({x: new Date(property), y: data.object[property]});
-        }
-        console.log(dataChart)
-    }
-</script>
+<script th:src="@{/assets/js/statistics-product.js}"></script>
 </body>
 </html>

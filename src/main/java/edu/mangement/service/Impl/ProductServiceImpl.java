@@ -1,6 +1,7 @@
 package edu.mangement.service.Impl;
 
 import edu.mangement.entity.Product;
+import edu.mangement.entity.sp.CustomerResult;
 import edu.mangement.entity.sp.DayQuantityMapper;
 import edu.mangement.mapper.ProductMapper;
 import edu.mangement.model.Paging;
@@ -9,11 +10,8 @@ import edu.mangement.model.SearchForm;
 import edu.mangement.repository.ProductRepository;
 import edu.mangement.service.FullTextSearchEngine;
 import edu.mangement.service.ProductService;
-import edu.mangement.utils.DateFormatUtils3;
 import edu.mangement.utils.FileProcessUtils;
 import javafx.util.Pair;
-import org.apache.lucene.search.Query;
-import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -21,8 +19,10 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 /**
  * Created by IntelliJ IDEA
@@ -39,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
     private EntityManager entityManager;
     @Autowired
     private FullTextSearchEngine<Product> fullTextSearchEngine;
+
     @Override
     public ProductDTO findProductById(Long id) {
         if (id != null) {
@@ -102,20 +103,43 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Long getTotalQuantityProductSell() {
-        return Long.valueOf((Integer)entityManager.
+        return Long.valueOf((Integer) entityManager.
                 createNamedStoredProcedureQuery("Product.getTotalQuantityProductSell")
                 .getSingleResult());
     }
 
     @Override
-    public Map<String, Long> contProductSold(Date date, Long id) {
-        List<DayQuantityMapper> resultList = entityManager.createNamedStoredProcedureQuery("Product.countProductSoldInYear")
+    public List<DayQuantityMapper> contProductSold(Date date, Long id) {
+        List<CustomerResult> resultList = entityManager
+                .createNamedStoredProcedureQuery("Product.countProductSoldInYear")
                 .setParameter("DATE_FROM", date)
                 .setParameter("productId", id)
                 .getResultList();
-        Map<String, Long> map = new LinkedHashMap<>();
-//        map.put("")
-//        resultList.stream().collect()
-        return null;
+        List<CustomerResult> resultList2 = entityManager
+                .createNamedStoredProcedureQuery("Product.countProductSoldInYear_2")
+                .setParameter("DATE_FROM", date)
+                .setParameter("productId", id)
+                .getResultList();
+        resultList.addAll(resultList2);
+        var collect = resultList.stream().collect(Collectors.toMap(
+                CustomerResult::getDateFrom, CustomerResult::getQuantity,
+                (o, n) -> o + n, LinkedHashMap::new));
+        var keys = collect.keySet();
+        List<DayQuantityMapper> list = new ArrayList<>();
+        var localDate = LocalDate.of(2020, 1, 1);
+        LongStream.range(1, 13).forEach(value -> {
+            DayQuantityMapper dayQuantityMapper;
+            if (keys.contains(value)) {
+                dayQuantityMapper = DayQuantityMapper.builder()
+                        .day(localDate.plusMonths(value - 1).toString())
+                        .quantity(collect.get(value)).build();
+            } else {
+                dayQuantityMapper = DayQuantityMapper.builder()
+                        .day(localDate.plusMonths(value - 1).toString())
+                        .quantity(0L).build();
+            }
+            list.add(dayQuantityMapper);
+        });
+        return list;
     }
 }

@@ -1,8 +1,11 @@
 package edu.mangement.model.form.api;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -13,6 +16,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class AjaxResponse {
     private String message;
+    private List<?> list;
+    private Long average;
+    public AjaxResponse(String message) {
+        this.message = message;
+    }
 }

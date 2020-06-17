@@ -1,9 +1,6 @@
 package edu.mangement;
 
-import edu.mangement.entity.sp.CustomerResult;
-import edu.mangement.entity.sp.DayQuantityMapper;
-import edu.mangement.service.InvoiceDetailService;
-import edu.mangement.service.OrderService;
+import edu.mangement.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,11 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.LongStream;
+import java.util.Date;
 
 @SpringBootApplication
 @EnableJpaAuditing
@@ -29,6 +22,8 @@ public class App implements CommandLineRunner {
 
     @Autowired
     private EntityManager entityManager;
+    @Autowired
+    private ProductService productService;
     @Override
     @Transactional
     public void run(String... args) throws Exception {

@@ -34,7 +34,24 @@ import java.util.List;
         @NamedStoredProcedureQuery(
                 name = "Product.countProductSoldInYear",
                 procedureName = "Sp_countProductSoldInYear",
-                resultSetMappings = "DayQuantityMapper",
+                resultSetMappings = "NewCustomerByWeek",
+                parameters = {
+                        @StoredProcedureParameter(
+                                name = "DATE_FROM",
+                                type = Date.class,
+                                mode = ParameterMode.IN
+                        ),
+                        @StoredProcedureParameter(
+                                name = "productId",
+                                type = Long.class,
+                                mode = ParameterMode.IN
+                        )
+                }
+        ),
+        @NamedStoredProcedureQuery(
+                name = "Product.countProductSoldInYear_2",
+                procedureName = "Sp_countProductSoldInYear_2",
+                resultSetMappings = "NewCustomerByWeek",
                 parameters = {
                         @StoredProcedureParameter(
                                 name = "DATE_FROM",
