@@ -11,12 +11,13 @@ import java.util.Date;
  * TIME : 11:00 PM
  */
 public class DateFormatUtils3 {
-    public static SimpleDateFormat basicDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");;
+    public static SimpleDateFormat basicDateFormat = null;
     public static SimpleDateFormat getFormat(String pattern){
         return new SimpleDateFormat(pattern);
     }
     public static Date getDateBasicType(String dateStr){
         try {
+            basicDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             return basicDateFormat.parse(dateStr);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -25,6 +26,7 @@ public class DateFormatUtils3 {
     }
     public static Date parseBasicType(Date date){
         try {
+            basicDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             return basicDateFormat.parse(String.valueOf(date));
         } catch (ParseException e) {
             e.printStackTrace();

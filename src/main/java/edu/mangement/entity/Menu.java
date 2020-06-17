@@ -32,7 +32,8 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Menu.findMenuUse",
             query = "SELECT a.menu from Auth a inner join a.menu inner join a.role " +
-                "where a.role.id = :roleId and a.role.activeFlag = 1 and a.activeFlag=1 and a.permission =1" +
+                "where a.role.id = :roleId and a.role.activeFlag = 1 and a.activeFlag=1 " +
+                    "and a.permission =1 and a.menu.mType = 0" +
                 " and a.menu.activeFlag=1")
         }
 )
@@ -69,6 +70,8 @@ public class Menu {
     private Date updateDate;
     @Value("1")
     private Integer activeFlag;
+    @Column(name = "Mtype")
+    private Integer mType;
     @OneToMany(mappedBy = "menu")
     private List<Auth> auths;
 }

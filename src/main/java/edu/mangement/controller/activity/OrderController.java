@@ -1,9 +1,11 @@
-package edu.mangement.controller;
+package edu.mangement.controller.activity;
 
 import edu.mangement.constant.Constant;
+import edu.mangement.model.InventoryHistoryDTO;
 import edu.mangement.model.OrderFilterForm;
 import edu.mangement.model.Paging;
-import edu.mangement.service.InvoiceService;
+import edu.mangement.service.BranchService;
+import edu.mangement.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -25,10 +27,10 @@ import java.text.SimpleDateFormat;
  * TIME : 2:43 PM
  */
 @Controller
-@RequestMapping("/admin/invoice")
-public class InvoiceController {
+@RequestMapping("/admin/order")
+public class OrderController {
     @Autowired
-    private InvoiceService invoiceService;
+    private OrderService orderService;
     @InitBinder
     public void initBinder(WebDataBinder bind) {
         if (bind.getTarget() == null) {
@@ -40,20 +42,20 @@ public class InvoiceController {
 
     @RequestMapping(value = {"/list", "/list/"})
     public String redirectShow() {
-        return "redirect:/admin/invoice/list/1";
+        return "redirect:/admin/order/list/1";
     }
 
     @RequestMapping("/list/{page}")
     public String show(@ModelAttribute("searchForm") OrderFilterForm orderFilterForm, Model model, @PathVariable("page") int page, HttpSession session) {
         Paging paging = Paging.builder().recordPerPage(2).indexPage(page).build();
-        var invoiceDTOList = invoiceService.search(orderFilterForm,paging);
+        var orderDTOList = orderService.search(orderFilterForm,paging);
         if (paging.getIndexPage() < page && paging.getTotalPages() > 0) {
             return "redirect:/admin/order/list/1";
         }
         Constant.sessionProcessor(model, session);
-        model.addAttribute("invoiceDTOList", invoiceDTOList);
-        model.addAttribute("tittlePage", "Danh sách các đơn hàng tại các chi nhánh");
+        model.addAttribute("orderDTOList", orderDTOList);
+        model.addAttribute("tittlePage", "Danh sách các đơn hàng online");
         model.addAttribute("paging", paging);
-        return "invoice-list";
+        return "order-list";
     }
 }

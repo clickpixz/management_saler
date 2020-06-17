@@ -1,8 +1,8 @@
-package edu.mangement.controller;
+package edu.mangement.controller.activity;
 
 import edu.mangement.constant.Constant;
-import edu.mangement.model.VendorDTO;
-import edu.mangement.service.VendorService;
+import edu.mangement.model.BranchDTO;
+import edu.mangement.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -24,10 +25,10 @@ import java.text.SimpleDateFormat;
  * TIME : 2:43 PM
  */
 @Controller
-@RequestMapping("/admin/vendor")
-public class VendorController {
+@RequestMapping("/admin/branch")
+public class BranchController {
     @Autowired
-    private VendorService vendorService;
+    private BranchService branchService;
 
     @InitBinder
     public void initBinder(WebDataBinder bind) {
@@ -40,35 +41,33 @@ public class VendorController {
 
     @RequestMapping(value = {"/list", "/list/"})
     public String redirectShow() {
-        return "redirect:/admin/vendor/list/1";
+        return "redirect:/admin/branch/list/1";
     }
 
     @GetMapping("/list/{page}")
     public String showCategoryList(Model model, @PathVariable("page") int page, HttpSession session) {
-        var vendorDTOList = vendorService.findAllVendor(PageRequest.of(page - 1, 5));
+        List<BranchDTO> branchDTOList = branchService.findAllBranch(PageRequest.of(page - 1, 5));
         Constant.sessionProcessor(model, session);
-        model.addAttribute("vendorDTOList", vendorDTOList);
-        model.addAttribute("tittlePage","Danh sách các Vendor");
-        model.addAttribute("nameAddButton","Thêm Vendor");
-        return "vendor-list";
+        model.addAttribute("branchDTOList", branchDTOList);
+        return "branch-list";
     }
 
     @GetMapping("/add")
     public String addBranch(Model model) {
-        model.addAttribute("tittlePage", "Thêm Vendor");
-        model.addAttribute("modelForm", new VendorDTO());
+        model.addAttribute("tittlePage", "Thêm chi nhánh");
+        model.addAttribute("modelForm", new BranchDTO());
         model.addAttribute("viewOnly", false);
-        return "vendor-action";
+        return "branch-action";
     }
 
     @GetMapping("/view/{id}")
     public String viewBranch(Model model, @PathVariable("id") Long id) {
-        var vendorDTO = vendorService.findVendorById(id);
-        if (vendorDTO != null) {
-            model.addAttribute("tittlePage", "Chi tiết Vendor");
-            model.addAttribute("modelForm", vendorDTO);
+        BranchDTO branchDTO = branchService.findBranchById(id);
+        if (branchDTO != null) {
+            model.addAttribute("tittlePage", "Chi tiết chi nhánh");
+            model.addAttribute("modelForm", branchDTO);
             model.addAttribute("viewOnly", true);
-            return "vendor-action";
+            return "branch-action";
         } else {
             return "pages-404_alt";
         }
@@ -76,12 +75,12 @@ public class VendorController {
 
     @GetMapping("/edit/{id}")
     public String editBranch(Model model, @PathVariable("id") Long id) {
-        var vendorDTO = vendorService.findVendorById(id);
-        if (vendorDTO != null) {
-            model.addAttribute("tittlePage", "Sửa Vendor");
-            model.addAttribute("modelForm", vendorDTO);
+        BranchDTO branchDTO = branchService.findBranchById(id);
+        if (branchDTO != null) {
+            model.addAttribute("tittlePage", "Sửa chi nhánh");
+            model.addAttribute("modelForm", branchDTO);
             model.addAttribute("viewOnly", false);
-            return "vendor-action";
+            return "branch-action";
         } else {
             return "pages-404_alt";
         }
@@ -89,50 +88,50 @@ public class VendorController {
 
     @GetMapping("/delete/{id}")
     public String deleteBranch(Model model, @PathVariable("id") Long id, HttpSession session) {
-        var vendorDTO = vendorService.findVendorById(id);
-        if (vendorDTO != null) {
+        BranchDTO branchDTO = branchService.findBranchById(id);
+        if (branchDTO != null) {
             try {
-                vendorService.deleteVendor(vendorDTO);
+                branchService.deleteBranch(branchDTO);
                 session.setAttribute(Constant.MSG_SUCCESS, "Delete Success !!!");
             } catch (Exception e) {
                 session.setAttribute(Constant.MSG_ERROR, "Delete has Error !!!");
                 e.printStackTrace();
             }
-            return "redirect:/admin/vendor/list";
+            return "redirect:/admin/branch/list";
         } else {
             return "pages-404_alt";
         }
     }
 
     @PostMapping("/save")
-    public String save(Model model, @ModelAttribute(value = "modelForm") @Valid VendorDTO vendorDTO,
+    public String save(Model model, @ModelAttribute(value = "modelForm") @Valid BranchDTO branchDTO,
                         BindingResult bindingResult,HttpSession session) {
         if (bindingResult.hasErrors()) {
-            if (vendorDTO.getId() != null) {
-                model.addAttribute("tittlePage", "Edit Vendor");
+            if (branchDTO.getId() != null) {
+                model.addAttribute("tittlePage", "Edit Branch");
             } else {
-                model.addAttribute("tittlePage", "Add Vendor");
+                model.addAttribute("tittlePage", "Add Branch");
             }
-            model.addAttribute("modelForm", vendorDTO);
+            model.addAttribute("modelForm", branchDTO);
             model.addAttribute("viewOnly", false);
-            return "vendor-action";
+            return "branch-action";
         }
         var msg = "";
         try {
-            vendorDTO.setActiveFlag(1);
-            vendorService.saveVendor(vendorDTO);
-            if (vendorDTO.getId() != null) {
+            branchDTO.setActiveFlag(1);
+            branchService.saveBranch(branchDTO);
+            if (branchDTO.getId() != null) {
 //            => method = update
-                msg = "Save Vendor Success !!!";
+                msg = "Save Branch Success !!!";
             } else {
 //                method = add
-                msg = "Add Vendor Success !!!";
+                msg = "Add Branch Success !!!";
             }
             session.setAttribute(Constant.MSG_SUCCESS, msg);
         } catch (Exception e) {
             session.setAttribute(Constant.MSG_ERROR, "Process Has ERROR !!!");
             e.printStackTrace();
         }
-        return "redirect:/admin/vendor/list";
+        return "redirect:/admin/branch/list";
     }
 }

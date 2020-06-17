@@ -1,4 +1,4 @@
-package edu.mangement.controller;
+package edu.mangement.controller.activity;
 
 import edu.mangement.model.OrderFilterForm;
 import edu.mangement.model.Paging;

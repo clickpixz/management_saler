@@ -1,4 +1,4 @@
-package edu.mangement.controller;
+package edu.mangement.controller.activity;
 
 import edu.mangement.constant.Constant;
 import edu.mangement.model.*;

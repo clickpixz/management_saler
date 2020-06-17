@@ -1,13 +1,13 @@
-package edu.mangement.controller;
+package edu.mangement.controller.activity;
 
 import edu.mangement.constant.Constant;
-import edu.mangement.entity.ProductInStock;
-import edu.mangement.model.ItemsDTO;
+import edu.mangement.model.BranchDTO;
 import edu.mangement.model.Paging;
+import edu.mangement.model.ProductDTO;
 import edu.mangement.model.ProductInStockDTO;
 import edu.mangement.service.BranchService;
 import edu.mangement.service.CategoryService;
-import edu.mangement.service.ItemsService;
+import edu.mangement.service.ProductInStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Pageable;
@@ -29,15 +29,14 @@ import java.text.SimpleDateFormat;
  * TIME : 2:43 PM
  */
 @Controller
-@RequestMapping("/admin/items")
-public class ItemsController {
+@RequestMapping("/admin/product-in-stock")
+public class ProductInStockController {
     @Autowired
-    private ItemsService itemsService;
+    private ProductInStockService productInStockService;
     @Autowired
     private CategoryService categoryService;
     @Autowired
     private BranchService branchService;
-
     @InitBinder
     public void initBinder(WebDataBinder bind) {
         if (bind.getTarget() == null) {
@@ -49,93 +48,96 @@ public class ItemsController {
 
     @RequestMapping(value = {"/list", "/list/"})
     public String redirectShow() {
-        return "redirect:/admin/items/list/1";
+        return "redirect:/admin/product-in-stock/list/1";
     }
 
     @RequestMapping("/list/{page}")
-    public String show(@ModelAttribute("searchForm") ItemsDTO itemsDTO, Model model, @PathVariable("page") int page, HttpSession session) {
+    public String show(@ModelAttribute("searchForm") ProductInStockDTO productInStockDTO, Model model, @PathVariable("page") int page, HttpSession session) {
         Paging paging = Paging.builder().recordPerPage(2).indexPage(page).build();
-        var itemsDTOList = itemsService.search(itemsDTO, paging);
+        var productInStockDTOList = productInStockService.search(productInStockDTO,paging);
         if (paging.getIndexPage() < page && paging.getTotalPages() > 0) {
             return "redirect:/admin/product-in-stock/list/1";
         }
         Constant.sessionProcessor(model, session);
-        model.addAttribute("itemsDTOList", itemsDTOList);
-        model.addAttribute("tittlePage", "Danh sách các Sản Phẩm đang được bán");
+        model.addAttribute("productInStockDTOList", productInStockDTOList);
+        model.addAttribute("tittlePage", "Danh sách các Sản Phẩm trong kho");
         model.addAttribute("paging", paging);
         initSelectBox(model);
-        return "items-list";
+        return "product-in-stock-list";
     }
-
+    public void initSelectBox(Model model){
+        var allCategory = categoryService.findAllCategory(Pageable.unpaged());
+        var allBranch = branchService.findAllBranch(Pageable.unpaged());
+        model.addAttribute("allCategory",allCategory);
+        model.addAttribute("allBranch",allBranch);
+    }
     @GetMapping("/view/{id}")
     public String view(Model model, @PathVariable("id") Long id) {
-        var items = itemsService.findById(id);
-        if (items != null) {
-            items.setProductInStockId(items.getProductInStock().getId());
-            model.addAttribute("tittlePage", "Chi tiết sản phẩm đăng bán");
+        var productInStockDTO = productInStockService.findById(id);
+        if (productInStockDTO != null) {
+            productInStockDTO.setProductId(productInStockDTO.getProductId());
+            productInStockDTO.setBranchId(productInStockDTO.getBranch().getId());
+            model.addAttribute("tittlePage", "Chi tiết sản phẩm trong kho");
             model.addAttribute("viewOnly", true);
-            model.addAttribute("modelForm", items);
-            return "items-action";
+            model.addAttribute("modelForm", productInStockDTO);
+            return "product-in-stock-action";
         }
         return "pages-404_alt";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable("id") Long id) {
-        var items = itemsService.findById(id);
-        if (items != null) {
-            items.setProductInStockId(items.getProductInStock().getId());
-            model.addAttribute("tittlePage", "Sửa sản phẩm đăng bán");
+        var productInStockDTO = productInStockService.findById(id);
+        if (productInStockDTO != null) {
+            productInStockDTO.setProductId(productInStockDTO.getProduct().getId());
+            productInStockDTO.setBranchId(productInStockDTO.getBranch().getId());
+            model.addAttribute("tittlePage", "Sửa sản phẩm trong kho");
             model.addAttribute("viewOnly", false);
-            model.addAttribute("modelForm", items);
-            return "items-action";
+            model.addAttribute("modelForm", productInStockDTO);
+            return "product-in-stock-action";
         }
         return "pages-404_alt";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(HttpSession session, @PathVariable("id") Long id) {
-        var items = itemsService.findById(id);
-        if (items != null) {
+        var productInStockDTO = productInStockService.findById(id);
+        if (productInStockDTO != null) {
             try {
-                items.setActiveFlag(0);
-                itemsService.saveItems(items);
+                productInStockDTO.setActiveFlag(0);
+                productInStockService.saveProduct(productInStockDTO);
                 session.setAttribute(Constant.MSG_SUCCESS, "Delete Success !!!");
             } catch (Exception e) {
                 session.setAttribute(Constant.MSG_ERROR, "Delete has Error !!!");
                 e.printStackTrace();
             }
-            return "redirect:/admin/items/list/1";
+            return "redirect:/admin/product-in-stock/list/1";
         }
         return "pages-404_alt";
     }
 
     @PostMapping("/save")
-    public String save(Model model, @ModelAttribute(value = "modelForm") @Valid ItemsDTO itemsDTO,
+    public String save(Model model, @ModelAttribute(value = "modelForm") @Valid ProductInStockDTO productInStockDTO,
                        BindingResult bindingResult, HttpSession session) {
+        System.out.println(productInStockDTO);
         if (bindingResult.hasErrors()) {
             model.addAttribute("tittlePage", "Edit Product In Stock");
-            model.addAttribute("modelForm", itemsDTO);
+            model.addAttribute("modelForm", productInStockDTO);
             model.addAttribute("viewOnly", false);
-            return "items-action";
+            return "product-in-stock-action";
         }
         try {
-            var productInStockDTO = ProductInStockDTO.builder().id(itemsDTO.getProductInStockId()).build();
-            itemsDTO.setActiveFlag(1);
-            itemsDTO.setProductInStock(productInStockDTO);
-            itemsService.saveItems(itemsDTO);
+            productInStockDTO.setActiveFlag(1);
+            var branch = BranchDTO.builder().id(productInStockDTO.getBranchId()).build();
+            var product = ProductDTO.builder().id(productInStockDTO.getProductId()).build();
+            productInStockDTO.setBranch(branch);
+            productInStockDTO.setProduct(product);
+            productInStockService.saveProduct(productInStockDTO);
             session.setAttribute(Constant.MSG_SUCCESS, "Save success  !!!");
         } catch (Exception e) {
             session.setAttribute(Constant.MSG_ERROR, "Process Has ERROR !!!");
             e.printStackTrace();
         }
-        return "redirect:/admin/items/list";
-    }
-
-    public void initSelectBox(Model model) {
-        var allCategory = categoryService.findAllCategory(Pageable.unpaged());
-        var allBranch = branchService.findAllBranch(Pageable.unpaged());
-        model.addAttribute("allCategory", allCategory);
-        model.addAttribute("allBranch", allBranch);
+        return "redirect:/admin/product-in-stock/list/1";
     }
 }

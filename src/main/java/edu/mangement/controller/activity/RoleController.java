@@ -1,8 +1,8 @@
-package edu.mangement.controller;
+package edu.mangement.controller.activity;
 
 import edu.mangement.constant.Constant;
-import edu.mangement.model.CategoryDTO;
-import edu.mangement.service.CategoryService;
+import edu.mangement.model.RoleDTO;
+import edu.mangement.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -25,10 +24,10 @@ import java.util.List;
  * TIME : 2:43 PM
  */
 @Controller
-@RequestMapping("/admin/category")
-public class CategoryController {
+@RequestMapping("/admin/role")
+public class RoleController {
     @Autowired
-    private CategoryService categoryService;
+    private RoleService roleService;
 
     @InitBinder
     public void initBinder(WebDataBinder bind) {
@@ -41,88 +40,88 @@ public class CategoryController {
 
     @RequestMapping(value = {"/list", "/list/"})
     public String redirectShow() {
-        return "redirect:/admin/category/list/1";
+        return "redirect:/admin/role/list/1";
     }
 
     @GetMapping("/list/{page}")
-    public String showCategoryList(Model model, @PathVariable("page") int page, HttpSession session) {
-        List<CategoryDTO> categoryDTOList = categoryService.findAllCategory(PageRequest.of(page - 1, 5));
+    public String showRoleList(Model model, @PathVariable("page") int page, HttpSession session) {
+        var roleDTOList = roleService.findAllRole(PageRequest.of(page - 1, 5));
         Constant.sessionProcessor(model, session);
-        model.addAttribute("categoryDTOList", categoryDTOList);
-        model.addAttribute("tittlePage","Danh sách các Category");
-        model.addAttribute("nameAddButton","Thêm Category");
-        return "category-list";
+        model.addAttribute("roleDTOList", roleDTOList);
+        model.addAttribute("tittlePage","Danh sách các Role");
+        model.addAttribute("nameAddButton","Thêm Role");
+        return "role-list";
     }
 
     @GetMapping("/add")
-    public String addBranch(Model model) {
-        model.addAttribute("tittlePage", "Thêm Category");
-        model.addAttribute("modelForm", new CategoryDTO());
+    public String add(Model model) {
+        model.addAttribute("tittlePage", "Thêm Role");
+        model.addAttribute("modelForm", new RoleDTO());
         model.addAttribute("viewOnly", false);
-        return "category-action";
+        return "role-action";
     }
 
     @GetMapping("/view/{id}")
-    public String viewBranch(Model model, @PathVariable("id") Long id) {
-        CategoryDTO categoryDTO = categoryService.findCategoryById(id);
-        if (categoryDTO != null) {
-            model.addAttribute("tittlePage", "Chi tiết Categgory");
-            model.addAttribute("modelForm", categoryDTO);
+    public String view(Model model, @PathVariable("id") Long id) {
+        var roleDTO = roleService.findRoleById(id);
+        if (roleDTO != null) {
+            model.addAttribute("tittlePage", "Chi tiết Role");
+            model.addAttribute("modelForm", roleDTO);
             model.addAttribute("viewOnly", true);
-            return "category-action";
+            return "role-action";
         } else {
             return "pages-404_alt";
         }
     }
 
     @GetMapping("/edit/{id}")
-    public String editBranch(Model model, @PathVariable("id") Long id) {
-        CategoryDTO categoryDTO = categoryService.findCategoryById(id);
-        if (categoryDTO != null) {
-            model.addAttribute("tittlePage", "Sửa Category");
-            model.addAttribute("modelForm", categoryDTO);
+    public String edit(Model model, @PathVariable("id") Long id) {
+        var roleDTO = roleService.findRoleById(id);
+        if (roleDTO != null) {
+            model.addAttribute("tittlePage", "Sửa Role");
+            model.addAttribute("modelForm", roleDTO);
             model.addAttribute("viewOnly", false);
-            return "category-action";
+            return "role-action";
         } else {
             return "pages-404_alt";
         }
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteBranch(Model model, @PathVariable("id") Long id, HttpSession session) {
-        CategoryDTO categoryDTO = categoryService.findCategoryById(id);
-        if (categoryDTO != null) {
+    public String delete(Model model, @PathVariable("id") Long id, HttpSession session) {
+        var roleDTO = roleService.findRoleById(id);
+        if (roleDTO != null) {
             try {
-                categoryService.deleteCategory(categoryDTO);
+                roleService.deleteRole(roleDTO);
                 session.setAttribute(Constant.MSG_SUCCESS, "Delete Success !!!");
             } catch (Exception e) {
                 session.setAttribute(Constant.MSG_ERROR, "Delete has Error !!!");
                 e.printStackTrace();
             }
-            return "redirect:/admin/category/list";
+            return "redirect:/admin/role/list";
         } else {
             return "pages-404_alt";
         }
     }
 
     @PostMapping("/save")
-    public String save(Model model, @ModelAttribute(value = "modelForm") @Valid CategoryDTO categoryDTO,
+    public String save(Model model, @ModelAttribute(value = "modelForm") @Valid RoleDTO roleDTO,
                         BindingResult bindingResult,HttpSession session) {
         if (bindingResult.hasErrors()) {
-            if (categoryDTO.getId() != null) {
-                model.addAttribute("tittlePage", "Edit Category");
+            if (roleDTO.getId() != null) {
+                model.addAttribute("tittlePage", "Edit Role");
             } else {
-                model.addAttribute("tittlePage", "Add Category");
+                model.addAttribute("tittlePage", "Add Role");
             }
-            model.addAttribute("modelForm", categoryDTO);
+            model.addAttribute("modelForm", roleDTO);
             model.addAttribute("viewOnly", false);
-            return "category-action";
+            return "role-action";
         }
         var msg = "";
         try {
-            categoryDTO.setActiveFlag(1);
-            categoryService.saveCategory(categoryDTO);
-            if (categoryDTO.getId() != null) {
+            roleDTO.setActiveFlag(1);
+            roleService.saveRole(roleDTO);
+            if (roleDTO.getId() != null) {
 //            => method = update
                 msg = "Save Category Success !!!";
             } else {
@@ -134,6 +133,6 @@ public class CategoryController {
             session.setAttribute(Constant.MSG_ERROR, "Process Has ERROR !!!");
             e.printStackTrace();
         }
-        return "redirect:/admin/category/list";
+        return "redirect:/admin/role/list";
     }
 }
