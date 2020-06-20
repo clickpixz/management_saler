@@ -1,7 +1,10 @@
 package edu.mangement.controller.activity;
 
 import edu.mangement.constant.Constant;
+import edu.mangement.entity.Member;
+import edu.mangement.mapper.MemberMapper;
 import edu.mangement.model.*;
+import edu.mangement.repository.MemberRepository;
 import edu.mangement.service.BranchService;
 import edu.mangement.service.MemberService;
 import edu.mangement.service.RoleService;
@@ -48,6 +51,8 @@ public class MemberController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private Environment environment;
+    @Autowired
+    private MemberRepository memberRepository;
     @InitBinder
     public void initBinder(WebDataBinder bind) {
         if (bind.getTarget() == null) {
@@ -165,10 +170,10 @@ public class MemberController {
             memberDTO.setActiveFlag(1);
             if (memberDTO.getId() != null) {
 //            => method = update
-                msg = "Save Vendor Success !!!";
+                msg = "Save Member Success !!!";
             } else {
 //                method = add
-                msg = "Add Vendor Success !!!";
+                msg = "Add Member Success !!!";
                 memberDTO.setPassword(passwordEncoder.encode(environment.getProperty("member.password.default")));
             }
             memberService.saveMember(memberDTO);
@@ -179,7 +184,30 @@ public class MemberController {
         }
         return "redirect:/admin/member/list";
     }
-
+    @GetMapping("/profile/{id}")
+    public String showProfile(Model model,@PathVariable("id") Long id){
+        var member = memberRepository.findById(id).get();
+        var memberDTO = MemberMapper.toDTO(member);
+        model.addAttribute("tittlePage","Trang Cá Nhân");
+        model.addAttribute("modelForm",memberDTO);
+        model.addAttribute("member",member);
+        return "page-profile";
+    }
+    @PostMapping("/profile/edit")
+    public String editProfile(Model model, @ModelAttribute("modelForm")MemberDTO memberDTO,HttpSession session){
+        try {
+            var memberEntity = memberRepository.getOne(memberDTO.getId());
+            memberEntity.setUsername(memberDTO.getUsername());
+            memberEntity.setSex(memberDTO.getSex());
+            memberEntity.setDoB(memberDTO.getDoB());
+            memberRepository.save(memberEntity);
+            session.setAttribute(Constant.MSG_ERROR, "Process Has Success !!!");
+        } catch (Exception e) {
+            session.setAttribute(Constant.MSG_ERROR, "Process Has ERROR !!!");
+            e.printStackTrace();
+        }
+        return "redirect:/admin/member/profile/"+memberDTO.getId();
+    }
     private void initSelectBox(Model model) {
         Map<Long, String> allRole = roleService.findAllRole(Pageable.unpaged())
                 .stream().collect(Collectors.toMap(RoleDTO::getId, RoleDTO::getName, (o, n) -> n, HashMap::new));
