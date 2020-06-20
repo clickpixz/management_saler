@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+    <head>
+        <meta charset="utf-8">
+        <title th:text="${tittlePage}"></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Responsive bootstrap 4 admin template" name="description">
+        <meta content="Coderthemes" name="author">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <th:block th:replace="layout/Link-Top :: link-top"></th:block>
+        <th:block th:replace="branch-list :: branch-list-css-frament">
+        </th:block>
+
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+
+            <!-- Topbar Start -->
+            <div th:replace="layout/Topbar :: topbar"></div>
+            <!-- end Topbar --> <!-- ========== Left Sidebar Start ========== -->
+            <div th:replace="layout/LeftSidebar :: left-sidebar"></div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Data Table</h4>
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb p-0 m-0">
+                                            <li class="breadcrumb-item"><a href="#">Velonic</a></li>
+                                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                                            <li class="breadcrumb-item active">Data Table</li>
+                                        </ol>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title mb-4" th:text="${tittlePage}"></h4>
+
+                                        <form class="parsley-examples" th:action="@{/admin/branch-fee-per-month/save}"
+                                              th:object="${modelForm}" method="post">
+                                            <input type="hidden" name = "id" th:field="*{id}">
+                                            <input type="hidden" th:field="*{createDate}" name="createDate" id="createDate">
+                                            <input type="hidden" th:field="*{activeFlag}" name="activeFlag">
+                                            <div class="form-group">
+                                                <label for="branch.id">Branch</label>
+                                                <select id="branch.id" class="form-control" th:field="*{branchId}">
+                                                    <option value="">Select</option>
+                                                    <option th:each="branch : ${allBranch}"
+                                                            th:value="${branch.id}"
+                                                            th:text="${branch.name}"></option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="year">Year<span class="text-danger">*</span></label>
+                                                <input type="number" name="name" th:field="*{year}" th:disabled="${viewOnly}"
+                                                       parsley-trigger="change" required="true" placeholder="Year ... " class="form-control" id="year">
+                                                <span th:class="text-danger" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="month">Month<span class="text-danger">*</span></label>
+                                                <input type="number" name="month" th:field="*{month}"
+                                                       th:disabled="${viewOnly}" parsley-trigger="change" required="true" placeholder="Month ... " class="form-control" id="month">
+                                                <span th:class="text-danger" th:if="${#fields.hasErrors('month')}" th:errors="*{month}"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cost">Cost<span class="text-danger">*</span></label>
+                                                <input type="number" name="cost" th:field="*{cost}"
+                                                       th:disabled="${viewOnly}" parsley-trigger="change"
+                                                       required="true" placeholder="Cost ... " class="form-control"
+                                                       id="cost">
+                                                <span th:class="text-danger" th:if="${#fields.hasErrors('cost')}"
+                                                      th:errors="*{cost}"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <textarea type="text" name="description" th:field="*{description}"
+                                                          th:disabled="${viewOnly}" parsley-trigger="change"
+                                                          placeholder="description" class="form-control" id="description"></textarea>
+                                                <span th:class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                                            </div>
+
+                                            <div class="form-group text-right mb-0">
+                                                <button class="btn btn-primary waves-effect waves-light mr-1" th:disabled="${viewOnly}" type="submit">
+                                                    Submit
+                                                </button>
+                                                <button type="reset" th:disabled="${viewOnly}" class="btn btn-secondary waves-effect waves-light">
+                                                    Cancel
+                                                </button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                            </div>
+                            <!-- end col -->
+
+                            <!-- end col -->
+                        </div>
+
+
+                    </div>
+                    <!-- end container-fluid -->
+
+                </div>
+                <!-- end content -->
+
+
+                <!-- Footer Start -->
+                <div th:replace="layout/Footer :: footer"></div>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- Right Sidebar -->
+        <div th:replace="layout/RightSidebar :: right-sidebar"></div>
+        <!-- /Right-bar -->
+
+        <!-- Right bar overlay-->
+        <div th:replace="layout/Right-bar-overlay :: right-bar-overlay"></div>
+
+        <div th:replace="layout/Link-Footer :: link-footer"></div>
+        <th:block th:replace="branch-list :: script-required-datatable">
+        </th:block>
+    <script>
+        $(document).ready(
+            function () {
+                $('#admincategorylistId').addClass('mm-active').siblings()
+                    .removeClass('mm-active');
+                $('#admincategorylistId').parents('li').show();
+            });
+    </script>
+    </body>
+</html>

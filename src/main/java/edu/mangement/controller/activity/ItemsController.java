@@ -54,7 +54,7 @@ public class ItemsController {
 
     @RequestMapping("/list/{page}")
     public String show(@ModelAttribute("searchForm") ItemsDTO itemsDTO, Model model, @PathVariable("page") int page, HttpSession session) {
-        Paging paging = Paging.builder().recordPerPage(2).indexPage(page).build();
+        Paging paging = Paging.builder().recordPerPage(10).indexPage(page).build();
         var itemsDTOList = itemsService.search(itemsDTO, paging);
         if (paging.getIndexPage() < page && paging.getTotalPages() > 0) {
             return "redirect:/admin/product-in-stock/list/1";

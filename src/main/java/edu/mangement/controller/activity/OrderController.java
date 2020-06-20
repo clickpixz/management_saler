@@ -47,7 +47,7 @@ public class OrderController {
 
     @RequestMapping("/list/{page}")
     public String show(@ModelAttribute("searchForm") OrderFilterForm orderFilterForm, Model model, @PathVariable("page") int page, HttpSession session) {
-        Paging paging = Paging.builder().recordPerPage(2).indexPage(page).build();
+        Paging paging = Paging.builder().recordPerPage(10).indexPage(page).build();
         var orderDTOList = orderService.search(orderFilterForm,paging);
         if (paging.getIndexPage() < page && paging.getTotalPages() > 0) {
             return "redirect:/admin/order/list/1";

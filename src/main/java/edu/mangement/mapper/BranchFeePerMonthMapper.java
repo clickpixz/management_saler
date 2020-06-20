@@ -1,5 +1,6 @@
 package edu.mangement.mapper;
 
+import edu.mangement.entity.Branch;
 import edu.mangement.entity.BranchFeePerMonth;
 import edu.mangement.model.BranchFeePerMonthDTO;
 
@@ -11,37 +12,31 @@ import edu.mangement.model.BranchFeePerMonthDTO;
  */
 public class BranchFeePerMonthMapper {
     public static BranchFeePerMonthDTO toDTO(BranchFeePerMonth branchFeePerMonth) {
-        BranchFeePerMonthDTO branchFeePerMonthDTO = BranchFeePerMonthDTO.builder()
+        return BranchFeePerMonthDTO.builder()
                 .id(branchFeePerMonth.getId())
                 .year(branchFeePerMonth.getYear())
                 .cost(branchFeePerMonth.getCost())
                 .month(branchFeePerMonth.getMonth())
+                .description(branchFeePerMonth.getDescription())
+                .branchId(branchFeePerMonth.getBranch().getId())
+                .branchName(branchFeePerMonth.getBranch().getName())
                 .createDate(branchFeePerMonth.getCreateDate())
                 .updateDate(branchFeePerMonth.getUpdateDate())
                 .activeFlag(branchFeePerMonth.getActiveFlag())
-                .description(branchFeePerMonth.getDescription())
                 .build();
-//        if (branchFeePerMonth.getBranch() != null) {
-//            branchFeePerMonthDTO.setBranch(BranchMapper.toDTO(branchFeePerMonth.getBranch()));
-//        }
-        return branchFeePerMonthDTO;
-
     }
 
     public static BranchFeePerMonth toEntity(BranchFeePerMonthDTO branchFeePerMonth) {
-        BranchFeePerMonth branchFeePerMonthEntity = BranchFeePerMonth.builder()
+        return  BranchFeePerMonth.builder()
                 .id(branchFeePerMonth.getId())
                 .cost(branchFeePerMonth.getCost())
                 .description(branchFeePerMonth.getDescription())
                 .month(branchFeePerMonth.getMonth())
                 .year(branchFeePerMonth.getYear())
+                .branch(Branch.builder().id(branchFeePerMonth.getBranchId()).build())
                 .createDate(branchFeePerMonth.getCreateDate())
                 .updateDate(branchFeePerMonth.getUpdateDate())
                 .activeFlag(branchFeePerMonth.getActiveFlag())
                 .build();
-//        if (branchFeePerMonth.getBranch() != null) {
-//            branchFeePerMonthEntity.setBranch(BranchMapper.toEntity(branchFeePerMonth.getBranch()));
-//        }
-        return branchFeePerMonthEntity;
     }
 }

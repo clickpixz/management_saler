@@ -1,6 +1,8 @@
 package edu.mangement.repository;
 
 import edu.mangement.entity.Menu;
+import org.hibernate.annotations.Parameter;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +22,5 @@ import java.util.Optional;
 @Repository
 public interface MenuRepository extends JpaRepository<Menu,Long> {
     List<Menu> findMenuUse(Long roleId);
-    List<Menu> findMenuByCreateDateBetween(Date date1,Date date2);
+    Page<Menu> findAllBymType(Integer mType,Pageable pageable);
 }

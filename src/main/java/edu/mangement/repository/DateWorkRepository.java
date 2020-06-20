@@ -12,4 +12,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface DateWorkRepository extends JpaRepository<DateWork,Long> {
+    DateWork findByIdAndActiveFlag(Long id,int activeFlag);
 }

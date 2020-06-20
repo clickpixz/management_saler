@@ -23,12 +23,6 @@ public class ItemsMapper {
         if (itemsEntity.getProductInStock() != null) {
             itemsDTO.setProductInStock(ProductInStockMapper.toDTO(itemsEntity.getProductInStock()));
         }
-//        if (itemsEntity.getInvoiceDetails() != null) {
-//            itemsDTO.setInvoiceDetails(itemsEntity.getInvoiceDetails().stream().map(InvoiceDetailMapper::toDTO).collect(Collectors.toList()));
-//        }
-//        if (itemsEntity.getOrderDetails() != null) {
-//            itemsDTO.setOrderDetails(itemsEntity.getOrderDetails().stream().map(OrderDetailMapper::toDTO).collect(Collectors.toList()));
-//        }
         return itemsDTO;
     }
 
@@ -43,12 +37,6 @@ public class ItemsMapper {
         if (itemsDTO.getProductInStock() != null) {
             itemsEntity.setProductInStock(ProductInStockMapper.toEntity(itemsDTO.getProductInStock()));
         }
-//        if (itemsDTO.getInvoiceDetails() != null) {
-//            itemsEntity.setInvoiceDetails(itemsDTO.getInvoiceDetails().stream().map(InvoiceDetailMapper::toEntity).collect(Collectors.toList()));
-//        }
-//        if (itemsDTO.getOrderDetails() != null) {
-//            itemsEntity.setOrderDetails(itemsDTO.getOrderDetails().stream().map(OrderDetailMapper::toEntity).collect(Collectors.toList()));
-//        }
         return itemsEntity;
     }
 }

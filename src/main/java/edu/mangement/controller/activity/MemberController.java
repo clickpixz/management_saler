@@ -67,12 +67,12 @@ public class MemberController {
 
     @RequestMapping("/list/{page}")
     public String show(@ModelAttribute("searchForm") SearchForm searchForm, Model model, @PathVariable("page") int page, HttpSession session) {
-        Paging paging = Paging.builder().recordPerPage(2).indexPage(page).build();
+        Paging paging = Paging.builder().recordPerPage(10).indexPage(page).build();
         List<MemberDTO> memberDTOList;
         if (searchForm != null && searchForm.getField() != null && !searchForm.getField().isBlank()) {
             memberDTOList = memberService.search(searchForm, paging);
         } else {
-            memberDTOList = memberService.findAll(PageRequest.of(page - 1, 2),paging);
+            memberDTOList = memberService.findAll(PageRequest.of(page - 1, 10),paging);
             if (paging.getIndexPage() < page&&paging.getTotalPages() > 0) {
                 return "redirect:/admin/member/list/1";
             }

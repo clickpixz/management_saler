@@ -30,11 +30,17 @@ public class BranchFeePerMonthDTO {
     @Min(value = 0,message = "month > 0")
     @Max(value = 12,message = "month <=12")
     private Integer month;
-    @Min(value = 1970,message = "year > 1970")
+    @Min(value = 2017,message = "year >= 2018")
+    @Max(value = 2022,message = "year <=2022")
     private Integer year;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
-    @Value("1")
+    private Long branchId;
+    private String branchName;
     private Integer activeFlag;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fromDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date toDate;
 }

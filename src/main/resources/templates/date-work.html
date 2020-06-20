@@ -37,7 +37,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box">
-                            <h4 class="page-title">Data Table</h4>
+                            <h4 class="page-title" th:text="${tittlePage}"></h4>
                             <div class="page-title-right">
                                 <ol class="breadcrumb p-0 m-0">
                                     <li class="breadcrumb-item"><a href="#">Velonic</a></li>
@@ -49,40 +49,56 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
+                <div>
+                    <div class="">
                         <div class="card">
-                            <div class="card-header py-3 bg-transparent">
-                                <div class="card-widgets">
-                                    <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
-                                    <a data-toggle="collapse" href="#cardCollpase3" role="button" aria-expanded="false"
-                                       aria-controls="cardCollpase3"><i class="mdi mdi-minus"></i></a>
-                                    <a href="#" data-toggle="remove"><i class="mdi mdi-close"></i></a>
-                                </div>
+                            <div class="card-header py-3 bg-transparent row">
                                 <h5 class="header-title mb-2"> Projects</h5>
-                                <div class="col-md-3">
-                                    <form class="app-search" th:action="@{/admin/product/list/1}"
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-6 card-body">
+                                    <form th:action="@{/admin/date-work/list/1}"
                                           th:object="${searchForm}" method="post" enctype="multipart/form-data"
-                                          name="searchForm" id="searchForm">
-                                        <div class="app-search-box">
-                                            <div class="input-group">
-                                                <input type="text" th:field="*{field}"
-                                                       class="form-control" placeholder="Search...">
-                                                <div class="input-group-append">
-                                                    <button class="btn" type="submit">
-                                                        <i class="fas fa-search"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
+                                          name="searchForm" id="searchForm"
+                                          class="parsley-examples">
+
+                                        <div class="form-group">
+                                            <label for="branch.id">Branch</label>
+                                            <select id="branch.id" class="form-control" th:field="*{branchId}">
+                                                <option value="">Select</option>
+                                                <option th:each="branch : ${allBranch}"
+                                                        th:value="${branch.id}"
+                                                        th:text="${branch.name}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="fromDate">FromDate</label>
+                                            <input id="fromDate" type="date" class="form-control"
+                                                   th:field="*{fromDate}" placeholder="mm/dd/yyyy"
+                                                   data-provide="datepicker" data-date-autoclose="true">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="toDate">To Date</label>
+                                            <input id="toDate" type="date" class="form-control"
+                                                   th:field="*{toDate}" placeholder="mm/dd/yyyy"
+                                                   data-provide="datepicker" data-date-autoclose="true">
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-outline-info btn-rounded waves-effect width-md waves-light"
+                                                    type="submit">
+                                                <i class="fas fa-search">Search</i>
+                                            </button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <a th:href="@{/admin/product/add}">
-                                    <i class="fas fa-search-minus"></i>
-                                    <th:block th:text="${nameAddButton}"></th:block>
-                                </a>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <a class="btn btn-purple text-light" type="button"
+                                       th:href="@{/admin/date-work/add}">
+                                        <i class="mdi mdi-database-import"></i>
+                                        <th:block th:text="${nameAddButton}"></th:block>
+                                    </a>
+                                </div>
                             </div>
                             <div id="cardCollpase3" class="collapse show">
                                 <div class="card-body">
@@ -91,58 +107,58 @@
                                             <thead>
                                             <tr>
                                                 <th class="text-body">#</th>
-                                                <th class="text-center">Name</th>
-                                                <th class="text-center">Code</th>
-                                                <th class="text-center">Category</th>
-                                                <th class="text-center">Image</th>
+                                                <th class="text-center">Tên chi nhánh</th>
+                                                <th class="text-center">Tên nhân viên</th>
+                                                <th class="text-center">Tháng</th>
+                                                <th class="text-center">Năm</th>
+                                                <th class="text-center">Số ngày nghỉ</th>
                                                 <th class="text-center">View</th>
                                                 <th class="text-center">Edit</th>
                                                 <th class="text-center">Delete</th>
+
                                             </tr>
                                             </thead>
-                                            <tbody th:each="product,productStatus : ${productDTOList}">
+                                            <tbody th:each="dateWork,dateWorkStatus : ${dateWorkDTOList}">
                                             <tr>
-                                                <td th:text="${productStatus.index+1+ (paging.indexPage-1)*paging.recordPerPage}"></td>
-                                                <td th:text="${product.name}"></td>
-                                                <td th:text="${product.code}"></td>
-                                                <td th:text="${product.category.name}"></td>
-                                                <td>
-                                                    <img th:src="@{'/'+${product.image}}" class="img-fluid">
-                                                </td>
-                                                <td>
-                                                    <a type="button" class="waves-effect width-md waves-light"
-                                                       th:href="@{'/admin/product/view/'+${product.id}}">
+                                                <td th:text="${dateWorkStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
+                                                <td th:text="${dateWork.branchName}"></td>
+                                                <td th:text="${dateWork.memberName}"></td>
+                                                <td th:text="${dateWork.month}"></td>
+                                                <td th:text="${dateWork.year}"></td>
+                                                <td th:text="${dateWork.snn}"></td>
+                                                <th>
+                                                    <a class="btn btn-primary"
+                                                       th:href="@{'/admin/date-work/view/'+ ${dateWork.id}}">
                                                         View
-                                                        <i class="fas fa-street-view"></i>
                                                     </a>
-                                                </td>
-                                                <td>
-                                                    <a type="button" class="waves-effect width-md waves-light"
-                                                       th:href="@{'/admin/product/edit/'+${product.id}}">
+                                                </th>
+                                                <th>
+                                                    <a class="btn btn-info"
+                                                       th:href="@{'/admin/date-work/edit/'+${dateWork.id}}">
                                                         Edit
-                                                        <i class="mdi mdi-delete-empty"></i>
                                                     </a>
-                                                </td>
-                                                <td>
-                                                    <a type="button" class="waves-effect width-md waves-light"
-                                                       th:onclick="'javascript:confirmDelete('+${product.id}+');'">
+                                                </th>
+                                                <th>
+                                                    <a class="btn btn-danger"
+                                                       th:href="@{'/admin/date-work/delete/'+${dateWork.id}}">
                                                         Delete
-                                                        <i class="mdi mdi-delete-empty"></i>
                                                     </a>
-                                                </td>
+                                                </th>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <nav aria-label="Page navigation example" th:fragment="menu-paging">
+                            <nav th:if="${paging.totalPages > 0}" aria-label="Page navigation example"
+                                 th:fragment="menu-paging">
                                 <ul class="pagination justify-content-center">
                                     <li th:if="${paging.indexPage == 1}" class="page-item disabled">
                                         <a class="page-link" href="javascript:void(0);" tabindex="-1">Previous</a>
                                     </li>
                                     <li th:if="${paging.indexPage != 1}" class="page-item">
-                                        <a class="page-link btn-link" th:href="@{'/admin/product/list/'+${paging.indexPage - 1}}"
+                                        <a class="page-link" type="button"
+                                           th:onclick="'javascript:gotoPage('+${paging.indexPage - 1}+');'"
                                            tabindex="-1">Previous</a>
                                     </li>
                                     <th:block th:each="i : ${#numbers.sequence(1,paging.totalPages)}">
@@ -151,14 +167,14 @@
                                                th:text="${i}"></a>
                                         </li>
                                         <li th:if="${paging.indexPage !=  i}" class="page-item">
-                                            <a class="page-link" href="javascript:void(0);"
+                                            <a class="page-link" type="button"
                                                th:text="${i}" th:onclick="'javascript:gotoPage('+${i}+');'"></a>
                                         </li>
 
                                     </th:block>
                                     <li th:if="${paging.indexPage != paging.totalPages}" class="page-item">
-                                        <a class="page-link" href="javascript:void(0);"
-                                           th:href="@{'/admin/product/list/'+${paging.indexPage + 1}}">Next</a>
+                                        <a class="page-link" type="button"
+                                           th:onclick="'javascript:gotoPage('+${paging.indexPage + 1}+');'">Next</a>
                                     </li>
                                     <li th:if="${paging.indexPage == paging.totalPages}" class="page-item disabled">
                                         <a class="page-link" href="#">Next</a>
@@ -214,23 +230,16 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     function gotoPage(page) {
-        let url = '/admin/product/list/' + page;
-        console.log(url);
+        let url = '/admin/date-work/list/' + page;
         $('#searchForm').attr('action', url);
         $('#searchForm').submit();
     }
 
-    function confirmDelete(id) {
-        if (confirm('Do you want delete this record?')) {
-            window.location.href = '/admin/product/delete/' + id;
-        }
-    }
-
     $(document).ready(
         function () {
-            $('#adminproductlistId').addClass('mm-active').siblings()
+            $('#admindate-worklistId').addClass('mm-active').siblings()
                 .removeClass('mm-active');
-            $('#adminproductlistId').parents('li').show();
+            $('#admindate-worklistId').parents('li').show();
         });
     /*]]>*/
 </script>

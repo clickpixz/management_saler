@@ -47,12 +47,12 @@ public class CustomerController {
 
     @RequestMapping("/list/{page}")
     public String show(@ModelAttribute("searchForm") SearchForm searchForm, Model model, @PathVariable("page") int page, HttpSession session) {
-        Paging paging = Paging.builder().recordPerPage(5).indexPage(page).build();
+        Paging paging = Paging.builder().recordPerPage(20).indexPage(page).build();
         List<CustomerDTO> customerDTOList;
         if (searchForm != null && searchForm.getField() != null && !searchForm.getField().isBlank()) {
             customerDTOList = customerService.search(searchForm, paging);
         } else {
-            var pairCustomer = customerService.findAll(PageRequest.of(page - 1, 10));
+            var pairCustomer = customerService.findAll(PageRequest.of(page - 1, 20));
             var totalPages = pairCustomer.getKey();
             customerDTOList = pairCustomer.getValue();
             paging.setTotalPages(totalPages);

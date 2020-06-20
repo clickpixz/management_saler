@@ -27,4 +27,12 @@ public class DateWorkDTO {
     private Date createDate;
     private Date updateDate;
     private Integer activeFlag;
+    private Long branchId;
+    private String branchName;
+    private Long memberId;
+    private String memberName;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fromDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date toDate;
 }

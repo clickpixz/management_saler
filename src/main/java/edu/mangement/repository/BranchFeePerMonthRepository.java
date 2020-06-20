@@ -12,4 +12,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface BranchFeePerMonthRepository extends JpaRepository<BranchFeePerMonth,Long> {
+    BranchFeePerMonth findByIdAndActiveFlag(Long id,int activeFlag);
 }

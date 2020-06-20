@@ -86,7 +86,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Pair<Integer, List<MenuDTO>> findAllMapMenu(Pageable pageable) {
-        Page<Menu> menuPage = menuRepository.findAll(pageable);
+        Page<Menu> menuPage = menuRepository.findAllBymType(0, pageable);
         Integer totalPages = menuPage.getTotalPages();
         var menuList = menuPage.getContent();
         var roleDTOList = roleService.findAllRole(null);
@@ -98,10 +98,10 @@ public class MenuServiceImpl implements MenuService {
             //map permision value each menu each role
             menu.getAuths().forEach(auth -> {
                 mapAuth.put(auth.getRole().getId(), auth.getPermission());
-                var menuDTO = MenuMapper.toDTO(menu);
-                menuDTO.setMapAuth(mapAuth);
-                menuDTOList.add(menuDTO);
             });
+            var menuDTO = MenuMapper.toDTO(menu);
+            menuDTO.setMapAuth(mapAuth);
+            menuDTOList.add(menuDTO);
         });
         return new Pair<>(totalPages, menuDTOList);
     }
@@ -138,8 +138,8 @@ public class MenuServiceImpl implements MenuService {
             auth.setPermission(authForm.getPermission());
             auth.setActiveFlag(1);
             authRepository.save(auth);
-        }else {
-            if (authForm.getPermission()==1) {
+        } else {
+            if (authForm.getPermission() == 1) {
                 Auth build = Auth.builder()
                         .activeFlag(1)
                         .permission(authForm.getPermission())

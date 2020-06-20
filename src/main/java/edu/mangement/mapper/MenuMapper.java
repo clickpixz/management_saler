@@ -12,35 +12,29 @@ import edu.mangement.model.MenuDTO;
 public class MenuMapper {
 
     public static MenuDTO toDTO(Menu menuEntity) {
-        MenuDTO menuDTO = MenuDTO.builder()
+        return MenuDTO.builder()
                 .id(menuEntity.getId())
                 .parentId(menuEntity.getParentId())
                 .url(menuEntity.getUrl())
                 .name(menuEntity.getName())
                 .orderIndex(menuEntity.getOrderIndex())
+                .mType(menuEntity.getMType())
                 .createDate(menuEntity.getCreateDate())
                 .updateDate(menuEntity.getUpdateDate())
                 .activeFlag(menuEntity.getActiveFlag())
                 .build();
-//        if(menuEntity.getAuths()!=null){
-//            functionDTO.setAuths(menuEntity.getAuths().stream().map(AuthMapper::toDTO).collect(Collectors.toList()));
-//        }
-        return menuDTO;
     }
     public static Menu toEntity(MenuDTO menuDTO) {
-        Menu functionEntity = Menu.builder()
+        return  Menu.builder()
                 .id(menuDTO.getId())
                 .parentId(menuDTO.getParentId())
                 .url(menuDTO.getUrl())
                 .name(menuDTO.getName())
                 .orderIndex(menuDTO.getOrderIndex())
+                .mType(menuDTO.getMType())
                 .createDate(menuDTO.getCreateDate())
                 .updateDate(menuDTO.getUpdateDate())
                 .activeFlag(menuDTO.getActiveFlag())
                 .build();
-//        if(functionDTO.getAuths()!=null){
-//            functionEntity.setAuths(functionDTO.getAuths().stream().map(AuthMapper::toEntity).collect(Collectors.toList()));
-//        }
-        return functionEntity;
     }
 }

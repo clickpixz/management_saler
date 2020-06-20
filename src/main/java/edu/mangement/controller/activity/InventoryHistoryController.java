@@ -56,8 +56,9 @@ public class InventoryHistoryController {
     }
 
     @RequestMapping("/list/{page}")
-    public String show(@ModelAttribute("searchForm") InventoryHistoryDTO inventoryHistoryDTO, Model model, @PathVariable("page") int page, HttpSession session) {
-        Paging paging = Paging.builder().recordPerPage(2).indexPage(page).build();
+    public String show(@ModelAttribute("searchForm") InventoryHistoryDTO inventoryHistoryDTO,
+                       Model model, @PathVariable("page") int page, HttpSession session) {
+        Paging paging = Paging.builder().recordPerPage(10).indexPage(page).build();
         var inventoryHistoryDTOList = inventoryHistoryService.search(inventoryHistoryDTO,paging);
         if (paging.getIndexPage() < page && paging.getTotalPages() > 0) {
             return "redirect:/admin/inventory-history/list/1";

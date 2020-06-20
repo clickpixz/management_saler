@@ -29,6 +29,7 @@ public class MenuDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Date updateDate;
+    private Integer mType;
     @Value("1")
     private Integer activeFlag;
     private String idMenu;

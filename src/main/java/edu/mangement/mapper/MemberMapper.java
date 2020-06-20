@@ -35,12 +35,6 @@ public class MemberMapper{
         if(member.getRole()!=null){
             memberDTO.setRole(RoleMapper.toDTO(member.getRole()));
         }
-//        if(member.getInvoices()!=null){
-//            memberDTO.setInvoices(member.getInvoices().stream().map(InvoiceMapper::toDTO).collect(Collectors.toList()));
-//        }
-//        if(member.getInventoryHistories()!=null){
-//            memberDTO.setInventoryHistories(member.getInventoryHistories().stream().map(InventoryHistoryMapper::toDTO).collect(Collectors.toList()));
-//        }
         return memberDTO;
     }
 

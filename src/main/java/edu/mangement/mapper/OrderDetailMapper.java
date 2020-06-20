@@ -22,9 +22,6 @@ public class OrderDetailMapper {
         if (orderDetailEntity.getItems() != null) {
             orderDetailDTO.setItems(ItemsMapper.toDTO(orderDetailEntity.getItems()));
         }
-//        if (orderDetailEntity.getOrder() != null) {
-//            orderDetailDTO.setOrder(OrderMapper.toDTO(orderDetailEntity.getOrder()));
-//        }
         return orderDetailDTO;
     }
 
@@ -40,9 +37,6 @@ public class OrderDetailMapper {
         if (orderDetailDTO.getItems() != null) {
             orderDetailEntity.setItems(ItemsMapper.toEntity(orderDetailDTO.getItems()));
         }
-//        if (orderDetailDTO.getOrder() != null) {
-//            orderDetailEntity.setOrder(OrderMapper.toEntity(orderDetailDTO.getOrder()));
-//        }
         return orderDetailEntity;
     }
 }

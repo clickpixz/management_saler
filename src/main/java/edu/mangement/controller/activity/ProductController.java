@@ -62,12 +62,12 @@ public class ProductController {
 
     @RequestMapping("/list/{page}")
     public String show(@ModelAttribute("searchForm") SearchForm searchForm, Model model, @PathVariable("page") int page, HttpSession session) {
-        Paging paging = Paging.builder().recordPerPage(2).indexPage(page).build();
+        Paging paging = Paging.builder().recordPerPage(8).indexPage(page).build();
         List<ProductDTO> productDTOList;
         if (searchForm != null && searchForm.getField() != null && !searchForm.getField().isBlank()) {
             productDTOList = productService.searchProduct(searchForm, paging);
         } else {
-            var pairProduct = productService.findAllProduct(PageRequest.of(page - 1, 2));
+            var pairProduct = productService.findAllProduct(PageRequest.of(page - 1, 8));
             var totalPages = pairProduct.getKey();
             productDTOList = pairProduct.getValue();
             paging.setTotalPages(totalPages);
