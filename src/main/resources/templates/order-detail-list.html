@@ -70,22 +70,33 @@
                                                 <th class="text-center">Tổng</th>
                                             </tr>
                                             </thead>
-                                            <tbody th:each="orderDetail,orderDetailStatus : ${orderDetailDTOList}">
-                                            <tr class="text-center">
+                                            <tbody>
+                                            <tr class="text-center"
+                                                th:each="orderDetail,orderDetailStatus : ${orderDetailDTOList}">
                                                 <td th:text="${orderDetailStatus.index+1+ (paging.indexPage - 1)*paging.recordPerPage}"></td>
                                                 <td th:text="${orderDetail.id}"></td>
                                                 <td th:text="${orderDetail.items.productInStock.product.name}"></td>
                                                 <td th:text="${orderDetail.items.productInStock.product.code}"></td>
                                                 <td th:text="${orderDetail.quantity}"></td>
-                                                <td th:text="${#numbers.formatDecimal(orderDetail.unitPrice,3,0)}"></td>
+                                                <td th:text="${#numbers.formatDecimal(orderDetail.unitPrice,3,'COMMA',0,'POINT')+' VND'}"></td>
+                                                <td th:text="${#numbers.formatDecimal(orderDetail.unitPrice*orderDetail.quantity,3,'COMMA',0,'POINT')+' VND'}"></td>
+                                            </tr>
+                                            <tr class="text-center">
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td th:text="${#numbers.formatDecimal(sum,0,'COMMA',0,'POINT')}"></td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <nav th:if="${paging.totalPages > 0}" aria-label="Page navigation example" th:fragment="menu-paging">
+                            <nav th:if="${paging.totalPages > 0}" aria-label="Page navigation example"
+                                 th:fragment="menu-paging">
                                 <ul class="pagination justify-content-center">
                                     <li th:if="${paging.indexPage == 1}" class="page-item disabled">
                                         <a class="page-link" href="javascript:void(0);" tabindex="-1">Previous</a>

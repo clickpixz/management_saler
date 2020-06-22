@@ -70,15 +70,24 @@
                                                 <th class="text-center">Tổng</th>
                                             </tr>
                                             </thead>
-                                            <tbody th:each="invoiceDetail,invoiceDetailStatus : ${invoiceDTO.getInvoiceDetails()}">
-                                            <tr class="text-center">
+                                            <tbody >
+                                            <tr class="text-center" th:each="invoiceDetail,invoiceDetailStatus : ${invoiceDTO.getInvoiceDetails()}">
                                                 <td th:text="${invoiceDetailStatus.index+1}"></td>
                                                 <td th:text="${invoiceDetail.id}"></td>
                                                 <td th:text="${invoiceDetail.items.productInStock.product.name}"></td>
                                                 <td th:text="${invoiceDetail.items.productInStock.product.code}"></td>
                                                 <td th:text="${invoiceDetail.quantity}"></td>
-                                                <td th:text="${#numbers.formatDecimal(invoiceDetail.unitPrice,2,0)}"></td>
-                                                <td th:text="${#numbers.formatDecimal(invoiceDetail.unitPrice * invoiceDetail.quantity,2,0)}"></td>
+                                                <td th:text="${#numbers.formatDecimal(invoiceDetail.unitPrice,3,'COMMA',0,'POINT')+' VND'}"></td>
+                                                <td th:text="${#numbers.formatDecimal(invoiceDetail.unitPrice*invoiceDetail.quantity,3,'COMMA',0,'POINT')+' VND'}"></td>
+                                            </tr>
+                                            <tr class="text-center">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td th:text="${#numbers.formatDecimal(sum,3,'COMMA',0,'POINT')+ ' VND'}"></td>
                                             </tr>
                                             </tbody>
                                         </table>

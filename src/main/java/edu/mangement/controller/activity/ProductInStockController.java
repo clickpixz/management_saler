@@ -140,4 +140,15 @@ public class ProductInStockController {
         }
         return "redirect:/admin/product-in-stock/list/1";
     }
+    @GetMapping("/invoke/{id}")
+    private String invokeProduct(@PathVariable("id") Long id,Model model,HttpSession session){
+        ProductInStockDTO productInStockDTO = productInStockService.findById(id);
+        if(productInStockDTO==null){
+            session.setAttribute(Constant.MSG_ERROR, "Process Has ERROR !!!");
+            return "redirect:/admin/product-in-stock/list/1";
+        }
+        model.addAttribute("tittlePage","Đăng bán sản phẩm");
+        model.addAttribute("productInStockDTO",productInStockDTO);
+        return "invoke-product-action";
+    }
 }

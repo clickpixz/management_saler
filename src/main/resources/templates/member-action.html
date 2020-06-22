@@ -61,7 +61,8 @@
                                             <input type="hidden" th:field="*{createDate}" name="createDate" id="createDate">
                                             <input type="hidden" th:field="*{activeFlag}" name="activeFlag">
                                             <input th:unless="${viewOnly}" type="hidden" th:field="*{image}" name="image">
-                                            <input type="hidden" th:value="000000" name="password" id="password">
+                                            <input th:if="${viewOnly}" type="hidden" th:value="000000" >
+                                            <input th:unless="${viewOnly}" type="hidden" th:field="*{password}">
 
                                             <div class="form-group">
                                                 <label for="username">Username<span class="text-danger">*</span></label>

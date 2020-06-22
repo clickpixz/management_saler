@@ -129,7 +129,7 @@
                                                 <td th:text="${productInStock.branch.name}"></td>
                                                 <td th:text="${productInStock.size}"></td>
                                                 <td th:text="${productInStock.quantity}"></td>
-                                                <td th:text="${productInStock.price}"></td>
+                                                <td th:text="${#numbers.formatDecimal(productInStock.price,3,'COMMA',0,'POINT')+' VND'}"></td>
                                                 <td>
                                                     <a class="btn btn-link" th:href="@{'/admin/product-in-stock/view/'+${productInStock.id}}">
                                                         <i class="fas fa-street-view"></i>
@@ -149,7 +149,8 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-link" th:onclick="'javascript:fire_ajax_submit('+ ${productInStock.id} + ','+${productInStock.price}+');'">
+                                                    <a class="btn btn-link" th:href="@{'/admin/product-in-stock/invoke/'+${productInStock.id}}">
+<!--                                                       th:onclick="'javascript:fire_ajax_submit('+ ${productInStock.id} + ','+${productInStock.price}+');'">-->
                                                         <i class="fas fa-angle-double-up"></i>
                                                     </a>
                                                 </td>

@@ -112,8 +112,16 @@
                                                 <td th:text="${order.id}"></td>
                                                 <td th:text="${order.customer.name}"></td>
                                                 <td th:text="${order.deliveryAddress}"></td>
-                                                <td th:text="${order.statusDelivery}"></td>
-                                                <td th:text="${#numbers.formatDecimal(order.totalOrder,3,0)}"></td>
+                                                <td th:if="${order.statusDelivery == 0}">
+                                                    <a class="btn btn-warning text-light">Đang chờ xử lý</a>
+                                                </td>
+                                                <td th:if="${order.statusDelivery == 1}">
+                                                    <a class="btn btn-success text-light">Đã giao hàng</a>
+                                                </td>
+                                                <td th:if="${order.statusDelivery == -1}">
+                                                    <a class="btn btn-danger text-light">Đã bị hủy</a>
+                                                </td>
+                                                <td th:text="${#numbers.formatDecimal(order.totalOrder,3,'COMMA',0,'POINT')+' VND'}"></td>
                                                 <td th:text="${order.updateDate}"></td>
                                                 <th>
                                                     <a th:href="@{'/admin/order-detail/list/1?orderId='+${order.id}}"

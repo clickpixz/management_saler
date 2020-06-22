@@ -1,5 +1,6 @@
 package edu.mangement.controller.activity;
 
+import edu.mangement.model.InvoiceDetailDTO;
 import edu.mangement.model.Paging;
 import edu.mangement.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.xml.crypto.Data;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -40,7 +43,13 @@ public class InvoiceDetailController {
     @RequestMapping("/list")
     public String show(Model model, @RequestParam(name = "invoiceId", defaultValue = "0") Long invoiceId) {
         var invoiceDTO = invoiceService.getById(invoiceId);
+        BigDecimal sum = BigDecimal.ZERO;
+        var invoiceDetails = invoiceDTO.getInvoiceDetails();
+        for (InvoiceDetailDTO invoiceDetailDTO : invoiceDetails) {
+            sum = sum.add(invoiceDetailDTO.getUnitPrice().multiply(new BigDecimal(invoiceDetailDTO.getQuantity())));
+        }
         model.addAttribute("invoiceDTO", invoiceDTO);
+        model.addAttribute("sum",sum);
         model.addAttribute("tittlePage", "Danh sách chi tiết đơn hàng tại các chi nhánh");
         return "invoice-detail-list";
     }

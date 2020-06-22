@@ -129,7 +129,7 @@
                                                 <td th:text="${items.productInStock.branch.name}"></td>
                                                 <td th:text="${items.productInStock.size}"></td>
                                                 <td th:text="${items.productInStock.quantity}"></td>
-                                                <td th:text="${#numbers.formatDecimal( items.price , 2 ,0)+'$'}"></td>
+                                                <td th:text="${#numbers.formatDecimal(items.price,3,'COMMA',0,'POINT')+' VND'}"></td>
                                                 <td>
                                                     <a class="btn btn-link" th:href="@{'/admin/items/view/'+${items.id}}">
                                                         <i class="fas fa-street-view"></i>
