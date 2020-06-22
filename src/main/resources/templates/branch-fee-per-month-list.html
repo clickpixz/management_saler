@@ -123,7 +123,7 @@
                                                 <td th:text="${branchFee.branchName}"></td>
                                                 <td th:text="${branchFee.month}"></td>
                                                 <td th:text="${branchFee.year}"></td>
-                                                <td th:text="${branchFee.cost}"></td>
+                                                <td th:text="${#numbers.formatDecimal(branchFee.cost,3,'COMMA',0,'POINT')+' VND'}"></td>
                                                 <th>
                                                     <a class="btn btn-primary"
                                                        th:href="@{'/admin/branch-fee-per-month/view/'+ ${branchFee.id}}">

@@ -70,7 +70,7 @@
                                         <label for="old-price"><h5>Giá nhập vào</h5></label>
                                         <input type="text" id="old-price" disabled
                                                required="true"
-                                               th:value="${productInStockDTO.price}" class="form-control">
+                                               th:value="${#numbers.formatDecimal(productInStockDTO.price,3,'COMMA',0,'POINT')+' VND'}" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="price"><h5>Nhập giá bán sản phẩm</h5></label>

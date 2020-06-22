@@ -26,7 +26,7 @@ public class StatisticsProductOfflineController {
     private InvoiceDetailService invoiceDetailService;
     @GetMapping("/invoice")
     public String show(Model model){
-        Date date = DateFormatUtils3.getDateBasicType("2020-05-25 00:00:00");
+        Date date = DateFormatUtils3.getDateBasicType("2020-06-22 00:00:00");
         var topProductSellsOffline = invoiceDetailService.getTopProductSell(date, null);
         model.addAttribute("tittlePage","Số liệu về sản phẩm");
         model.addAttribute("tittleTable","Sản phẩm bán offline chạy nhất");

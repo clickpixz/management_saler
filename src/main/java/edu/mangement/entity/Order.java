@@ -1,6 +1,7 @@
 package edu.mangement.entity;
 
 import edu.mangement.entity.sp.DayQuantityMapper;
+import edu.mangement.entity.sp.InterestMapper;
 import lombok.*;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -42,7 +43,57 @@ import java.util.List;
                         )
                 }
         ),
+        @NamedStoredProcedureQuery(
+                name = "calculateInterestByProductId",
+                procedureName = "Sp_Calculate_Interest_In_Branch_Month",
+                resultSetMappings = "InterestMapper",
+                parameters = {
+                        @StoredProcedureParameter(
+                                name = "branchId",
+                                type = Long.class,
+                                mode = ParameterMode.IN
+                        ),
+                        @StoredProcedureParameter(
+                                name = "DATE_FROM",
+                                type = Date.class,
+                                mode = ParameterMode.IN
+                        ),
+                }
+        ),
+        @NamedStoredProcedureQuery(
+                name = "CalculateMemberSalary",
+                procedureName = "Sp_Calculate_Member_Salary_In_Branch_Month",
+                resultSetMappings = "MemberFeeMapper",
+                parameters = {
+                        @StoredProcedureParameter(
+                                name = "branchId",
+                                type = Long.class,
+                                mode = ParameterMode.IN
+                        ),
+                        @StoredProcedureParameter(
+                                name = "NAM",
+                                type = Integer.class,
+                                mode = ParameterMode.IN
+                        ),
+                        @StoredProcedureParameter(
+                                name = "THANG",
+                                type = Integer.class,
+                                mode = ParameterMode.IN
+                        ),
+                }
+        ),
 })
+@SqlResultSetMapping(
+        name = "MemberFeeMapper",
+        classes = {
+                @ConstructorResult(
+                        targetClass = InterestMapper.class,
+                        columns = {
+                                @ColumnResult(name = "salari", type = BigDecimal.class),
+                        }
+                )
+        }
+)
 @SqlResultSetMapping(
         name = "DayQuantityMapper",
         classes = {
@@ -51,6 +102,19 @@ import java.util.List;
                         columns = {
                                 @ColumnResult(name = "DAY_IN_WEEK", type = String.class),
                                 @ColumnResult(name = "quantity", type = Long.class)
+                        }
+                )
+        }
+)
+@SqlResultSetMapping(
+        name = "InterestMapper",
+        classes = {
+                @ConstructorResult(
+                        targetClass = InterestMapper.class,
+                        columns = {
+                                @ColumnResult(name = "total", type = BigDecimal.class),
+                                @ColumnResult(name = "capital", type = BigDecimal.class),
+                                @ColumnResult(name = "interest", type = BigDecimal.class)
                         }
                 )
         }

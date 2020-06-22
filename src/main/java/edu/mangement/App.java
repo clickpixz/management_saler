@@ -31,7 +31,6 @@ public class App implements CommandLineRunner {
 //		fullTextEntityManager.createIndexer().startAndWait();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date1 = simpleDateFormat.parse("2020-06-01 00:00:00");
-
     }
 
 }

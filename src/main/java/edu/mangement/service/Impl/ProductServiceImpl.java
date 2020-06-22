@@ -1,12 +1,17 @@
 package edu.mangement.service.Impl;
 
+import edu.mangement.entity.Branch;
+import edu.mangement.entity.BranchFeePerMonth;
 import edu.mangement.entity.Product;
 import edu.mangement.entity.sp.CustomerResult;
 import edu.mangement.entity.sp.DayQuantityMapper;
+import edu.mangement.entity.sp.InterestMapper;
 import edu.mangement.mapper.ProductMapper;
 import edu.mangement.model.Paging;
 import edu.mangement.model.ProductDTO;
 import edu.mangement.model.SearchForm;
+import edu.mangement.model.form.api.AjaxResponse;
+import edu.mangement.repository.BranchRepository;
 import edu.mangement.repository.ProductRepository;
 import edu.mangement.service.FullTextSearchEngine;
 import edu.mangement.service.ProductService;
@@ -19,7 +24,9 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
@@ -39,6 +46,8 @@ public class ProductServiceImpl implements ProductService {
     private EntityManager entityManager;
     @Autowired
     private FullTextSearchEngine<Product> fullTextSearchEngine;
+    @Autowired
+    private BranchRepository branchRepository;
 
     @Override
     public ProductDTO findProductById(Long id) {
@@ -141,5 +150,65 @@ public class ProductServiceImpl implements ProductService {
             list.add(dayQuantityMapper);
         });
         return list;
+    }
+
+    @Override
+    public List<AjaxResponse> calculateInterest(Long branchId) {
+        List<AjaxResponse> list = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            LocalDate localDate = LocalDate.of(2020, i, 1);
+            Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            List<InterestMapper> interestSoildProduct = entityManager
+                    .createNamedStoredProcedureQuery("calculateInterestByProductId")
+                    .setParameter("DATE_FROM", date)
+                    .setParameter("branchId", branchId)
+                    .getResultList();
+            //calculate fee branch
+            var branchFeePerMonthList = branchRepository.getOne(branchId).getBranchFeePerMonths();
+            var feePerMonth = BigDecimal.ZERO;
+            for (BranchFeePerMonth branchFeePerMonth : branchFeePerMonthList) {
+                int month = branchFeePerMonth.getMonth().intValue();
+                if (month == i) {
+                    feePerMonth = feePerMonth.add(new BigDecimal(String.valueOf(branchFeePerMonth.getCost())));
+                }
+            }
+            //calculate fee member
+            List<InterestMapper> listMemberFee = entityManager
+                    .createNamedStoredProcedureQuery("CalculateMemberSalary")
+                    .setParameter("branchId", branchId)
+                    .setParameter("NAM", 2020)
+                    .setParameter("THANG", i)
+                    .getResultList();
+            BigDecimal memberFee = BigDecimal.ZERO;
+            if(listMemberFee!=null){
+                if(listMemberFee.size()>0){
+                    if(listMemberFee.get(0).getTotal()!=null){
+                       memberFee = memberFee.add(listMemberFee.get(0).getTotal());
+                    }
+                }
+            }
+            var ajaxResponse = AjaxResponse.builder()
+                    .message(localDate.toString())
+                    .interestMapper(checkNullAndMapZeroValue(interestSoildProduct.get(0), memberFee, feePerMonth))
+                    .build();
+            list.add(ajaxResponse);
+        }
+        return list;
+    }
+
+    private InterestMapper checkNullAndMapZeroValue(InterestMapper interestMapper,
+                                                    BigDecimal memberFee, BigDecimal branchFeePerMonth) {
+        if (interestMapper.getCapital() == null) {
+            interestMapper.setCapital(BigDecimal.ZERO);
+        }
+        if (interestMapper.getInterest() == null) {
+            interestMapper.setInterest(BigDecimal.ZERO);
+        }
+        if (interestMapper.getTotal() == null) {
+            interestMapper.setTotal(BigDecimal.ZERO);
+        }
+        interestMapper.setBranchFee(branchFeePerMonth);
+        interestMapper.setMemberFee(memberFee);
+        return interestMapper;
     }
 }

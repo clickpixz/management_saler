@@ -4,6 +4,7 @@ import edu.mangement.entity.sp.DayQuantityMapper;
 import edu.mangement.model.Paging;
 import edu.mangement.model.ProductDTO;
 import edu.mangement.model.SearchForm;
+import edu.mangement.model.form.api.AjaxResponse;
 import javafx.util.Pair;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,4 +28,5 @@ public interface ProductService {
     List<ProductDTO> searchProduct(SearchForm searchForm, Paging paging);
     Long getTotalQuantityProductSell();
     List<DayQuantityMapper> contProductSold(Date date, Long id);
+    List<AjaxResponse> calculateInterest(Long branchId);
 }

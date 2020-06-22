@@ -28,7 +28,7 @@ public class StatisticsProductOnlineController {
     private InvoiceDetailService invoiceDetailService;
     @GetMapping("/order")
     public String show(Model model){
-        Date date = DateFormatUtils3.getDateBasicType("2020-05-25 00:00:00");
+        Date date = DateFormatUtils3.getDateBasicType("2020-06-22 00:00:00");
         var topProductSellsOnline = orderDetailService.getTopProductSell(date, null);
         model.addAttribute("tittlePage","Số liệu về sản phẩm");
         model.addAttribute("tittleTable1","Sản phẩm bán online chạy nhất");

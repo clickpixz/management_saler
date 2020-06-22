@@ -39,28 +39,28 @@ public class StatisticsProductRestController {
     private ProductService productService;
     @GetMapping("/top-order-online")
     public ResponseEntity<?> getTopOrderOnline() {
-        Date date = DateFormatUtils3.getDateBasicType("2020-05-25 00:00:00");
+        Date date = DateFormatUtils3.getDateBasicType("2020-06-22 00:00:00");
         var topProductSell = orderDetailService.getTopProductSell(date, null);
         return ResponseEntity.ok(new Wraps(topProductSell));
     }
 
     @GetMapping("/total-order-by-day")
     public ResponseEntity<?> getTotalOrderByDay() {
-        Date date = DateFormatUtils3.getDateBasicType("2020-06-01 00:00:00");
+        Date date = DateFormatUtils3.getDateBasicType("2020-06-22 00:00:00");
         var map = orderService.countOrderByDay(date);
         return ResponseEntity.ok(new Wraps(map));
     }
 
     @GetMapping("/top-invoice-offline")
     public ResponseEntity<?> getTopInvoiceOffline() {
-        Date date = DateFormatUtils3.getDateBasicType("2020-05-25 00:00:00");
+        Date date = DateFormatUtils3.getDateBasicType("2020-06-22 00:00:00");
         var topProductSell = invoiceDetailService.getTopProductSell(date, null);
         return ResponseEntity.ok(new Wraps(topProductSell));
     }
 
     @GetMapping("/total-invoice-by-day")
     public ResponseEntity<?> getTotalInvoiceByDay() {
-        Date date = DateFormatUtils3.getDateBasicType("2020-06-01 00:00:00");
+        Date date = DateFormatUtils3.getDateBasicType("2020-06-22 00:00:00");
         var map = invoiceService.countInvoiceByDay(date);
         return ResponseEntity.ok(new Wraps(map));
     }

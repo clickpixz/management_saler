@@ -61,8 +61,7 @@
                                             <input type="hidden" th:field="*{createDate}" name="createDate" id="createDate">
                                             <input type="hidden" th:field="*{activeFlag}" name="activeFlag">
                                             <input th:unless="${viewOnly}" type="hidden" th:field="*{image}" name="image">
-                                            <input th:if="${viewOnly}" type="hidden" th:value="000000" >
-                                            <input th:unless="${viewOnly}" type="hidden" th:field="*{password}">
+                                            <input type="hidden" th:field="*{password}">
 
                                             <div class="form-group">
                                                 <label for="username">Username<span class="text-danger">*</span></label>
@@ -119,8 +118,9 @@
 
                                             <div class="form-group">
                                                 <label for="salary">Salary</label>
-                                                <input type="number" th:field="*{salary}" th:disabled="${viewOnly}" id="salary"
+                                                <input th:unless="${viewOnly}" type="number" th:field="*{salary}" th:disabled="${viewOnly}" id="salary"
                                                           placeholder="Salary" class="form-control">
+                                                <input th:if="${viewOnly}" th:disabled="${viewOnly}" th:value="${#numbers.formatDecimal(modelForm.salary,3,'COMMA',0,'POINT')+' VND'}"></input>
                                                 <span th:class="text-danger" th:if="${#fields.hasErrors('doB')}" th:errors="*{doB}"></span>
                                             </div>
 

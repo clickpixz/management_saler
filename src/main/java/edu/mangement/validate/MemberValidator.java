@@ -29,7 +29,7 @@ public class MemberValidator implements Validator {
     public void validate(Object o, Errors errors) {
         MemberDTO memberDTO = (MemberDTO) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"username","msg.member.username.blank");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"password","msg.member.password.blank");
+//        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"password","msg.member.password.blank");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","msg.member.name.blank");
         //check username exits
         if(memberDTO.getUsername()!=null){
@@ -53,9 +53,9 @@ public class MemberValidator implements Validator {
             errors.rejectValue("username","msg.member.username.length");
         }
         //check password lenght
-        if(memberDTO.getPassword()!=null&&memberDTO.getPassword().length()<=6&&memberDTO.getPassword().length()>=30){
-            errors.rejectValue("password","msg.member.password.length");
-        }
+//        if(memberDTO.getPassword()!=null&&memberDTO.getPassword().length()<=6&&memberDTO.getPassword().length()>=30){
+//            errors.rejectValue("password","msg.member.password.length");
+//        }
         //checl salary value
         if(memberDTO.getSalary()!=null&&memberDTO.getSalary().compareTo(BigDecimal.valueOf(0))<0){
             errors.rejectValue("salary","msg.member.salary.value");
