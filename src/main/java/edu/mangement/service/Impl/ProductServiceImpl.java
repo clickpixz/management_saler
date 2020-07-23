@@ -1,6 +1,5 @@
 package edu.mangement.service.Impl;
 
-import edu.mangement.entity.Branch;
 import edu.mangement.entity.BranchFeePerMonth;
 import edu.mangement.entity.Product;
 import edu.mangement.entity.sp.CustomerResult;
@@ -16,7 +15,6 @@ import edu.mangement.repository.ProductRepository;
 import edu.mangement.service.FullTextSearchEngine;
 import edu.mangement.service.ProductService;
 import edu.mangement.utils.FileProcessUtils;
-import javafx.util.Pair;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -72,11 +70,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Pair<Integer, List<ProductDTO>> findAllProduct(Pageable pageable) {
+    public List<ProductDTO> findAllProduct(Pageable pageable,Paging paging) {
         var pageProduct = productRepository.findAllByActiveFlag(1, pageable);
-        var totalPages = pageProduct.getTotalPages();
-        var productDTOList = pageProduct.get().map(ProductMapper::toDTO).collect(Collectors.toList());
-        return new Pair<>(totalPages, productDTOList);
+        paging.setTotalPages(pageProduct.getTotalPages());
+        paging.setTotalRows(pageProduct.getTotalElements());
+        return pageProduct.get().map(ProductMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override

@@ -1,7 +1,6 @@
 package edu.mangement.controller.activity;
 
 import edu.mangement.constant.Constant;
-import edu.mangement.entity.Member;
 import edu.mangement.mapper.MemberMapper;
 import edu.mangement.model.*;
 import edu.mangement.repository.MemberRepository;
@@ -23,8 +22,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +58,7 @@ public class MemberController {
             return;
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        bind.registerCustomEditor(Data.class, new CustomDateEditor(simpleDateFormat, false));
+        bind.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
         if (bind.getTarget().getClass() == MemberDTO.class) {
             bind.setValidator(memberValidator);
         }

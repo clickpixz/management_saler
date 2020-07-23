@@ -21,6 +21,7 @@ public class DateFormatUtils3 {
             return basicDateFormat.parse(dateStr);
         } catch (ParseException e) {
             e.printStackTrace();
+            System.out.println("");
         }
         return null;
     }

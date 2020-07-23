@@ -4,9 +4,7 @@ import edu.mangement.constant.Constant;
 import edu.mangement.model.FormInventory;
 import edu.mangement.model.InventoryHistoryDTO;
 import edu.mangement.model.Paging;
-import edu.mangement.model.ProductInStockDTO;
 import edu.mangement.service.BranchService;
-import edu.mangement.service.CategoryService;
 import edu.mangement.service.InventoryHistoryService;
 import edu.mangement.validate.FormInventoryValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA
@@ -44,7 +42,7 @@ public class InventoryHistoryController {
             return;
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        bind.registerCustomEditor(Data.class, new CustomDateEditor(simpleDateFormat, false));
+        bind.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
         if (bind.getTarget().getClass() == FormInventory.class) {
             bind.setValidator(formInventoryValidator);
         }

@@ -2,7 +2,7 @@ const url_api = 'http://localhost:8080/admin/api/v1/top-invoice-offline';
 const url_api2 = 'http://localhost:8080/admin/api/v1/total-invoice-by-day';
 const xlabels = [];
 const xlabels2 = ['MonthDay','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const order_quantity = [];
+const order_quantity = [23,54,33,44,66,12,45];
 const product_quantity = [];
 chartTopOfflineSellInit();
 chartCountingInvoiceInit();
@@ -92,6 +92,7 @@ async function chartCountingInvoiceInit() {
 async function getInvoiceData() {
     const response = await fetch(url_api2);
     const data = await response.json();
+    console.log(data)
     xlabels2.forEach(value => {
         order_quantity.push(data.object[value]);
     })

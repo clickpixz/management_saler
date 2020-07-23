@@ -3,7 +3,7 @@ const url_api2 = 'http://localhost:8080/admin/api/v1/total-order-by-day';
 const xlabels = [];
 const xlabels2 = ['MonthDay','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 const product_quantity = [];
-const order_quantity = [];
+const order_quantity = [34,24,87,66,45,78,64];
 chartTopOnlineSellInit();
 chartCountingOrderInit();
 
@@ -47,6 +47,7 @@ async function chartTopOnlineSellInit() {
 async function getOnlineSellData() {
     const response = await fetch(url_api);
     const data = await response.json();
+    console.log(data);
     data.object.forEach(row => {
         xlabels.push(row.productDTO.name);
         product_quantity.push(row.quantity);
@@ -92,6 +93,7 @@ async function chartCountingOrderInit() {
 async function getOrderData() {
     const response = await fetch(url_api2);
     const data = await response.json();
+    console.log(data);
     console.log(data.object)
     xlabels2.forEach(value => {
         order_quantity.push(data.object[value]);

@@ -7,7 +7,6 @@ import edu.mangement.model.Paging;
 import edu.mangement.model.RoleDTO;
 import edu.mangement.service.MenuService;
 import edu.mangement.service.RoleService;
-import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.PageRequest;
@@ -20,9 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 /**
@@ -45,7 +43,7 @@ public class MenuController {
             return;
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        bind.registerCustomEditor(Data.class, new CustomDateEditor(simpleDateFormat, false));
+        bind.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
     }
 
     @RequestMapping(value = {"/list", "/list/"})
@@ -55,13 +53,11 @@ public class MenuController {
 
     @GetMapping("/list/{page}")
     public String showCategoryList(Model model, @PathVariable("page") Integer page, HttpSession session) {
-        Pair<Integer, List<MenuDTO>> listPair = menuService.findAllMapMenu(PageRequest.of(page - 1, 20, Sort.by("parentId")));
-        Integer totalPages = listPair.getKey();
-        if (totalPages < page) {
+        Paging paging = Paging.builder().recordPerPage(20).indexPage(page).build();
+        var menuDTOList = menuService.findAllMapMenu(PageRequest.of(page - 1, 20, Sort.by("parentId")),paging);
+        if (paging.getTotalPages() < page) {
             return "redirect:/admin/menu/list/1";
         }
-        Paging paging = Paging.builder().recordPerPage(20).indexPage(page).totalPages(totalPages).build();
-        var menuDTOList = listPair.getValue();
         var roleDTOList = roleService.findAllRole(null);
         Constant.sessionProcessor(model, session);
         model.addAttribute("menuDTOList", menuDTOList);

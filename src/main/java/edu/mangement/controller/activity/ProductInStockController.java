@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA
@@ -43,7 +43,7 @@ public class ProductInStockController {
             return;
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        bind.registerCustomEditor(Data.class, new CustomDateEditor(simpleDateFormat, false));
+        bind.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
     }
 
     @RequestMapping(value = {"/list", "/list/"})

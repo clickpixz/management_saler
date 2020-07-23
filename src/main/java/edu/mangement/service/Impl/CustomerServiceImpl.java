@@ -9,7 +9,6 @@ import edu.mangement.model.SearchForm;
 import edu.mangement.repository.CustomerRepository;
 import edu.mangement.service.CustomerService;
 import edu.mangement.service.FullTextSearchEngine;
-import javafx.util.Pair;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -47,12 +46,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Pair<Integer, List<CustomerDTO>> findAll(Pageable pageable) {
+    public List<CustomerDTO> findAll(Pageable pageable,Paging paging) {
         var pageCustomer = customerRepository.findAllByActiveFlag(1, pageable);
-        var totalPages = pageCustomer.getTotalPages();
-        var customerDTOList = pageCustomer.get().map(CustomerMapper::toDTO).collect(Collectors.toList());
-        Pair<Integer, List<CustomerDTO>> pair = new Pair<>(totalPages, customerDTOList);
-        return pair;
+        paging.setTotalPages(pageCustomer.getTotalPages());
+        paging.setTotalRows(pageCustomer.getTotalElements());
+        return pageCustomer.get().map(CustomerMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override

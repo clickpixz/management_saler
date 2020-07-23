@@ -22,7 +22,7 @@ import java.util.List;
 public interface ProductService {
     ProductDTO findProductById(Long id);
     ProductDTO findProductByCode(String code);
-    Pair<Integer, List<ProductDTO>> findAllProduct(Pageable pageable);
+    List<ProductDTO> findAllProduct(Pageable pageable,Paging paging);
     ProductDTO saveProduct(ProductDTO productDTO) throws Exception;
     void deleteProduct(ProductDTO productDTO) throws Exception;
     List<ProductDTO> searchProduct(SearchForm searchForm, Paging paging);

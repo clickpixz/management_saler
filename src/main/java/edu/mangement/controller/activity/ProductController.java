@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +49,7 @@ public class ProductController {
             return;
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        bind.registerCustomEditor(Data.class, new CustomDateEditor(simpleDateFormat, false));
+        bind.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
         if (bind.getTarget().getClass() == ProductDTO.class) {
             bind.setValidator(productValidator);
         }
@@ -67,11 +67,8 @@ public class ProductController {
         if (searchForm != null && searchForm.getField() != null && !searchForm.getField().isBlank()) {
             productDTOList = productService.searchProduct(searchForm, paging);
         } else {
-            var pairProduct = productService.findAllProduct(PageRequest.of(page - 1, 8));
-            var totalPages = pairProduct.getKey();
-            productDTOList = pairProduct.getValue();
-            paging.setTotalPages(totalPages);
-            if (totalPages < page&&totalPages>0) {
+            productDTOList = productService.findAllProduct(PageRequest.of(page - 1, 8), paging);
+            if (paging.getTotalPages() < page && paging.getTotalPages() > 0) {
                 return "redirect:/admin/product/list/1";
             }
         }
@@ -79,7 +76,7 @@ public class ProductController {
         model.addAttribute("productDTOList", productDTOList);
         model.addAttribute("tittlePage", "Danh sách các Sản Phẩm");
         model.addAttribute("nameAddButton", "Thêm Sản phẩm");
-        model.addAttribute("paging",paging);
+        model.addAttribute("paging", paging);
         return "product-list";
     }
 

@@ -21,7 +21,7 @@ import java.util.Map;
 @Service
 public interface CustomerService {
     CustomerDTO findByCustomerId(Long id);
-    Pair<Integer, List<CustomerDTO>> findAll(Pageable pageable);
+    List<CustomerDTO> findAll(Pageable pageable,Paging paging);
     CustomerDTO saveCustomer(CustomerDTO customerDTO) throws Exception;
     void deleteCustomer(CustomerDTO customerDTO) throws Exception;
     List<CustomerDTO> search(SearchForm searchForm, Paging paging);

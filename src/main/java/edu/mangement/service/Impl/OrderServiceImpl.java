@@ -39,6 +39,7 @@ public class OrderServiceImpl implements OrderService {
         var countQueryStr = new StringBuilder("SELECT count(*) from Order o WHERE o.activeFlag =:activeFlag");
         Map<String, Object> mapParams = new HashMap<>();
         prepareQuery(orderFilterForm, queryStr, countQueryStr, mapParams);
+        queryStr.append(" order by o.createDate desc");
         TypedQuery<Order> query = entityManager.createQuery(queryStr.toString(), Order.class);
         Query countQuery = entityManager.createQuery(countQueryStr.toString());
         prepareStatement(mapParams, query, countQuery);

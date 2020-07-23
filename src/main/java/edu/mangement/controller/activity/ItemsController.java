@@ -1,7 +1,6 @@
 package edu.mangement.controller.activity;
 
 import edu.mangement.constant.Constant;
-import edu.mangement.entity.ProductInStock;
 import edu.mangement.model.ItemsDTO;
 import edu.mangement.model.Paging;
 import edu.mangement.model.ProductInStockDTO;
@@ -19,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA
@@ -44,7 +43,7 @@ public class ItemsController {
             return;
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        bind.registerCustomEditor(Data.class, new CustomDateEditor(simpleDateFormat, false));
+        bind.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
     }
 
     @RequestMapping(value = {"/list", "/list/"})

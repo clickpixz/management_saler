@@ -40,6 +40,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         var countQueryStr = new StringBuilder("SELECT count(*) from Invoice model WHERE model.activeFlag =:activeFlag");
         Map<String, Object> mapParams = new HashMap<>();
         prepareQuery(orderFilterForm, queryStr, countQueryStr, mapParams);
+        queryStr.append(" order by model.createDate desc");
         TypedQuery<Invoice> query = entityManager.createQuery(queryStr.toString(), Invoice.class);
         Query countQuery = entityManager.createQuery(countQueryStr.toString());
         prepareStatement(mapParams, query, countQuery);

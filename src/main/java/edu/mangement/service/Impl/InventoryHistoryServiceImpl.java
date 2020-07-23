@@ -52,6 +52,7 @@ public class InventoryHistoryServiceImpl implements InventoryHistoryService {
         var countQueryStr = new StringBuilder("SELECT count(*) from InventoryHistory ih WHERE ih.activeFlag =:activeFlag");
         Map<String, Object> mapParams = new HashMap<>();
         prepareQuery(inventoryHistoryDTO, queryStr, countQueryStr, mapParams);
+        queryStr.append(" order by ih.createDate desc");
         TypedQuery<InventoryHistory> query = entityManager.createQuery(queryStr.toString(), InventoryHistory.class);
         Query countQuery = entityManager.createQuery(countQueryStr.toString());
         prepareStatement(mapParams, query, countQuery);

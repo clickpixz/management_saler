@@ -14,9 +14,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +36,7 @@ public class CustomerController {
             return;
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        bind.registerCustomEditor(Data.class, new CustomDateEditor(simpleDateFormat, false));
+        bind.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
     }
 
     @RequestMapping(value = {"/list", "/list/"})
@@ -52,11 +51,8 @@ public class CustomerController {
         if (searchForm != null && searchForm.getField() != null && !searchForm.getField().isBlank()) {
             customerDTOList = customerService.search(searchForm, paging);
         } else {
-            var pairCustomer = customerService.findAll(PageRequest.of(page - 1, 20));
-            var totalPages = pairCustomer.getKey();
-            customerDTOList = pairCustomer.getValue();
-            paging.setTotalPages(totalPages);
-            if (totalPages < page) {
+            customerDTOList = customerService.findAll(PageRequest.of(page - 1, 20),paging);
+            if (paging.getTotalPages() < page) {
                 return "redirect:/admin/customer/list/1";
             }
             Constant.sessionProcessor(model, session);

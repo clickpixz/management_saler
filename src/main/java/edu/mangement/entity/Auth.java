@@ -41,7 +41,7 @@ public class Auth {
     @LastModifiedDate
     @Field(termVector = TermVector.YES)
     private Date updateDate;
-    private Integer activeFlag = 1;
+    private Integer activeFlag;
     @ManyToOne
     @JoinColumn(name = "Role_ID", referencedColumnName = "id", nullable = false)
     private Role role;

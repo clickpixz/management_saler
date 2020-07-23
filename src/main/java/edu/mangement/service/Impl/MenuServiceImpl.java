@@ -6,14 +6,13 @@ import edu.mangement.entity.Role;
 import edu.mangement.mapper.MenuMapper;
 import edu.mangement.model.AuthForm;
 import edu.mangement.model.MenuDTO;
+import edu.mangement.model.Paging;
 import edu.mangement.model.RoleDTO;
 import edu.mangement.repository.AuthRepository;
 import edu.mangement.repository.MenuRepository;
 import edu.mangement.service.MenuService;
 import edu.mangement.service.RoleService;
-import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -85,9 +84,10 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Pair<Integer, List<MenuDTO>> findAllMapMenu(Pageable pageable) {
-        Page<Menu> menuPage = menuRepository.findAllBymType(0, pageable);
-        Integer totalPages = menuPage.getTotalPages();
+    public List<MenuDTO> findAllMapMenu(Pageable pageable, Paging paging) {
+        var menuPage = menuRepository.findAllBymType(0, pageable);
+        paging.setTotalRows(menuPage.getTotalElements());
+        paging.setTotalPages(menuPage.getTotalPages());
         var menuList = menuPage.getContent();
         var roleDTOList = roleService.findAllRole(null);
         List<MenuDTO> menuDTOList = new ArrayList<>();
@@ -103,7 +103,7 @@ public class MenuServiceImpl implements MenuService {
             menuDTO.setMapAuth(mapAuth);
             menuDTOList.add(menuDTO);
         });
-        return new Pair<>(totalPages, menuDTOList);
+        return menuDTOList;
     }
 
     @Override

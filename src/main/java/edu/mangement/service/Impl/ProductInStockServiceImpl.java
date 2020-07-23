@@ -70,6 +70,7 @@ public class ProductInStockServiceImpl implements ProductInStockService {
         StringBuilder countQueryStr = new StringBuilder("SELECT count(*) from ProductInStock pis WHERE pis.activeFlag =:activeFlag");
         Map<String, Object> mapParams = new HashMap<>();
         prepareQuery(productInStockDTO, queryStr, countQueryStr, mapParams);
+        queryStr.append(" order by pis.createDate desc");
         TypedQuery<ProductInStock> query = entityManager.createQuery(queryStr.toString(), ProductInStock.class);
         Query countQuery = entityManager.createQuery(countQueryStr.toString());
         //set parameter

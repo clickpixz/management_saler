@@ -44,7 +44,7 @@ public class Branch {
     @LastModifiedDate
     @Field(termVector = TermVector.YES)
     private Date updateDate;
-    private Integer activeFlag = 1;
+    private Integer activeFlag;
     @OneToMany(mappedBy = "branch")
     private List<BranchFeePerMonth> branchFeePerMonths;
     @OneToMany(mappedBy = "branch")
