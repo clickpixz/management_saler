@@ -5,7 +5,6 @@ import edu.mangement.model.Paging;
 import edu.mangement.model.ProductDTO;
 import edu.mangement.model.SearchForm;
 import edu.mangement.model.form.api.AjaxResponse;
-import javafx.util.Pair;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

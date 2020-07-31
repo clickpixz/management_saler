@@ -4,7 +4,6 @@ import edu.mangement.entity.sp.CustomerResult;
 import edu.mangement.model.CustomerDTO;
 import edu.mangement.model.Paging;
 import edu.mangement.model.SearchForm;
-import javafx.util.Pair;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

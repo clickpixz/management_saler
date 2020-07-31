@@ -35,7 +35,7 @@ public class OrderController {
             return;
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        bind.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
+//        bind.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
     }
 
     @RequestMapping(value = {"/list", "/list/"})

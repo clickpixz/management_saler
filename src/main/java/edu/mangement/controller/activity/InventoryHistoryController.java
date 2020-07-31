@@ -41,11 +41,11 @@ public class InventoryHistoryController {
         if (bind.getTarget() == null) {
             return;
         }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        bind.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
-        if (bind.getTarget().getClass() == FormInventory.class) {
-            bind.setValidator(formInventoryValidator);
-        }
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        bind.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
+//        if (bind.getTarget().getClass() == FormInventory.class) {
+//            bind.setValidator(formInventoryValidator);
+//        }
     }
 
     @RequestMapping(value = {"/list", "/list/"})
@@ -57,6 +57,7 @@ public class InventoryHistoryController {
     public String show(@ModelAttribute("searchForm") InventoryHistoryDTO inventoryHistoryDTO,
                        Model model, @PathVariable("page") int page, HttpSession session) {
         Paging paging = Paging.builder().recordPerPage(10).indexPage(page).build();
+        System.out.println(inventoryHistoryDTO);
         var inventoryHistoryDTOList = inventoryHistoryService.search(inventoryHistoryDTO,paging);
         if (paging.getIndexPage() < page && paging.getTotalPages() > 0) {
             return "redirect:/admin/inventory-history/list/1";
